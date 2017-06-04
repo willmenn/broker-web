@@ -10,6 +10,14 @@ const axiosConfig = () => {
 
 class ShiftPlaceFormComponent extends Component {
 
+
+    constructor() {
+        super();
+        this.state = {
+            name: ''
+        }
+    }
+
     onSubmit(evt) {
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
 
@@ -30,6 +38,10 @@ class ShiftPlaceFormComponent extends Component {
         return JSON.stringify(body);
     }
 
+    handleNameChange = (event) => {
+        this.setState({name: event.target.value});
+    };
+
     render() {
         return (
             <div>
@@ -37,21 +49,26 @@ class ShiftPlaceFormComponent extends Component {
                     <div className="field">
                         <label className="label">Nome do plantão</label>
                         <p className="control">
-                            <input className="input" type="text" placeholder="Plantão" name="name"/>
+                            <input className="input" type="text"
+                                   placeholder={ this.props.shiftPlaceData.name } name="name"/>
+
                         </p>
                     </div>
 
                     <div className="field">
                         <label className="label">Endereço do plantão</label>
                         <p className="control">
-                            <input className="input" type="text" placeholder="Endereço" name="address"/>
+                            <input className="input" type="text"  name="address"
+                                   placeholder={this.props.shiftPlaceData.address}/>
+
                         </p>
                     </div>
 
                     <div className="field">
                         <label className="label">Número de lugares no plantão</label>
                         <p className="control">
-                            <input className="input" type="text" placeholder="Lugares" name="places"/>
+                            <input className="input" type="text"  name="places"
+                                   placeholder={this.props.shiftPlaceData.places }/>
                         </p>
                     </div>
                     <div className="field">
@@ -80,7 +97,8 @@ class ShiftPlaceFormComponent extends Component {
                         </p>
                     </div>
                 </form>
-            </div>
+            </
+                div >
         )
     }
 }
