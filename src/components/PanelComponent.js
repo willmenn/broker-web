@@ -27,9 +27,9 @@ class PanelComponent extends Component {
                         </div>
                     </div>
                     <footer className="card-footer">
-                        <a className="card-footer-item">Save</a>
-                        <a className="card-footer-item">Edit</a>
-                        <a className="card-footer-item">Delete</a>
+                        <a className="card-footer-item" onClick={this.props.onClickRegisterShiftPlace}>Cadastrar</a>
+                        <a className="card-footer-item">Editar</a>
+                        <a className="card-footer-item">Deletar</a>
                     </footer>
                 </div>
             </div>

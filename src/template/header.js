@@ -31,7 +31,7 @@ class HeaderComponent extends Component {
               </span>
 
                     <div className="nav-right nav-menu">
-                        <a className="nav-item">
+                        <a className="nav-item" onClick={this.props.onClickHomeHeader}>
                             Home
                         </a>
                         <a className="nav-item">
