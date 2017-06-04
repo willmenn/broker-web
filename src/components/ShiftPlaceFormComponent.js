@@ -19,15 +19,41 @@ class ShiftPlaceFormComponent extends Component {
     }
 
     onSubmit(evt) {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
 
         let data = this.createFormData(evt);
+        data.managersName = this.props.managersName;
+        if (this.props.edit) {
+            this.updateData(data);
+            let body = JSON.stringify(data);
+            this.executePut(body, this.props.shiftPlaceData.shiftPlaceId);
+        } else {
+            let body = JSON.stringify(data);
+            this.executePost(body);
+        }
+        evt.preventDefault();
+        return false;
+    }
+
+    updateData(data) {
+        data.name = data.name !== '' ? data.name : this.props.shiftPlaceData.name;
+        data.address = data.address !== '' ? data.address : this.props.shiftPlaceData.address;
+        data.places = data.places !== '' ? data.places : this.props.shiftPlaceData.places;
+        data.days = data.days[0] !== this.props.shiftPlaceData.days[0] ? data.days : this.props.shiftPlaceData.days;
+
+    }
+
+    executePut(data, id) {
+        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
+        
+        axiosConfig().put(url, data);
+    }
+
+
+    executePost(data) {
+        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
 
         //TODO missing managersName.
         axiosConfig().post(url, data);
-
-        evt.preventDefault();
-        return false;
     }
 
     createFormData(evt) {
@@ -35,12 +61,12 @@ class ShiftPlaceFormComponent extends Component {
             .filter(el => el.name)
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
-        return JSON.stringify(body);
+        console.log(" oi:"+evt.target.elements.days.value);
+        body.days=[evt.target.elements.days.value];
+        console.log(body);
+        return body;
     }
 
-    handleNameChange = (event) => {
-        this.setState({name: event.target.value});
-    };
 
     render() {
         return (
@@ -58,7 +84,7 @@ class ShiftPlaceFormComponent extends Component {
                     <div className="field">
                         <label className="label">Endereço do plantão</label>
                         <p className="control">
-                            <input className="input" type="text"  name="address"
+                            <input className="input" type="text" name="address"
                                    placeholder={this.props.shiftPlaceData.address}/>
 
                         </p>
@@ -67,15 +93,15 @@ class ShiftPlaceFormComponent extends Component {
                     <div className="field">
                         <label className="label">Número de lugares no plantão</label>
                         <p className="control">
-                            <input className="input" type="text"  name="places"
+                            <input className="input" type="text" name="places"
                                    placeholder={this.props.shiftPlaceData.places }/>
                         </p>
                     </div>
                     <div className="field">
                         <label className="label">Subject</label>
                         <p className="control">
-                        <span className="select">
-                          <select>
+                        <span className="select" >
+                          <select name="days">
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
                             <option value="TUE">Terça-feira</option>

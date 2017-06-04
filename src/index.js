@@ -44,7 +44,8 @@ class App extends Component {
                 name: "Plantão",
                 address: "Endereço",
                 places: "Lugares"
-            }
+            },
+            edit:false
         });
         refreshReact();
     }
@@ -86,7 +87,8 @@ class App extends Component {
                 name: "Plantão",
                 address: "Endereço",
                 places: "Lugares"
-            }
+            },
+            edit: true
         });
 
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
@@ -109,7 +111,7 @@ class App extends Component {
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Corretor'/> : null }
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?
-                        <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData}/> : null}
+                        <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData} edit={this.state.edit} managersName={this.state.managerName}/> : null}
                     { this.state.isListComponentVisible ? <ListComponent
                         listOptions={this.state.listOptions}
                         listData={this.state.listData}
