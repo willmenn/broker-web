@@ -44,7 +44,7 @@ class ShiftPlaceFormComponent extends Component {
 
     executePut(data, id) {
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
-        
+
         axiosConfig().put(url, data);
     }
 

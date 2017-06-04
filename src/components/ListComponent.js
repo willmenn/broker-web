@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
 
+
+import axios from 'axios';
+
+
+const axiosConfig = () => {
+    return axios.create({
+        headers: {'Content-Type': "application/json; charset=utf-8"}
+    });
+}
+
 const customizedCss = {
     margin: 'auto'
 }
@@ -16,8 +26,31 @@ const minPanelWidth = {
 
 class ListComponent extends Component {
 
+
+    constructor() {
+        super();
+        this.state = {
+            enableDelete: true
+        }
+    }
+
+    onClickLineForDelete(shiftPlaceId) {
+        this.setState({
+            enableDelete: false,
+            deleteId: shiftPlaceId
+        })
+    }
+
+    onClickDeleteButton() {
+        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + this.state.deleteId;
+
+        axiosConfig().delete(url);
+
+    }
+
     render() {
         const {listOptions} = this.props;
+        const listData = this.props.listData ? this.props.listData : this.stata.listData;
 
         if (this.props.listData.length === 0) {
             return (
@@ -34,8 +67,14 @@ class ListComponent extends Component {
                         {console.log(this.props.listData)}
                         {listOptions.title}
                     </p>
-                    {this.props.listData.map(s =>
-                        <a className="panel-block" onClick={() => this.props.onClickPanelLine(s.shiftPlaceId)}>
+                    {listData.map(s =>
+                        <a className="panel-block" onClick={() => {
+                            if (listOptions.action === 'Delete') {
+                                this.onClickLineForDelete(s.shiftPlaceId);
+                            } else {
+                                this.props.onClickPanelLine(s.shiftPlaceId);
+                            }
+                        }}>
                             <span className="panel-icon">
                               <i className="fa fa-book"></i>
                             </span>
@@ -44,7 +83,9 @@ class ListComponent extends Component {
                     )
                     }
                     <div className="panel-block">
-                        <button className="button is-primary is-outlined is-fullwidth">
+                        <button
+                            className={listOptions.action === 'Delete' ? "button is-danger is-outlined is-fullwidth" : "button is-primary is-outlined is-fullwidth"}
+                            disabled={this.state.enableDelete} onClick={this.onClickDeleteButton.bind(this)}>
                             {listOptions.action}
                         </button>
                     </div>

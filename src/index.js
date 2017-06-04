@@ -66,7 +66,7 @@ class App extends Component {
             isShiftPlaceFormVisible: false,
             isListComponentVisible: true,
             shiftPlacePanelVisible: true,
-            listOptions: {title: 'Plantão', action: 'Edit'},
+            listOptions: {title: 'Plantões', action: 'Edit'},
             listData: []
         });
 
@@ -97,7 +97,22 @@ class App extends Component {
             refreshReact();
         });
     }
-
+    onClickDeleteShiftPlace(){
+        this.setState({
+            isHomeVisible: false,
+            isShiftPlaceFormVisible: false,
+            isListComponentVisible: true,
+            shiftPlacePanelVisible: true,
+            listOptions: {title: 'Plantões', action: 'Delete'},
+            listData: []
+        });
+        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + this.state.managerName;
+        axiosConfig().get(url).then(res => {
+            console.log(this.state.listData)
+            this.setState({listData: res.data});
+            refreshReact();
+        });
+    }
 
     render() {
         return (
@@ -107,7 +122,8 @@ class App extends Component {
                     { this.state.isHomeVisible || this.state.shiftPlacePanelVisible ?
                         <PanelComponent cardTitle='Plantão'
                                         onClickRegisterShiftPlace={this.onClickRegisterShiftPlace.bind(this)}
-                                        onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}/> : null}
+                                        onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}
+                                        onClickDeleteShiftPlace={this.onClickDeleteShiftPlace.bind(this)}/> : null}
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Corretor'/> : null }
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?
