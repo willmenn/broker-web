@@ -31,6 +31,7 @@ class App extends Component {
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
             isBrokerFormVisible: false,
+            brokerPanelVisible: false,
             managerName: 'MTest'
         };
     }
@@ -53,7 +54,7 @@ class App extends Component {
         refreshReact();
     }
 
-    onClickRegisterBroker(){
+    onClickRegisterBroker() {
         this.setState({
             isHomeVisible: false,
             isShiftPlaceFormVisible: false,
@@ -102,7 +103,51 @@ class App extends Component {
         });
     }
 
-    onClickPanelLine(id) {
+    onClickEditBroker() {
+        this.setState({
+            isHomeVisible: false,
+            isShiftPlaceFormVisible: false,
+            isListComponentVisible: true,
+            brokerPanelVisible: true,
+            shiftPlacePanelVisible: false,
+            listOptions: {title: 'Corretores', action: 'Edit', entity: 'broker'},
+            listData: [],
+            isBrokerFormVisible: false,
+        });
+
+        var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
+        axiosConfig().get(url).then(res => {
+            this.setState({listData: res.data});
+            refreshReact();
+        });
+    }
+
+    onClickPanelLine(id, entity) {
+        if (entity === 'broker') {
+            this.setState({
+                isHomeVisible: false,
+                isShiftPlaceFormVisible: false,
+                isListComponentVisible: false,
+                shiftPlacePanelVisible: false,
+                brokerData: {
+                    name: "Nome do Corretor"
+                },
+                edit: true,
+                isBrokerFormVisible: true,
+                brokerPanelVisible: false
+            });
+
+            var url = "https://brokermanagement-dev.herokuapp.com/broker/" + id;
+            axiosConfig().get(url).then(res => {
+                this.setState({brokerData: res.data});
+                refreshReact();
+            });
+        } else {
+            this.editShiftPlace(id);
+        }
+    }
+
+    editShiftPlace(id) {
         this.setState({
             isHomeVisible: false,
             isShiftPlaceFormVisible: true,
@@ -152,8 +197,9 @@ class App extends Component {
                                         onClickRegisterShiftPlace={this.onClickRegisterShiftPlace.bind(this)}
                                         onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}
                                         onClickDeleteShiftPlace={this.onClickDeleteShiftPlace.bind(this)}/> : null}
-                    { this.state.isHomeVisible ? <PanelComponent
+                    { this.state.isHomeVisible || this.state.brokerPanelVisible ? <PanelComponent
                         onClickRegisterShiftPlace={this.onClickRegisterBroker.bind(this)}
+                        onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
                         cardTitle='Corretor'/> : null }
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?

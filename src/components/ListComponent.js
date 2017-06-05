@@ -26,8 +26,8 @@ const minPanelWidth = {
 
 class ListComponent extends Component {
 
-    constructor(props,context) {
-        super(props,context);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             enableButton: true,
             clickedDataId: -1
@@ -77,15 +77,16 @@ class ListComponent extends Component {
                     <p className="panel-heading" style={textAlign}>
                         {listOptions.title}
                     </p>
-                    {listData.map( (s, index) => {
+                    {listData.map((s, index) => {
                             return (
                                 <a className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
                                    onClick={() => {
                                        this.handleActiveState(index);
+                                       let id = listOptions.entity === 'broker' ? s.brokerId : s.shiftPlaceId;
                                        if (listOptions.action === 'Delete') {
-                                           this.onClickLineForDelete(s.shiftPlaceId);
+                                           this.onClickLineForDelete(id);
                                        } else {
-                                           this.onClickLineForEdit(s.shiftPlaceId)
+                                           this.onClickLineForEdit(id);
                                        }
                                    }}>
                             <span className="panel-icon">
@@ -103,10 +104,10 @@ class ListComponent extends Component {
                             disabled={this.state.enableButton} onClick={() => {
                             if (listOptions.action === 'Delete') {
                                 this.onClickDeleteButton.bind(this)
-                            }else{
-                                this.props.onClickPanelLine(this.state.editId);
+                            } else {
+                                this.props.onClickPanelLine(this.state.editId, listOptions.entity);
                             }
-                            }}>
+                        }}>
                             {listOptions.action}
                         </button>
                     </div>
