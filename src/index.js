@@ -187,6 +187,26 @@ class App extends Component {
         });
     }
 
+    onClickDeleteBroker(){
+        this.setState({
+            isHomeVisible: false,
+            isShiftPlaceFormVisible: false,
+            isListComponentVisible: true,
+            shiftPlacePanelVisible: false,
+            listOptions: {title: 'Corretores', action: 'Delete', entity: 'broker'},
+            listData: [],
+            isBrokerFormVisible: false,
+            brokerPanelVisible: true
+        });
+        var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
+        axiosConfig().get(url).then(res => {
+            console.log(this.state.listData)
+            this.setState({listData: res.data});
+            refreshReact();
+        });
+
+    }
+
     render() {
         return (
             <div>
@@ -200,6 +220,7 @@ class App extends Component {
                     { this.state.isHomeVisible || this.state.brokerPanelVisible ? <PanelComponent
                         onClickRegisterShiftPlace={this.onClickRegisterBroker.bind(this)}
                         onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
+                        onClickDeleteShiftPlace={this.onClickDeleteBroker.bind(this)}
                         cardTitle='Corretor'/> : null }
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?

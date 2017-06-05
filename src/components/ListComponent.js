@@ -24,20 +24,31 @@ const minPanelWidth = {
 
 }
 
+const displayNone = {
+    display: 'none'
+}
+
+const displayBlock = {
+    display: 'block',
+    fontSize: '12px'
+}
+
+
 class ListComponent extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
             enableButton: true,
-            clickedDataId: -1
+            clickedDataId: -1,
+            isDeleted: false
         }
     }
 
-    onClickLineForDelete(shiftPlaceId) {
+    onClickLineForDelete(id) {
         this.setState({
             enableButton: false,
-            deleteId: shiftPlaceId
+            deleteId: id
         })
     }
 
@@ -48,15 +59,25 @@ class ListComponent extends Component {
         })
     }
 
-    onClickDeleteButton() {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + this.state.deleteId;
-
+    onClickDeleteButton(entity) {
+        var url = '';
+        if (entity === 'broker') {
+            url = "https://brokermanagement-dev.herokuapp.com/broker/" + this.state.deleteId;
+        } else {
+            url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + this.state.deleteId;
+        }
         axiosConfig().delete(url);
-
+        this.setState({isDeleted: true});
     }
 
     handleActiveState(index) {
         this.setState({clickedDataId: index})
+    }
+
+    handleDeleteNotificationButton() {
+        this.setState({
+            isDeleted: false
+        })
     }
 
     render() {
@@ -103,7 +124,7 @@ class ListComponent extends Component {
                             className={listOptions.action === 'Delete' ? "button is-danger is-outlined is-fullwidth" : "button is-primary is-outlined is-fullwidth"}
                             disabled={this.state.enableButton} onClick={() => {
                             if (listOptions.action === 'Delete') {
-                                this.onClickDeleteButton.bind(this)
+                                this.onClickDeleteButton(listOptions.entity);
                             } else {
                                 this.props.onClickPanelLine(this.state.editId, listOptions.entity);
                             }
@@ -111,11 +132,13 @@ class ListComponent extends Component {
                             {listOptions.action}
                         </button>
                     </div>
+                    <div className="notification is-danger" style={this.state.isDeleted ? displayBlock : displayNone}>
+                        <button className="delete" onClick={this.handleDeleteNotificationButton.bind(this)}></button>
+                        Deletado com sucesso!
+                    </div>
                 </nav>
             </ div >
         )
     }
-
-
 }
 export default ListComponent;
