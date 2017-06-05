@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
+const displayNone = {
+    display: 'none'
+}
+
+const displayBlock = {
+    display: 'block',
+    fontSize: '12px'
+}
 
 const axiosConfig = () => {
     return axios.create({
@@ -9,6 +17,15 @@ const axiosConfig = () => {
 }
 
 class BrokerFormComponent extends Component {
+
+
+    constructor() {
+        super();
+        this.state = {
+            isSuccess: false,
+            isEdited: false
+        }
+    }
 
     onSubmit(evt) {
 
@@ -35,6 +52,7 @@ class BrokerFormComponent extends Component {
         var url = "https://brokermanagement-dev.herokuapp.com/broker/" + id;
 
         axiosConfig().put(url, data);
+        this.setState({isEdited: true})
     }
 
 
@@ -42,6 +60,7 @@ class BrokerFormComponent extends Component {
         var url = "https://brokermanagement-dev.herokuapp.com/broker";
 
         axiosConfig().post(url, data);
+        this.setState({isSuccess: true})
     }
 
     createFormData(evt) {
@@ -56,6 +75,13 @@ class BrokerFormComponent extends Component {
         ;
         console.log(body);
         return body;
+    }
+
+    handleNotificationExitButton() {
+        this.setState({
+            isSuccess: false,
+            isEdited: false
+        })
     }
 
     render() {
@@ -89,15 +115,22 @@ class BrokerFormComponent extends Component {
 
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className="button is-primary">Submit</button>
+                            <button className="button is-primary"  type="submit">Submit</button>
                         </p>
                         <p className="control">
-                            <button className="button is-link">Cancel</button>
+                            <button className="button is-link" type="reset">Cancel</button>
                         </p>
                     </div>
+                    <div className="notification is-success" style={this.state.isSuccess ? displayBlock : displayNone}>
+                        <button type='reset' className="delete" onClick={this.handleNotificationExitButton.bind(this)}></button>
+                        Criado com sucesso!
+                    </div>
+                    <div className="notification is-info" style={this.state.isEdited ? displayBlock : displayNone}>
+                        <button type='reset' className="delete" onClick={this.handleNotificationExitButton.bind(this)}></button>
+                        Editado com sucesso!
+                    </div>
                 </form>
-            </
-                div >
+            </div >
         )
     }
 
