@@ -7,7 +7,8 @@ import HeaderComponent from './template/header'
 import AppComponent from './App';
 import PanelComponent from './components/PanelComponent';
 import ListComponent from './components/ListComponent';
-import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent'
+import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent';
+import BrokerFormComponent from './components/BrokerFormComponent';
 import './index.css';
 
 import axios from 'axios';
@@ -29,6 +30,7 @@ class App extends Component {
             isShiftPlaceFormVisible: false,
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
+            isBrokerFormVisible: false,
             managerName: 'MTest'
         };
     }
@@ -40,12 +42,33 @@ class App extends Component {
             isShiftPlaceFormVisible: true,
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
+            isBrokerFormVisible: false,
             shiftPlaceData: {
                 name: "Plantão",
                 address: "Endereço",
                 places: "Lugares"
             },
-            edit:false
+            edit: false
+        });
+        refreshReact();
+    }
+
+    onClickRegisterBroker(){
+        this.setState({
+            isHomeVisible: false,
+            isShiftPlaceFormVisible: false,
+            isListComponentVisible: false,
+            shiftPlacePanelVisible: false,
+            isBrokerFormVisible: true,
+            shiftPlaceData: {
+                name: "Plantão",
+                address: "Endereço",
+                places: "Lugares"
+            },
+            brokerData: {
+                name: "Nome do Corretor"
+            },
+            edit: false
         });
         refreshReact();
     }
@@ -55,7 +78,8 @@ class App extends Component {
             isHomeVisible: true,
             isShiftPlaceFormVisible: false,
             isListComponentVisible: false,
-            shiftPlacePanelVisible: false
+            shiftPlacePanelVisible: false,
+            isBrokerFormVisible: false,
         });
         refreshReact();
     }
@@ -67,7 +91,8 @@ class App extends Component {
             isListComponentVisible: true,
             shiftPlacePanelVisible: true,
             listOptions: {title: 'Plantões', action: 'Edit'},
-            listData: []
+            listData: [],
+            isBrokerFormVisible: false,
         });
 
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + this.state.managerName;
@@ -88,7 +113,8 @@ class App extends Component {
                 address: "Endereço",
                 places: "Lugares"
             },
-            edit: true
+            edit: true,
+            isBrokerFormVisible: false,
         });
 
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
@@ -97,14 +123,16 @@ class App extends Component {
             refreshReact();
         });
     }
-    onClickDeleteShiftPlace(){
+
+    onClickDeleteShiftPlace() {
         this.setState({
             isHomeVisible: false,
             isShiftPlaceFormVisible: false,
             isListComponentVisible: true,
             shiftPlacePanelVisible: true,
             listOptions: {title: 'Plantões', action: 'Delete'},
-            listData: []
+            listData: [],
+            isBrokerFormVisible: false,
         });
         var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + this.state.managerName;
         axiosConfig().get(url).then(res => {
@@ -124,10 +152,16 @@ class App extends Component {
                                         onClickRegisterShiftPlace={this.onClickRegisterShiftPlace.bind(this)}
                                         onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}
                                         onClickDeleteShiftPlace={this.onClickDeleteShiftPlace.bind(this)}/> : null}
-                    { this.state.isHomeVisible ? <PanelComponent cardTitle='Corretor'/> : null }
+                    { this.state.isHomeVisible ? <PanelComponent
+                        onClickRegisterShiftPlace={this.onClickRegisterBroker.bind(this)}
+                        cardTitle='Corretor'/> : null }
                     { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?
-                        <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData} edit={this.state.edit} managersName={this.state.managerName}/> : null}
+                        <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData} edit={this.state.edit}
+                                                 managersName={this.state.managerName}/> : null}
+                    { this.state.isBrokerFormVisible ?
+                        <BrokerFormComponent brokerData={this.state.brokerData} edit={this.state.edit}
+                                             managersName={this.state.managerName}/> : null}
                     { this.state.isListComponentVisible ? <ListComponent
                         listOptions={this.state.listOptions}
                         listData={this.state.listData}

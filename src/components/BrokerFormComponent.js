@@ -8,24 +8,16 @@ const axiosConfig = () => {
     });
 }
 
-class ShiftPlaceFormComponent extends Component {
-
-
-    constructor() {
-        super();
-        this.state = {
-            name: ''
-        }
-    }
+class BrokerFormComponent extends Component {
 
     onSubmit(evt) {
 
         let data = this.createFormData(evt);
-        data.managersName = this.props.managersName;
+        data.manager = this.props.managersName;
         if (this.props.edit) {
             this.updateData(data);
             let body = JSON.stringify(data);
-            this.executePut(body, this.props.shiftPlaceData.shiftPlaceId);
+            this.executePut(body, this.props.brokerData.brokerId);
         } else {
             let body = JSON.stringify(data);
             this.executePost(body);
@@ -35,24 +27,20 @@ class ShiftPlaceFormComponent extends Component {
     }
 
     updateData(data) {
-        data.name = data.name !== '' ? data.name : this.props.shiftPlaceData.name;
-        data.address = data.address !== '' ? data.address : this.props.shiftPlaceData.address;
-        data.places = data.places !== '' ? data.places : this.props.shiftPlaceData.places;
-        data.days = data.days[0] !== this.props.shiftPlaceData.days[0] ? data.days : this.props.shiftPlaceData.days;
-
+        data.name = data.name !== '' ? data.name : this.props.brokerData.name;
+        data.preference = data.preference.weekDay !== this.props.brokerData.preference.weekday ? data.preference : this.props.brokerData.preference;
     }
 
     executePut(data, id) {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
+        var url = "https://brokermanagement-dev.herokuapp.com/broker/" + id;
 
         axiosConfig().put(url, data);
     }
 
 
     executePost(data) {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
+        var url = "https://brokermanagement-dev.herokuapp.com/broker";
 
-        //TODO missing managersName.
         axiosConfig().post(url, data);
     }
 
@@ -61,44 +49,31 @@ class ShiftPlaceFormComponent extends Component {
             .filter(el => el.name)
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
-        body.days=[evt.target.elements.days.value];
+        body.preference =
+            {
+                weekDay: evt.target.elements.days.value
+            }
+        ;
+        console.log(body);
         return body;
     }
-
 
     render() {
         return (
             <div>
-                <form classID="shiftPlaceForm" onSubmit={this.onSubmit.bind(this)}>
+                <form classID="brokerForm" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field">
-                        <label className="label">Nome do plantão</label>
+                        <label className="label">Nome do corretor</label>
                         <p className="control">
                             <input className="input" type="text"
-                                   placeholder={ this.props.shiftPlaceData.name } name="name"/>
-
+                                   placeholder={ this.props.brokerData.name } name="name"/>
                         </p>
                     </div>
 
-                    <div className="field">
-                        <label className="label">Endereço do plantão</label>
-                        <p className="control">
-                            <input className="input" type="text" name="address"
-                                   placeholder={this.props.shiftPlaceData.address}/>
-
-                        </p>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Número de lugares no plantão</label>
-                        <p className="control">
-                            <input className="input" type="text" name="places"
-                                   placeholder={this.props.shiftPlaceData.places }/>
-                        </p>
-                    </div>
                     <div className="field">
                         <label className="label">Subject</label>
                         <p className="control">
-                        <span className="select" >
+                        <span className="select">
                           <select name="days">
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
@@ -125,6 +100,9 @@ class ShiftPlaceFormComponent extends Component {
                 div >
         )
     }
+
+
 }
 
-export  default ShiftPlaceFormComponent;
+export default BrokerFormComponent;
+
