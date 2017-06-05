@@ -26,11 +26,11 @@ const minPanelWidth = {
 
 class ListComponent extends Component {
 
-
-    constructor() {
-        super();
+    constructor(props,context) {
+        super(props,context);
         this.state = {
-            enableDelete: true
+            enableDelete: true,
+            clickedDataId: -1
         }
     }
 
@@ -48,10 +48,14 @@ class ListComponent extends Component {
 
     }
 
+    handleActiveState(index) {
+        this.setState({clickedDataId: index})
+    }
+
     render() {
         const {listOptions} = this.props;
-        const listData = this.props.listData ? this.props.listData : this.stata.listData;
-
+        const listData = this.props.listData ? this.props.listData : this.state.listData;
+        let clickedIndex = this.state.clickedDataId;
         if (this.props.listData.length === 0) {
             return (
                 <div className="is-half" style={customizedCss}>
@@ -64,22 +68,26 @@ class ListComponent extends Component {
             <div className="is-half" style={customizedCss}>
                 <nav className="panel" style={minPanelWidth}>
                     <p className="panel-heading" style={textAlign}>
-                        {console.log(this.props.listData)}
                         {listOptions.title}
                     </p>
-                    {listData.map(s =>
-                        <a className="panel-block" onClick={() => {
-                            if (listOptions.action === 'Delete') {
-                                this.onClickLineForDelete(s.shiftPlaceId);
-                            } else {
-                                this.props.onClickPanelLine(s.shiftPlaceId);
-                            }
-                        }}>
+                    {listData.map( (s, index) => {
+                            return (
+                                <a className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
+                                   onClick={() => {
+                                       this.handleActiveState(index);
+                                       if (listOptions.action === 'Delete') {
+                                           this.onClickLineForDelete(s.shiftPlaceId);
+                                       } else {
+                                           this.props.onClickPanelLine(s.shiftPlaceId);
+                                       }
+                                   }}>
                             <span className="panel-icon">
                               <i className="fa fa-book"></i>
                             </span>
-                            {s.name}
-                        </a>
+                                    {s.name}
+                                </a>
+                            )
+                        }
                     )
                     }
                     <div className="panel-block">
@@ -93,5 +101,7 @@ class ListComponent extends Component {
             </ div >
         )
     }
+
+
 }
 export default ListComponent;
