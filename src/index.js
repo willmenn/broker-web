@@ -48,6 +48,7 @@ class App extends Component {
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
             isBrokerFormVisible: false,
+            scheduleVisible: false,
             shiftPlaceData: {
                 name: "Plantão",
                 address: "Endereço",
@@ -65,6 +66,7 @@ class App extends Component {
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
             isBrokerFormVisible: true,
+            scheduleVisible: false,
             shiftPlaceData: {
                 name: "Plantão",
                 address: "Endereço",
@@ -96,6 +98,7 @@ class App extends Component {
             isShiftPlaceFormVisible: false,
             isListComponentVisible: true,
             shiftPlacePanelVisible: true,
+            scheduleVisible: false,
             listOptions: {title: 'Plantões', action: 'Edit'},
             listData: [],
             isBrokerFormVisible: false,
@@ -115,6 +118,7 @@ class App extends Component {
             isListComponentVisible: true,
             brokerPanelVisible: true,
             shiftPlacePanelVisible: false,
+            scheduleVisible: false,
             listOptions: {title: 'Corretores', action: 'Edit', entity: 'broker'},
             listData: [],
             isBrokerFormVisible: false,
@@ -134,6 +138,7 @@ class App extends Component {
                 isShiftPlaceFormVisible: false,
                 isListComponentVisible: false,
                 shiftPlacePanelVisible: false,
+                scheduleVisible: false,
                 brokerData: {
                     name: "Nome do Corretor"
                 },
@@ -158,6 +163,7 @@ class App extends Component {
             isShiftPlaceFormVisible: true,
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
+            scheduleVisible: false,
             shiftPlaceData: {
                 name: "Plantão",
                 address: "Endereço",
@@ -180,6 +186,7 @@ class App extends Component {
             isShiftPlaceFormVisible: false,
             isListComponentVisible: true,
             shiftPlacePanelVisible: true,
+            scheduleVisible: false,
             listOptions: {title: 'Plantões', action: 'Delete'},
             listData: [],
             isBrokerFormVisible: false,
@@ -198,6 +205,7 @@ class App extends Component {
             isShiftPlaceFormVisible: false,
             isListComponentVisible: true,
             shiftPlacePanelVisible: false,
+            scheduleVisible: false,
             listOptions: {title: 'Corretores', action: 'Delete', entity: 'broker'},
             listData: [],
             isBrokerFormVisible: false,
