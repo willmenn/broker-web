@@ -9,6 +9,7 @@ import PanelComponent from './components/PanelComponent';
 import ListComponent from './components/ListComponent';
 import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent';
 import BrokerFormComponent from './components/BrokerFormComponent';
+import ScheduleComponent from './components/ScheduleComponent';
 import './index.css';
 
 import axios from 'axios';
@@ -32,7 +33,10 @@ class App extends Component {
             shiftPlacePanelVisible: false,
             isBrokerFormVisible: false,
             brokerPanelVisible: false,
-            managerName: 'MTest'
+            scheduleVisible: false,
+            managerName: 'MTest',
+            schedulePanelVisible: false,
+            scheduleData: {weekSchedule: {dayScheduleList: [{brokers: []}]}}
         };
     }
 
@@ -187,7 +191,7 @@ class App extends Component {
         });
     }
 
-    onClickDeleteBroker(){
+    onClickDeleteBroker() {
         this.setState({
             isHomeVisible: false,
             isShiftPlaceFormVisible: false,
@@ -207,6 +211,39 @@ class App extends Component {
 
     }
 
+    onClickCreateAndFetchSchedule() {
+        this.setState({
+            isHomeVisible: false,
+            isShiftPlaceFormVisible: false,
+            isListComponentVisible: false,
+            shiftPlacePanelVisible: false,
+            listOptions: {title: 'Corretores', action: 'Delete', entity: 'broker'},
+            listData: [],
+            isBrokerFormVisible: false,
+            brokerPanelVisible: false,
+            schedulePanelVisible: true,
+            scheduleVisible: true,
+            scheduleData: {"fake": "fake"},
+            brokers: []
+
+        });
+        var url = "http://broker-scheduler.herokuapp.com/schedule";
+        let data = {manager: this.state.managerName};
+        axiosConfig().post(url, data).then(res => {
+            console.log(res);
+            axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + res.data.scheduleId + '&manager=' + this.state.managerName).then(resGet => {
+                this.setState({scheduleData: resGet.data});
+                console.log(this.state.scheduleData);
+            })
+        })
+        var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
+        axiosConfig().get(urlBroker).then(res => {
+            this.setState({brokers: res.data});
+        });
+        refreshReact();
+    }
+
+
     render() {
         return (
             <div>
@@ -222,7 +259,9 @@ class App extends Component {
                         onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
                         onClickDeleteShiftPlace={this.onClickDeleteBroker.bind(this)}
                         cardTitle='Corretor'/> : null }
-                    { this.state.isHomeVisible ? <PanelComponent cardTitle='Escala'/> : null}
+                    { this.state.isHomeVisible || this.state.schedulePanelVisible ?
+                        <PanelComponent onClickRegisterShiftPlace={this.onClickCreateAndFetchSchedule.bind(this)}
+                                        cardTitle='Escala'/> : null}
                     { this.state.isShiftPlaceFormVisible ?
                         <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData} edit={this.state.edit}
                                                  managersName={this.state.managerName}/> : null}
@@ -234,6 +273,8 @@ class App extends Component {
                         listData={this.state.listData}
                         onClickPanelLine={this.onClickPanelLine.bind(this)}
                     /> : null}
+                    {this.state.scheduleVisible ? <ScheduleComponent brokers={this.state.brokers}
+                                                                     scheduleWrapper={this.state.scheduleData}/> : null}
                 </AppComponent>
             </div>
         )
