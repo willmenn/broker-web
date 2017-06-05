@@ -85,6 +85,7 @@ class App extends Component {
             isListComponentVisible: false,
             shiftPlacePanelVisible: false,
             isBrokerFormVisible: false,
+            scheduleVisible: false
         });
         refreshReact();
     }
