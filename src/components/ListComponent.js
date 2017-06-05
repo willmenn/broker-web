@@ -29,15 +29,22 @@ class ListComponent extends Component {
     constructor(props,context) {
         super(props,context);
         this.state = {
-            enableDelete: true,
+            enableButton: true,
             clickedDataId: -1
         }
     }
 
     onClickLineForDelete(shiftPlaceId) {
         this.setState({
-            enableDelete: false,
+            enableButton: false,
             deleteId: shiftPlaceId
+        })
+    }
+
+    onClickLineForEdit(shiftPlaceId) {
+        this.setState({
+            enableButton: false,
+            editId: shiftPlaceId
         })
     }
 
@@ -78,7 +85,7 @@ class ListComponent extends Component {
                                        if (listOptions.action === 'Delete') {
                                            this.onClickLineForDelete(s.shiftPlaceId);
                                        } else {
-                                           this.props.onClickPanelLine(s.shiftPlaceId);
+                                           this.onClickLineForEdit(s.shiftPlaceId)
                                        }
                                    }}>
                             <span className="panel-icon">
@@ -93,7 +100,13 @@ class ListComponent extends Component {
                     <div className="panel-block">
                         <button
                             className={listOptions.action === 'Delete' ? "button is-danger is-outlined is-fullwidth" : "button is-primary is-outlined is-fullwidth"}
-                            disabled={this.state.enableDelete} onClick={this.onClickDeleteButton.bind(this)}>
+                            disabled={this.state.enableButton} onClick={() => {
+                            if (listOptions.action === 'Delete') {
+                                this.onClickDeleteButton.bind(this)
+                            }else{
+                                this.props.onClickPanelLine(this.state.editId);
+                            }
+                            }}>
                             {listOptions.action}
                         </button>
                     </div>
