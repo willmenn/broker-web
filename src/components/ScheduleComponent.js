@@ -26,12 +26,12 @@ class ScheduleComponent extends Component {
         if (this.props.brokers.length !== 0 && this.props.scheduleWrapper.length !== 0) {
             return (
                 <div>
-                    <table className="table">
+                    <table className="table is-striped">
                         <thead>
                         <tr>
                             <th><abbr title="SUN">Domingo</abbr></th>
                             <th><abbr title="MON">Segunda-feira</abbr></th>
-                            <th><abbr title="TUE">Teraça-feira</abbr></th>
+                            <th><abbr title="TUE">Terça-feira</abbr></th>
                             <th><abbr title="WED">Quarta-feira</abbr></th>
                             <th><abbr title="THU">Quinta-feira</abbr></th>
                             <th><abbr title="FRI">Sexta-feira</abbr></th>
