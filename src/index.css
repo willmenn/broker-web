@@ -3,3 +3,23 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+
+.toggle-leave {
+  animation-name: fade-out;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1.0;
+    height: 32px;
+  }
+  to {
+    opacity: 0.0;
+    height: 0px;
+    padding: 0px;
+    /*display: none;*/
+  }
+}

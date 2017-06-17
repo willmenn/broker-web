@@ -30,9 +30,9 @@ const displayNone = {
 
 const displayBlock = {
     display: 'block',
-    fontSize: '12px'
+    fontSize: '12px',
+    marginTop: '5px'
 }
-
 
 class ListComponent extends Component {
 
@@ -66,8 +66,15 @@ class ListComponent extends Component {
         } else {
             url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + this.state.deleteId;
         }
-        axiosConfig().delete(url);
-        this.setState({isDeleted: true});
+        axiosConfig().delete(url).then(res => {
+            this.setState({isDeleted: true});
+            var elem = document.getElementById(this.state.deleteId)
+            elem.className += " " + "toggle-leave";
+            elem.addEventListener('webkitAnimationEnd',function(){
+                elem.parentNode.removeChild(elem)
+            });
+        });
+
     }
 
     handleActiveState(index) {
@@ -99,11 +106,12 @@ class ListComponent extends Component {
                         {listOptions.title}
                     </p>
                     {listData.map((s, index) => {
+                            let id = listOptions.entity === 'broker' ? s.brokerId : s.shiftPlaceId;
                             return (
-                                <a className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
+                                <a id={id} className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
                                    onClick={() => {
                                        this.handleActiveState(index);
-                                       let id = listOptions.entity === 'broker' ? s.brokerId : s.shiftPlaceId;
+
                                        if (listOptions.action === 'Delete') {
                                            this.onClickLineForDelete(id);
                                        } else {
@@ -132,7 +140,7 @@ class ListComponent extends Component {
                             {listOptions.action}
                         </button>
                     </div>
-                    <div className="notification is-danger" style={this.state.isDeleted ? displayBlock : displayNone}>
+                    <div className="notification is-danger" style={this.state.isDeleted ? displayBlock: displayNone}>
                         <button className="delete" onClick={this.handleDeleteNotificationButton.bind(this)}></button>
                         Deletado com sucesso!
                     </div>
