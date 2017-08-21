@@ -12,6 +12,7 @@ import BrokerFormComponent from './components/BrokerFormComponent';
 import ScheduleComponent from './components/ScheduleComponent';
 import './index.css';
 
+import PanelStore from './store/PanelStore'
 import axios from 'axios';
 
 
@@ -26,58 +27,14 @@ class App extends Component {
 
     constructor() {
         super();
-        this.state = {
-            isHomeVisible: true,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            isBrokerFormVisible: false,
-            brokerPanelVisible: false,
-            scheduleVisible: false,
-            managerName: 'MTest',
-            schedulePanelVisible: false,
-            scheduleData: {weekSchedule: {dayScheduleList: [{brokers: []}]}}
-        };
+        this.state = {panel: PanelStore.getAll()}
     }
 
-
-    onClickRegisterShiftPlace() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: true,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            isBrokerFormVisible: false,
-            scheduleVisible: false,
-            shiftPlaceData: {
-                name: "Plantão",
-                address: "Endereço",
-                places: "Lugares"
-            },
-            edit: false
-        });
-        refreshReact();
-    }
-
-    onClickRegisterBroker() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            isBrokerFormVisible: true,
-            scheduleVisible: false,
-            shiftPlaceData: {
-                name: "Plantão",
-                address: "Endereço",
-                places: "Lugares"
-            },
-            brokerData: {
-                name: "Nome do Corretor"
-            },
-            edit: false
-        });
-        refreshReact();
+    componentWillMount() {
+        PanelStore.on('change', () => {
+            console.log("change")
+            this.setState({panel :PanelStore.getAll()});
+        })
     }
 
     onClickHomeHeader() {
@@ -220,70 +177,40 @@ class App extends Component {
 
     }
 
-    onClickCreateAndFetchSchedule() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            listOptions: {title: 'Corretores', action: 'Delete', entity: 'broker'},
-            listData: [],
-            isBrokerFormVisible: false,
-            brokerPanelVisible: false,
-            schedulePanelVisible: true,
-            scheduleVisible: true,
-            scheduleData: {"fake": "fake"},
-            brokers: []
-
-        });
-        var url = "http://broker-scheduler.herokuapp.com/schedule";
-        let data = {manager: this.state.managerName};
-        axiosConfig().post(url, data).then(res => {
-            console.log(res);
-            axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + res.data.scheduleId + '&manager=' + this.state.managerName).then(resGet => {
-                this.setState({scheduleData: resGet.data});
-                console.log(this.state.scheduleData);
-            })
-        })
-        var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
-        axiosConfig().get(urlBroker).then(res => {
-            this.setState({brokers: res.data});
-        });
-        refreshReact();
-    }
-
-
     render() {
         return (
             <div>
                 <HeaderComponent onClickHomeHeader={this.onClickHomeHeader.bind(this)}/>
                 <AppComponent>
-                    { this.state.isHomeVisible || this.state.shiftPlacePanelVisible ?
+                    { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
                         <PanelComponent cardTitle='Plantão'
-                                        onClickRegisterShiftPlace={this.onClickRegisterShiftPlace.bind(this)}
+                                        type="PLANTAO"
                                         onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}
                                         onClickDeleteShiftPlace={this.onClickDeleteShiftPlace.bind(this)}/> : null}
-                    { this.state.isHomeVisible || this.state.brokerPanelVisible ? <PanelComponent
-                        onClickRegisterShiftPlace={this.onClickRegisterBroker.bind(this)}
+                    { this.state.panel.isHomeVisible || this.state.panel.brokerPanelVisible ?
+                        <PanelComponent
                         onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
                         onClickDeleteShiftPlace={this.onClickDeleteBroker.bind(this)}
-                        cardTitle='Corretor'/> : null }
-                    { this.state.isHomeVisible || this.state.schedulePanelVisible ?
-                        <PanelComponent onClickRegisterShiftPlace={this.onClickCreateAndFetchSchedule.bind(this)}
+                        cardTitle='Corretor'
+                        type="CORRETOR"
+                    /> : null }
+                    { this.state.panel.isHomeVisible || this.state.panel.schedulePanelVisible ?
+                        <PanelComponent type='ESCALA'
+                                        managerName={this.state.panel.managerName}
                                         cardTitle='Escala'/> : null}
-                    { this.state.isShiftPlaceFormVisible ?
-                        <ShiftPlaceFormComponent shiftPlaceData={this.state.shiftPlaceData} edit={this.state.edit}
-                                                 managersName={this.state.managerName}/> : null}
-                    { this.state.isBrokerFormVisible ?
-                        <BrokerFormComponent brokerData={this.state.brokerData} edit={this.state.edit}
-                                             managersName={this.state.managerName}/> : null}
-                    { this.state.isListComponentVisible ? <ListComponent
-                        listOptions={this.state.listOptions}
-                        listData={this.state.listData}
+                    { this.state.panel.isShiftPlaceFormVisible ?
+                        <ShiftPlaceFormComponent shiftPlaceData={this.state.panel.shiftPlaceData} edit={this.state.panel.edit}
+                                                 managersName={this.state.panel.managerName}/> : null}
+                    { this.state.panel.isBrokerFormVisible ?
+                        <BrokerFormComponent brokerData={this.state.panel.brokerData} edit={this.state.panel.edit}
+                                             managersName={this.state.panel.managerName}/> : null}
+                    { this.state.panel.isListComponentVisible ? <ListComponent
+                        listOptions={this.state.panel.listOptions}
+                        listData={this.state.panel.listData}
                         onClickPanelLine={this.onClickPanelLine.bind(this)}
                     /> : null}
-                    {this.state.scheduleVisible ? <ScheduleComponent brokers={this.state.brokers}
-                                                                     scheduleWrapper={this.state.scheduleData}/> : null}
+                    {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
+                                                                     scheduleWrapper={this.state.panel.scheduleData}/> : null}
                 </AppComponent>
             </div>
         )

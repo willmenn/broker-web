@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
-
+import * as PanelAction from '../action/PanelAction';
 
 class PanelComponent extends Component {
 
+    cadastroButton(event) {
+        PanelAction.createPanelAction({type: event.type, manager: event.manager});
+    }
+
     render() {
         return (
-            <div className="column is-one-third">
+            <div id={this.props.cardTitle + 'Id'} className="column is-one-third transition5">
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
@@ -27,8 +31,14 @@ class PanelComponent extends Component {
                         </div>
                     </div>
                     <footer className="card-footer">
-                        <a className="card-footer-item" onClick={this.props.onClickRegisterShiftPlace}>Cadastrar</a>
-                        <a className="card-footer-item" onClick={() => this.props.onClickEditShiftPlace(this.props.cardTitle)}>Editar</a>
+                        <a className="card-footer-item" onClick={() => {
+                                this.cadastroButton({type: this.props.type, manager: this.props.managerName})
+
+                        }}>Cadastrar</a>
+                        <a className="card-footer-item" onClick={() => {
+                            document.getElementById(this.props.cardTitle + 'Id').className += " " + ""
+                            this.props.onClickEditShiftPlace(this.props.cardTitle)
+                        }}>Editar</a>
                         <a className="card-footer-item" onClick={this.props.onClickDeleteShiftPlace}>Deletar</a>
                     </footer>
                 </div>

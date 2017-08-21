@@ -23,3 +23,7 @@ body {
     /*display: none;*/
   }
 }
+
+.transition5{
+  -webkit-transition:5s;
+}

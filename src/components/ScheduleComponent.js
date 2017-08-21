@@ -17,10 +17,6 @@ class ScheduleComponent extends Component {
         return contain;
     }
 
-    createTable() {
-
-
-    }
 
     render() {
         if (this.props.brokers.length !== 0 && this.props.scheduleWrapper.length !== 0) {
