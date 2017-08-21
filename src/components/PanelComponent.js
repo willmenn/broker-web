@@ -7,6 +7,10 @@ class PanelComponent extends Component {
         PanelAction.createPanelAction({type: event.type, manager: event.manager});
     }
 
+    deleteButton(event) {
+        PanelAction.deletePanelAction({type: event.type, manager: event.manager});
+    }
+
     render() {
         return (
             <div id={this.props.cardTitle + 'Id'} className="column is-one-third transition5">
@@ -32,14 +36,16 @@ class PanelComponent extends Component {
                     </div>
                     <footer className="card-footer">
                         <a className="card-footer-item" onClick={() => {
-                                this.cadastroButton({type: this.props.type, manager: this.props.managerName})
+                            this.cadastroButton({type: this.props.type, manager: this.props.managerName})
 
                         }}>Cadastrar</a>
                         <a className="card-footer-item" onClick={() => {
                             document.getElementById(this.props.cardTitle + 'Id').className += " " + ""
                             this.props.onClickEditShiftPlace(this.props.cardTitle)
                         }}>Editar</a>
-                        <a className="card-footer-item" onClick={this.props.onClickDeleteShiftPlace}>Deletar</a>
+                        <a className="card-footer-item" onClick={() => {
+                            this.deleteButton({type: this.props.type, manager: this.props.managerName})
+                        }}>Deletar</a>
                     </footer>
                 </div>
             </div>

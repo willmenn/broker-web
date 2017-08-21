@@ -24,12 +24,32 @@ const createSchedule = function (data) {
     })
 };
 
-const fecthBrokersList = function(data) {
+const fecthBrokersList = function (data) {
     var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + data.manager;
     axiosConfig().get(urlBroker).then(resGet => {
         dispatcher.dispatch({
             type: 'ESCALA_BROKERS',
             data: resGet.data
+        })
+    });
+}
+
+const fetchBrokerList = function (type, manager) {
+    var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + manager;
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: type,
+            data: res.data
+        })
+    });
+}
+
+const fetchSchiftPlaceList = function (type, manager) {
+    var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + manager;
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: type,
+            data: res.data
         })
     });
 }
@@ -57,6 +77,20 @@ export function createPanelAction(event) {
             console.log(data);
             createSchedule(data);
             fecthBrokersList(data);
+            break;
+        }
+    }
+}
+
+export function deletePanelAction(event) {
+    console.log('delete: ' + event.type)
+    switch (event.type) {
+        case 'CORRETOR' : {
+            fetchBrokerList(event.type + '_DELETE', event.manager);
+            break;
+        }
+        case 'PLANTAO' : {
+            fetchSchiftPlaceList(event.type + '_DELETE', event.manager)
             break;
         }
     }

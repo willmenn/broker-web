@@ -54,6 +54,14 @@ class PanelStore extends EventEmitter {
                 this.escalaBrokers(action.data);
                 break;
             }
+            case 'CORRETOR_DELETE' : {
+                this.brokerDelete(action.data);
+                break;
+            }
+            case 'PLANTAO_DELETE' : {
+                this.shiftPlaeDelete(action.data);
+                break;
+            }
         }
     }
 
@@ -112,16 +120,34 @@ class PanelStore extends EventEmitter {
         this.emit('change');
     }
 
-    escalaData(data){
+    escalaData(data) {
         this.state.scheduleData = data;
         this.emit('change');
     }
 
-    escalaBrokers(data){
-        console.log('brokers: '+ data)
+    escalaBrokers(data) {
         this.state.brokers = data;
         this.emit('change');
     }
+
+    brokerDelete(data) {
+        this.setDefaultEventDetails();
+        this.state.isListComponentVisible = true;
+        this.state.listOptions = {title: 'Corretores', action: 'Delete', entity: 'broker'};
+        this.state.listData = data;
+        this.state.brokerPanelVisible = true;
+        this.emit('change');
+    }
+
+    shiftPlaeDelete(data) {
+        this.setDefaultEventDetails();
+        this.state.isListComponentVisible = true;
+        this.state.shiftPlacePanelVisible = true;
+        this.state.listOptions = {title: 'Plantões', action: 'Delete'};
+        this.state.listData = data;
+        this.emit('change');
+    }
+
     getAll() {
         return this.state;
     }

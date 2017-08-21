@@ -156,27 +156,6 @@ class App extends Component {
         });
     }
 
-    onClickDeleteBroker() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: true,
-            shiftPlacePanelVisible: false,
-            scheduleVisible: false,
-            listOptions: {title: 'Corretores', action: 'Delete', entity: 'broker'},
-            listData: [],
-            isBrokerFormVisible: false,
-            brokerPanelVisible: true
-        });
-        var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
-        axiosConfig().get(url).then(res => {
-            console.log(this.state.listData)
-            this.setState({listData: res.data});
-            refreshReact();
-        });
-
-    }
-
     render() {
         return (
             <div>
@@ -185,13 +164,13 @@ class App extends Component {
                     { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
                         <PanelComponent cardTitle='Plantão'
                                         type="PLANTAO"
-                                        onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}
-                                        onClickDeleteShiftPlace={this.onClickDeleteShiftPlace.bind(this)}/> : null}
+                                        managerName={this.state.panel.managerName}
+                                        onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}/> : null}
                     { this.state.panel.isHomeVisible || this.state.panel.brokerPanelVisible ?
                         <PanelComponent
                         onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
-                        onClickDeleteShiftPlace={this.onClickDeleteBroker.bind(this)}
                         cardTitle='Corretor'
+                        managerName={this.state.panel.managerName}
                         type="CORRETOR"
                     /> : null }
                     { this.state.panel.isHomeVisible || this.state.panel.schedulePanelVisible ?
