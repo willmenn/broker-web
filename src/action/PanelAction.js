@@ -95,3 +95,17 @@ export function deletePanelAction(event) {
         }
     }
 }
+
+export function editPanelAction(event) {
+    console.log('delete: ' + event.type)
+    switch (event.type) {
+        case 'CORRETOR' : {
+            fetchBrokerList(event.type + '_EDIT', event.manager);
+            break;
+        }
+        case 'PLANTAO' : {
+            fetchSchiftPlaceList(event.type + '_EDIT', event.manager)
+            break;
+        }
+    }
+}

@@ -49,45 +49,6 @@ class App extends Component {
         refreshReact();
     }
 
-    onClickEditShiftPlace() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: true,
-            shiftPlacePanelVisible: true,
-            scheduleVisible: false,
-            listOptions: {title: 'Plantões', action: 'Edit'},
-            listData: [],
-            isBrokerFormVisible: false,
-        });
-
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + this.state.managerName;
-        axiosConfig().get(url).then(res => {
-            this.setState({listData: res.data});
-            refreshReact();
-        });
-    }
-
-    onClickEditBroker() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: true,
-            brokerPanelVisible: true,
-            shiftPlacePanelVisible: false,
-            scheduleVisible: false,
-            listOptions: {title: 'Corretores', action: 'Edit', entity: 'broker'},
-            listData: [],
-            isBrokerFormVisible: false,
-        });
-
-        var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + this.state.managerName;
-        axiosConfig().get(url).then(res => {
-            this.setState({listData: res.data});
-            refreshReact();
-        });
-    }
-
     onClickPanelLine(id, entity) {
         if (entity === 'broker') {
             this.setState({
@@ -137,25 +98,6 @@ class App extends Component {
         });
     }
 
-    onClickDeleteShiftPlace() {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: true,
-            shiftPlacePanelVisible: true,
-            scheduleVisible: false,
-            listOptions: {title: 'Plantões', action: 'Delete'},
-            listData: [],
-            isBrokerFormVisible: false,
-        });
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + this.state.managerName;
-        axiosConfig().get(url).then(res => {
-            console.log(this.state.listData)
-            this.setState({listData: res.data});
-            refreshReact();
-        });
-    }
-
     render() {
         return (
             <div>
@@ -164,11 +106,9 @@ class App extends Component {
                     { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
                         <PanelComponent cardTitle='Plantão'
                                         type="PLANTAO"
-                                        managerName={this.state.panel.managerName}
-                                        onClickEditShiftPlace={this.onClickEditShiftPlace.bind(this)}/> : null}
+                                        managerName={this.state.panel.managerName}/> : null}
                     { this.state.panel.isHomeVisible || this.state.panel.brokerPanelVisible ?
                         <PanelComponent
-                        onClickEditShiftPlace={this.onClickEditBroker.bind(this)}
                         cardTitle='Corretor'
                         managerName={this.state.panel.managerName}
                         type="CORRETOR"

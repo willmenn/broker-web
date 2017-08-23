@@ -62,6 +62,15 @@ class PanelStore extends EventEmitter {
                 this.shiftPlaeDelete(action.data);
                 break;
             }
+            case 'CORRETOR_EDIT' : {
+                this.brokerEdit(action.data);
+                break;
+            }
+            case 'PLANTAO_EDIT' : {
+                this.shiftPlaceEdit(action.data);
+                break;
+            }
+
         }
     }
 
@@ -145,6 +154,26 @@ class PanelStore extends EventEmitter {
         this.state.shiftPlacePanelVisible = true;
         this.state.listOptions = {title: 'Plantões', action: 'Delete'};
         this.state.listData = data;
+        this.emit('change');
+    }
+
+    brokerEdit(data) {
+        this.setDefaultEventDetails();
+        this.state.isListComponentVisible = true;
+        this.state.listOptions = {title: 'Corretores', action: 'Edit', entity: 'broker'};
+        this.state.listData = data;
+        this.state.brokerPanelVisible = true;
+        this.state.edit= true;
+        this.emit('change');
+    }
+
+    shiftPlaceEdit(data) {
+        this.setDefaultEventDetails();
+        this.state.isListComponentVisible = true;
+        this.state.shiftPlacePanelVisible = true;
+        this.state.listOptions = {title: 'Plantões', action: 'Edit'};
+        this.state.listData = data;
+        this.state.edit= true;
         this.emit('change');
     }
 
