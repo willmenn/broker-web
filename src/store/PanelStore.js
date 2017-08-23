@@ -14,6 +14,7 @@ class PanelStore extends EventEmitter {
             brokerPanelVisible: false,
             scheduleVisible: false,
             managerName: 'MTest',
+            listData: [],
             schedulePanelVisible: false,
             scheduleData: {
                 weekSchedule: {
@@ -160,7 +161,7 @@ class PanelStore extends EventEmitter {
     brokerEdit(data) {
         this.setDefaultEventDetails();
         this.state.isListComponentVisible = true;
-        this.state.listOptions = {title: 'Corretores', action: 'Edit', entity: 'broker'};
+        this.state.listOptions = {title: 'Corretores', action: 'Edit', entity: 'CORRETOR_EDIT'};
         this.state.listData = data;
         this.state.brokerPanelVisible = true;
         this.state.edit= true;
@@ -171,7 +172,7 @@ class PanelStore extends EventEmitter {
         this.setDefaultEventDetails();
         this.state.isListComponentVisible = true;
         this.state.shiftPlacePanelVisible = true;
-        this.state.listOptions = {title: 'Plantões', action: 'Edit'};
+        this.state.listOptions = {title: 'Plantões', action: 'Edit', entity: 'PLANTAO_EDIT'};
         this.state.listData = data;
         this.state.edit= true;
         this.emit('change');

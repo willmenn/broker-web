@@ -13,6 +13,7 @@ import ScheduleComponent from './components/ScheduleComponent';
 import './index.css';
 
 import PanelStore from './store/PanelStore'
+import ListStore from './store/ListStore'
 import axios from 'axios';
 
 
@@ -34,6 +35,11 @@ class App extends Component {
         PanelStore.on('change', () => {
             console.log("change")
             this.setState({panel :PanelStore.getAll()});
+        })
+
+        ListStore.on('change', () => {
+            console.log("List change")
+            this.setState({panel :ListStore.getAll()});
         })
     }
 

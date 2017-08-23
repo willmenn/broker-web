@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import * as ListAction from '../action/ListAction';
 
 import axios from 'axios';
 
@@ -59,6 +59,10 @@ class ListComponent extends Component {
         })
     }
 
+    onClickEdit(entity,id) {
+        ListAction.editEntity({ entity: entity,id: id});
+    }
+
     onClickDeleteButton(entity) {
         var url = '';
         if (entity === 'broker') {
@@ -106,7 +110,7 @@ class ListComponent extends Component {
                         {listOptions.title}
                     </p>
                     {listData.map((s, index) => {
-                            let id = listOptions.entity === 'broker' ? s.brokerId : s.shiftPlaceId;
+                            let id = listOptions.entity === 'CORRETOR_EDIT' ? s.brokerId : s.shiftPlaceId;
                             return (
                                 <a id={id} className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
                                    onClick={() => {
@@ -134,7 +138,7 @@ class ListComponent extends Component {
                             if (listOptions.action === 'Delete') {
                                 this.onClickDeleteButton(listOptions.entity);
                             } else {
-                                this.props.onClickPanelLine(this.state.editId, listOptions.entity);
+                                this.onClickEdit(listOptions.entity,this.state.editId);
                             }
                         }}>
                             {listOptions.action}
