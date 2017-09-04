@@ -13,6 +13,8 @@ class PanelStore extends EventEmitter {
             isBrokerFormVisible: false,
             brokerPanelVisible: false,
             scheduleVisible: false,
+            shiftPlaceCount: 0,
+            brokerCount: 0,
             managerName: '',
             listData: [],
             schedulePanelVisible: false,
@@ -71,7 +73,14 @@ class PanelStore extends EventEmitter {
                 this.shiftPlaceEdit(action.data);
                 break;
             }
-
+            case 'CORRETOR_COUNT' : {
+                this.brokerCount(action.data);
+                break;
+            }
+            case 'PLANTAO_COUNT' : {
+                this.shiftPlaceCount(action.data);
+                break;
+            }
         }
     }
 
@@ -176,6 +185,22 @@ class PanelStore extends EventEmitter {
         this.state.listData = data;
         this.state.edit = true;
         this.emit('change');
+    }
+
+    shiftPlaceCount(data) {
+        this.state.shiftPlaceCount = data;
+        this.emit('componentChange');
+    }
+
+    brokerCount(data){
+        this.state.brokerCount=data;
+        this.emit('componentChange');
+    }
+    getCounts() {
+        return {
+            shiftPlaceCount: this.state.shiftPlaceCount,
+            brokerCount: this.state.brokerCount
+        }
     }
 
     getAll() {

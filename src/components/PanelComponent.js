@@ -1,7 +1,34 @@
 import React, {Component} from 'react';
 import * as PanelAction from '../action/PanelAction';
+import PanelStore from '../store/PanelStore'
+
+const cardContentTitle = {
+    fontSize: '4rem',
+    display: 'inline'
+}
+
+const cardContentSubTitle = {
+    display: 'inline',
+    marginLeft: '10px'
+
+}
 
 class PanelComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {panel: PanelStore.getCounts()};
+    }
+
+    componentDidMount() {
+        PanelAction.createPanelCountAction({type: this.props.type, manager: this.props.managerName});
+    }
+
+    componentWillMount() {
+        PanelStore.on('componentChange', () => {
+            console.log("componentChange")
+            this.setState({panel: PanelStore.getCounts()});
+        })
+    }
 
     cadastroButton(event) {
         PanelAction.createPanelAction({type: event.type, manager: event.manager});
@@ -31,11 +58,23 @@ class PanelComponent extends Component {
                     </header>
                     <div className="card-content">
                         <div className="content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
-                            mauris.
-                            <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
-                            <br/>
-                            <small>11:09 PM - 1 Jan 2016</small>
+                            {this.props.type === 'PLANTAO' ?
+                                <div>
+                                    <p className="title" style={cardContentTitle}>{this.state.panel.shiftPlaceCount.count}</p>
+                                    <p className="subtitle" style={cardContentSubTitle}>Pantões</p></div>
+                                : this.props.type === 'CORRETOR' ?
+                                    <div><p className="title" style={cardContentTitle}>{this.state.panel.brokerCount.count}</p>
+                                        <p className="subtitle" style={cardContentSubTitle}>Corretores</p></div> :
+                                    <div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
+                                            iaculis
+                                            mauris.
+                                            <a>@bulmaio</a>. <a>#css</a> <a>#responsive</a>
+                                            <br/>
+                                            <small>11:09 PM - 1 Jan 2016</small>
+                                        </p>
+                                    </div>
+                            }
                         </div>
                     </div>
                     <footer className="card-footer">

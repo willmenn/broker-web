@@ -15,7 +15,7 @@ const createSchedule = function (data) {
         console.log(res);
         axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + res.data.scheduleId + '&manager=' + data.manager)
             .then(resGet => {
-                resGet.data.scheduleId=res.data.scheduleId;
+                resGet.data.scheduleId = res.data.scheduleId;
                 dispatcher.dispatch({
                     type: 'ESCALA_DATA',
                     data: resGet.data
@@ -83,29 +83,68 @@ export function createPanelAction(event) {
     }
 }
 
+const fetchBrokerCount = function (type, manager) {
+    var url = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + manager + "/count";
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: type,
+            data: res.data
+        })
+    });
+}
+
+
+const fetchShiftPlaceCount = function (type, manager) {
+    var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + manager + "/count";
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: type,
+            data: res.data
+        })
+    });
+}
+
+
+export function createPanelCountAction(event) {
+    console.log(event.type)
+
+    switch (event.type) {
+        case 'PLANTAO' : {
+            console.log("PANEL COUNT");
+            console.log(event);
+            fetchBrokerCount('PLANTAO_COUNT', event.manager);
+            break;
+        }
+        case 'CORRETOR' : {
+            fetchShiftPlaceCount('CORRETOR_COUNT', event.manager);
+            break;
+        }
+    }
+}
+
 export function deletePanelAction(event) {
-    console.log('delete: ' + event.type)
+    console.log('delete: ' + event.type);
     switch (event.type) {
         case 'CORRETOR' : {
             fetchBrokerList(event.type + '_DELETE', event.manager);
             break;
         }
         case 'PLANTAO' : {
-            fetchSchiftPlaceList(event.type + '_DELETE', event.manager)
+            fetchSchiftPlaceList(event.type + '_DELETE', event.manager);
             break;
         }
     }
 }
 
 export function editPanelAction(event) {
-    console.log('delete: ' + event.type)
+    console.log('delete: ' + event.type);
     switch (event.type) {
         case 'CORRETOR' : {
             fetchBrokerList(event.type + '_EDIT', event.manager);
             break;
         }
         case 'PLANTAO' : {
-            fetchSchiftPlaceList(event.type + '_EDIT', event.manager)
+            fetchSchiftPlaceList(event.type + '_EDIT', event.manager);
             break;
         }
     }
