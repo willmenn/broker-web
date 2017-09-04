@@ -61,55 +61,6 @@ class App extends Component {
         refreshReact();
     }
 
-    onClickPanelLine(id, entity) {
-        if (entity === 'broker') {
-            this.setState({
-                isHomeVisible: false,
-                isShiftPlaceFormVisible: false,
-                isListComponentVisible: false,
-                shiftPlacePanelVisible: false,
-                scheduleVisible: false,
-                brokerData: {
-                    name: "Nome do Corretor"
-                },
-                edit: true,
-                isBrokerFormVisible: true,
-                brokerPanelVisible: false
-            });
-
-            var url = "https://brokermanagement-dev.herokuapp.com/broker/" + id;
-            axiosConfig().get(url).then(res => {
-                this.setState({brokerData: res.data});
-                refreshReact();
-            });
-        } else {
-            this.editShiftPlace(id);
-        }
-    }
-
-    editShiftPlace(id) {
-        this.setState({
-            isHomeVisible: false,
-            isShiftPlaceFormVisible: true,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            scheduleVisible: false,
-            shiftPlaceData: {
-                name: "Plantão",
-                address: "Endereço",
-                places: "Lugares"
-            },
-            edit: true,
-            isBrokerFormVisible: false,
-        });
-
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
-        axiosConfig().get(url).then(res => {
-            this.setState({shiftPlaceData: res.data});
-            refreshReact();
-        });
-    }
-
     render() {
         return (
             <div>
@@ -140,7 +91,6 @@ class App extends Component {
                             { this.state.panel.isListComponentVisible ? <ListComponent
                                 listOptions={this.state.panel.listOptions}
                                 listData={this.state.panel.listData}
-                                onClickPanelLine={this.onClickPanelLine.bind(this)}
                             /> : null}
                             {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
                                                                                    scheduleWrapper={this.state.panel.scheduleData}/> : null}
