@@ -62,7 +62,7 @@ class PanelComponent extends Component {
                                 <div>
                                     <p className="title"
                                        style={cardContentTitle}>{this.state.panel.shiftPlaceCount.count}</p>
-                                    <p className="subtitle" style={cardContentSubTitle}>Pantões</p></div>
+                                    <p className="subtitle" style={cardContentSubTitle}>Plantões</p></div>
                                 : this.props.type === 'CORRETOR' ?
                                     <div><p className="title"
                                             style={cardContentTitle}>{this.state.panel.brokerCount.count}</p>
