@@ -93,7 +93,8 @@ class App extends Component {
                                 listData={this.state.panel.listData}
                             /> : null}
                             {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
-                                                                                   scheduleWrapper={this.state.panel.scheduleData}/> : null}
+                                                                                   scheduleWrapper={this.state.panel.scheduleData}
+                                                                                   managersName={this.state.panel.managerName}/> : null}
                 </AppComponent>
                 }
             </div>

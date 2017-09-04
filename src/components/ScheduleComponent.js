@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import ScheduleSaveButtonComponent from '../components/ScheduleSaveButtonComponent';
 
 const customizedCss = {
     margin: 'auto'
@@ -53,10 +53,9 @@ class ScheduleComponent extends Component {
                             </tr>)
                         })
                         }
-
-
                         </tbody>
                     </table>
+                    <ScheduleSaveButtonComponent manager={this.props.managersName}/>
                 </div>
             )
         } else {
