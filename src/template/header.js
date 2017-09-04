@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
+import * as HeaderAction from '../action/HeaderAction'
 
 class HeaderComponent extends Component {
+
+    home() {
+        HeaderAction.homeAction();
+    }
 
     render() {
         return (<div>
@@ -11,7 +16,7 @@ class HeaderComponent extends Component {
                 <span></span>
               </span>
                     <div className="nav-right nav-menu">
-                        <a className="nav-item" onClick={this.props.onClickHomeHeader}>
+                        <a className="nav-item" onClick={this.home.bind(this)}>
                             Home
                         </a>
                         <a className="nav-item">

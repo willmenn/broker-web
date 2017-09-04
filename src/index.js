@@ -16,6 +16,7 @@ import './index.css';
 import PanelStore from './store/PanelStore'
 import ListStore from './store/ListStore'
 import LoginStore from './store/LoginStore'
+import HeaderStore  from './store/HeaderStore'
 import axios from 'axios';
 
 
@@ -38,7 +39,6 @@ class App extends Component {
             console.log("change")
             this.setState({panel: PanelStore.getAll()});
         })
-
         ListStore.on('change', () => {
             console.log("List change")
             this.setState({panel: ListStore.getAll()});
@@ -47,24 +47,16 @@ class App extends Component {
             console.log("Login change")
             this.setState({panel: LoginStore.getAll()});
         })
-    }
-
-    onClickHomeHeader() {
-        this.setState({
-            isHomeVisible: true,
-            isShiftPlaceFormVisible: false,
-            isListComponentVisible: false,
-            shiftPlacePanelVisible: false,
-            isBrokerFormVisible: false,
-            scheduleVisible: false
-        });
-        refreshReact();
+        HeaderStore.on('change', () => {
+            console.log("Login change")
+            this.setState({panel: HeaderStore.getAll()});
+        })
     }
 
     render() {
         return (
             <div>
-                <HeaderComponent onClickHomeHeader={this.onClickHomeHeader.bind(this)}/>
+                <HeaderComponent/>
                 {this.state.panel.managerName === "" ? <AppComponent><LoginComponent/></AppComponent>:
                     <AppComponent>
                             { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
