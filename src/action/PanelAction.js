@@ -112,11 +112,11 @@ export function createPanelCountAction(event) {
         case 'PLANTAO' : {
             console.log("PANEL COUNT");
             console.log(event);
-            fetchBrokerCount('PLANTAO_COUNT', event.manager);
+            fetchShiftPlaceCount('PLANTAO_COUNT', event.manager);
             break;
         }
         case 'CORRETOR' : {
-            fetchShiftPlaceCount('CORRETOR_COUNT', event.manager);
+            fetchBrokerCount('CORRETOR_COUNT', event.manager);
             break;
         }
     }

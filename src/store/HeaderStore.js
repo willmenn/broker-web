@@ -1,6 +1,7 @@
 import {EventEmitter} from 'events';
 import dispatcher from '../Dispatcher';
-import PanelStore from './PanelStore'
+import PanelStore from './PanelStore';
+import * as PanelAction from '../action/PanelAction';
 
 class HeaderStore extends EventEmitter {
 
@@ -15,10 +16,16 @@ class HeaderStore extends EventEmitter {
         console.log('store: ' + action.type)
         switch (action.type) {
             case 'HOME_ACTION' : {
+                this.fireCountAction();
                 this.emit('change');
                 break;
             }
         }
+    }
+
+    fireCountAction() {
+        PanelAction.createPanelCountAction({type: 'PLANTAO', manager: PanelStore.getAll().managerName});
+        PanelAction.createPanelCountAction({type: 'CORRETOR', manager: PanelStore.getAll().managerName});
     }
 
     getAll() {

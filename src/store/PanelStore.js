@@ -93,6 +93,8 @@ class PanelStore extends EventEmitter {
             isBrokerFormVisible: false,
             brokerPanelVisible: false,
             scheduleVisible: false,
+            shiftPlaceCount: this.state.shiftPlaceCount,
+            brokerCount:  this.state.brokerCount,
             managerName: this.state.managerName ? this.state.managerName : '',
             schedulePanelVisible: false,
             scheduleData: {

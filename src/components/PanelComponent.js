@@ -60,10 +60,12 @@ class PanelComponent extends Component {
                         <div className="content">
                             {this.props.type === 'PLANTAO' ?
                                 <div>
-                                    <p className="title" style={cardContentTitle}>{this.state.panel.shiftPlaceCount.count}</p>
+                                    <p className="title"
+                                       style={cardContentTitle}>{this.state.panel.shiftPlaceCount.count}</p>
                                     <p className="subtitle" style={cardContentSubTitle}>Pantões</p></div>
                                 : this.props.type === 'CORRETOR' ?
-                                    <div><p className="title" style={cardContentTitle}>{this.state.panel.brokerCount.count}</p>
+                                    <div><p className="title"
+                                            style={cardContentTitle}>{this.state.panel.brokerCount.count}</p>
                                         <p className="subtitle" style={cardContentSubTitle}>Corretores</p></div> :
                                     <div>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
