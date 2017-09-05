@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 import HeaderComponent from './template/header'
+import LoginHeaderComponent from './template/loginHeader'
 
 import AppComponent from './App';
 import PanelComponent from './components/PanelComponent';
@@ -47,19 +48,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                <HeaderComponent/>
-                <section className="hero is-primary is-bold">
-                    <div className="hero-body">
-                        <div className="container">
-                            <h1 className="title">
-                                Olá, {this.state.panel.managerName}
-                            </h1>
-                            <h2 className="subtitle">
-                                use o sistema para gerar a escala da semana do seu time.
-                            </h2>
-                        </div>
-                    </div>
-                </section>
+                {this.state.panel.managerName !== "" ?<HeaderComponent managerName={this.state.panel.managerName}/>:
+                    <LoginHeaderComponent/>}
                 {this.state.panel.managerName === "" ? <AppComponent><LoginComponent/></AppComponent>:
                     <AppComponent>
                             { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?

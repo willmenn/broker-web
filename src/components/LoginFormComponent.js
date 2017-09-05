@@ -26,17 +26,17 @@ class LoginFormComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div className="box">
                 <form classID="loginForm" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field">
-                        <label className="label">User:</label>
+                        <label className="label">Usuário:</label>
                         <p className="control">
                             <input className="input" type="text"
                                    placeholder="Nome do Gerente" name="manager"/>
                         </p>
                     </div>
                     <div className="field">
-                        <label className="label">Password:</label>
+                        <label className="label">Senha:</label>
                         <p className="control">
                             <input className="input" type="password"
                                    placeholder="Senha" name="password"/>
