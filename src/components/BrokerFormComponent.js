@@ -86,8 +86,8 @@ class BrokerFormComponent extends Component {
 
     render() {
         return (
-            <div>
-                <form classID="brokerForm" onSubmit={this.onSubmit.bind(this)}>
+            <div className="column is-narrow-desktop is-offset-one-quarter">
+                <form classID="brokerForm" className="box" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field">
                         <label className="label">Nome do corretor</label>
                         <p className="control">

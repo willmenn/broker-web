@@ -12,7 +12,7 @@ class AppBodyComponent extends Component {
     render() {
         return (
             <div>
-                <div className="columns" style={customizedCss}>
+                <div className="columns is-desktop" style={customizedCss}>
                     {this.props.children}
                 </div>
             </div >
