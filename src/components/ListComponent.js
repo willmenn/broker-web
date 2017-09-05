@@ -110,7 +110,7 @@ class ListComponent extends Component {
                         {listOptions.title}
                     </p>
                     {listData.map((s, index) => {
-                            let id = listOptions.entity === 'CORRETOR_EDIT' ? s.brokerId : s.shiftPlaceId;
+                            let id = listOptions.entity === 'CORRETOR_EDIT' || listOptions.entity === 'broker'  ? s.brokerId : s.shiftPlaceId;
                             return (
                                 <a id={id} className={clickedIndex === index ? 'panel-block is-active' : 'panel-block'}
                                    onClick={() => {
