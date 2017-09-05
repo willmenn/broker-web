@@ -17,15 +17,6 @@ import PanelStore from './store/PanelStore'
 import ListStore from './store/ListStore'
 import LoginStore from './store/LoginStore'
 import HeaderStore  from './store/HeaderStore'
-import axios from 'axios';
-
-
-const axiosConfig = () => {
-    return axios.create({
-        headers: {'Content-Type': "application/json; charset=utf-8"}
-    });
-}
-
 
 class App extends Component {
 
@@ -57,6 +48,18 @@ class App extends Component {
         return (
             <div>
                 <HeaderComponent/>
+                <section className="hero is-primary is-bold">
+                    <div className="hero-body">
+                        <div className="container">
+                            <h1 className="title">
+                                Olá, {this.state.panel.managerName}
+                            </h1>
+                            <h2 className="subtitle">
+                                use o sistema para gerar a escala da semana do seu time.
+                            </h2>
+                        </div>
+                    </div>
+                </section>
                 {this.state.panel.managerName === "" ? <AppComponent><LoginComponent/></AppComponent>:
                     <AppComponent>
                             { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
