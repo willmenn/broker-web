@@ -9,7 +9,7 @@ class HeaderComponent extends Component {
 
     render() {
         return (
-            <section className="hero is-primary is-medium">
+            <section className="hero is-primary">
                 <div className="hero-head">
                     <header className="nav">
                         <div className="container">

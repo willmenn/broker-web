@@ -96,6 +96,7 @@ class PanelStore extends EventEmitter {
             shiftPlaceCount: this.state.shiftPlaceCount,
             brokerCount:  this.state.brokerCount,
             managerName: this.state.managerName ? this.state.managerName : '',
+            scheduleId: this.state.scheduleId ? this.state.scheduleId : '',
             schedulePanelVisible: false,
             scheduleData: {
                 weekSchedule: {
@@ -143,6 +144,7 @@ class PanelStore extends EventEmitter {
 
     escalaData(data) {
         this.state.scheduleData = data;
+        this.state.scheduleId = data.scheduleId;
         this.emit('change');
     }
 
@@ -198,10 +200,11 @@ class PanelStore extends EventEmitter {
         this.state.brokerCount=data;
         this.emit('componentChange');
     }
-    getCounts() {
+    getPanelData() {
         return {
             shiftPlaceCount: this.state.shiftPlaceCount,
-            brokerCount: this.state.brokerCount
+            brokerCount: this.state.brokerCount,
+            scheduleId: this.state.scheduleId
         }
     }
 

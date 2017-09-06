@@ -7,7 +7,8 @@ class LoginStore extends EventEmitter {
     constructor() {
         super();
         this.state = {
-            managerName: ""
+            managerName: "",
+            scheduleId: ''
         }
     }
 
@@ -17,6 +18,7 @@ class LoginStore extends EventEmitter {
             case 'LOGIN_MANAGER' : {
                 console.log(action.data)
                 this.state.managerName = action.data.manager;
+                this.state.scheduleId = action.data.scheduleId;
                 this.emit('change');
                 break;
             }
@@ -26,6 +28,7 @@ class LoginStore extends EventEmitter {
     getAll() {
         let stateDefault =PanelStore.getAll();
         stateDefault.managerName = this.state.managerName;
+        stateDefault.scheduleId= this.state.scheduleId ? this.state.scheduleId : '';
         return stateDefault;
     }
 }
