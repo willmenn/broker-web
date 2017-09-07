@@ -14,7 +14,7 @@ class HeaderComponent extends Component {
                     <header className="nav">
                         <div className="container">
                             <div className="nav-left">
-                                <a className="nav-item">
+                                <a className="nav-item" style={{paddingLeft: 0}}>
                                     <p className="subtitle is-3 is-bold">Broker Scheduler</p>
                                 </a>
                             </div>
