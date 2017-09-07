@@ -97,7 +97,7 @@ class BrokerFormComponent extends Component {
                     </div>
 
                     <div className="field">
-                        <label className="label">Subject</label>
+                        <label className="label">Preferência de dia:</label>
                         <p className="control">
                         <span className="select">
                           <select name="days">
@@ -115,10 +115,10 @@ class BrokerFormComponent extends Component {
 
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className="button is-primary"  type="submit">Submit</button>
+                            <button className="button is-primary"  type="submit">Salvar</button>
                         </p>
                         <p className="control">
-                            <button className="button is-link" type="reset">Cancel</button>
+                            <button className="button is-link" type="reset">Resetar</button>
                         </p>
                     </div>
                     <div className="notification is-success" style={this.state.isSuccess ? displayBlock : displayNone}>

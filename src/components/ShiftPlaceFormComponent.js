@@ -96,7 +96,7 @@ class ShiftPlaceFormComponent extends Component {
                         </p>
                     </div>
                     <div className="field">
-                        <label className="label">Subject</label>
+                        <label className="label">Dia para trabalhar no plantão:</label>
                         <p className="control">
                         <span className="select" >
                           <select name="days">
@@ -114,10 +114,10 @@ class ShiftPlaceFormComponent extends Component {
 
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className="button is-primary">Submit</button>
+                            <button className="button is-primary">Salvar</button>
                         </p>
                         <p className="control">
-                            <button className="button is-link">Cancel</button>
+                            <button className="button is-link">Resetar</button>
                         </p>
                     </div>
                 </form>
