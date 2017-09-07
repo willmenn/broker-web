@@ -53,10 +53,9 @@ class PanelComponent extends Component {
 
         }else{
             return <div>
-                <p> Clique no botão <a>Gerar Escala</a>,
+                <p className="subtitle is-6">Clique no botão <a>Gerar Escala</a>,
                     <br/>
-                    <small> para criar uma escala para
-                        a sua equipe.</small>
+                     para criar uma escala para a sua equipe.
                 </p>
             </div>
         }
@@ -77,8 +76,9 @@ class PanelComponent extends Component {
                       </span>
                         </a>
                     </header>
-                    <div className="card-content">
-                        <div className="content">
+                    <div className="card-content" style={this.props.type === 'ESCALA' &&
+                    !this.state.panel.scheduleId ?{padding: 30 + 'px'}: null }>
+                        <div className="content" >
                             {this.props.type === 'PLANTAO' ?
                                 <div>
                                     <p className="title"

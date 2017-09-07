@@ -48,7 +48,7 @@ class ScheduleSaveButtonComponent extends Component {
                 <form classID="brokerForm" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className="button is-primary" type="submit">Submit</button>
+                            <button className="button is-primary" type="submit">Salvar Escala</button>
                         </p>
                     </div>
                     <div className="notification is-success"
