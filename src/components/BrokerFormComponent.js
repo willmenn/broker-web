@@ -1,43 +1,27 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
-const displayNone = {
-    display: 'none'
-}
-
-const displayBlock = {
-    display: 'block',
-    fontSize: '12px'
-}
-
-const axiosConfig = () => {
-    return axios.create({
-        headers: {'Content-Type': "application/json; charset=utf-8"}
-    });
-}
+import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
+import SaveFormButtonComponent from './SaveFormButtonComponent'
 
 class BrokerFormComponent extends Component {
 
-
-    constructor() {
-        super();
-        this.state = {
-            isSuccess: false,
-            isEdited: false
-        }
+    constructor(props){
+        super(props);
     }
 
     onSubmit(evt) {
-
         let data = this.createFormData(evt);
         data.manager = this.props.managersName;
         if (this.props.edit) {
             this.updateData(data);
             let body = JSON.stringify(data);
-            this.executePut(body, this.props.brokerData.brokerId);
+            SaveFormButtonAction.editFormButtonAction({
+                type: 'CORRETOR',
+                data: body,
+                id: this.props.brokerData.brokerId
+            });
         } else {
             let body = JSON.stringify(data);
-            this.executePost(body);
+            SaveFormButtonAction.saveFormButtonAction({type: 'CORRETOR', data: body})
         }
         evt.preventDefault();
         return false;
@@ -46,21 +30,6 @@ class BrokerFormComponent extends Component {
     updateData(data) {
         data.name = data.name !== '' ? data.name : this.props.brokerData.name;
         data.preference = data.preference.weekDay !== this.props.brokerData.preference.weekday ? data.preference : this.props.brokerData.preference;
-    }
-
-    executePut(data, id) {
-        var url = "https://brokermanagement-dev.herokuapp.com/broker/" + id;
-
-        axiosConfig().put(url, data);
-        this.setState({isEdited: true})
-    }
-
-
-    executePost(data) {
-        var url = "https://brokermanagement-dev.herokuapp.com/broker";
-
-        axiosConfig().post(url, data);
-        this.setState({isSuccess: true})
     }
 
     createFormData(evt) {
@@ -75,13 +44,6 @@ class BrokerFormComponent extends Component {
         ;
         console.log(body);
         return body;
-    }
-
-    handleNotificationExitButton() {
-        this.setState({
-            isSuccess: false,
-            isEdited: false
-        })
     }
 
     render() {
@@ -112,23 +74,7 @@ class BrokerFormComponent extends Component {
                         </span>
                         </p>
                     </div>
-
-                    <div className="field is-grouped">
-                        <p className="control">
-                            <button className="button is-primary"  type="submit">Salvar</button>
-                        </p>
-                        <p className="control">
-                            <button className="button is-link" type="reset">Resetar</button>
-                        </p>
-                    </div>
-                    <div className="notification is-success" style={this.state.isSuccess ? displayBlock : displayNone}>
-                        <button type='reset' className="delete" onClick={this.handleNotificationExitButton.bind(this)}></button>
-                        Criado com sucesso!
-                    </div>
-                    <div className="notification is-info" style={this.state.isEdited ? displayBlock : displayNone}>
-                        <button type='reset' className="delete" onClick={this.handleNotificationExitButton.bind(this)}></button>
-                        Editado com sucesso!
-                    </div>
+                    <SaveFormButtonComponent/>
                 </form>
             </div >
         )

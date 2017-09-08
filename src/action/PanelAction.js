@@ -67,6 +67,9 @@ export function createPanelAction(event) {
         case 'CORRETOR' : {
             dispatcher.dispatch({
                 type: 'CORRETOR_CADASTRO'
+            });
+            dispatcher.dispatch({
+                type: 'BROKER_BUTTON_RESET'
             })
             break;
         }
