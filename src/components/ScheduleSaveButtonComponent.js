@@ -15,7 +15,7 @@ class ScheduleSaveButtonComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            schedule: ScheduleSaveButtonStore.getAll()
+            schedule: ScheduleSaveButtonStore.getDefaultState()
         }
     }
 
