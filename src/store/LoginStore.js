@@ -8,13 +8,19 @@ class LoginStore extends EventEmitter {
         super();
         this.state = {
             managerName: "",
-            scheduleId: ''
+            scheduleId: '',
+            loginLoading: false
         }
     }
 
     handleAction(action) {
         console.log('store: ' + action.type)
         switch (action.type) {
+            case 'LOGIN_LOADING' : {
+                this.state.loginLoading = true;
+                this.emit('loginChange');
+                break;
+            }
             case 'LOGIN_MANAGER' : {
                 console.log(action.data)
                 this.state.managerName = action.data.manager;
@@ -26,10 +32,19 @@ class LoginStore extends EventEmitter {
     }
 
     getAll() {
-        let stateDefault =PanelStore.getAll();
+        let stateDefault = PanelStore.getAll();
         stateDefault.managerName = this.state.managerName;
-        stateDefault.scheduleId= this.state.scheduleId ? this.state.scheduleId : '';
+        stateDefault.scheduleId = this.state.scheduleId ? this.state.scheduleId : '';
         return stateDefault;
+    }
+
+    getLoginState() {
+        return this.state.loginLoading;
+    }
+
+    setLoginStateToDefault() {
+        this.state.loginLoading = false;
+        return false;
     }
 }
 

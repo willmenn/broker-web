@@ -10,6 +10,9 @@ const axiosConfig = () => {
 export const loginAction = function (data) {
     var url = "http://brokermanagement-dev.herokuapp.com/manager?manager="
         + data.manager + "&pass=" + data.password;
+    dispatcher.dispatch({
+        type: 'LOGIN_LOADING'
+    })
     axiosConfig().get(url).then(res => {
         dispatcher.dispatch({
             type: 'LOGIN_MANAGER',
