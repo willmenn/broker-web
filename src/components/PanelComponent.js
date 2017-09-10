@@ -53,7 +53,8 @@ class PanelComponent extends Component {
 
         }else{
             return <div>
-                <p className="subtitle is-6">Clique no botão <a>Gerar Escala</a>,
+                <p className="subtitle is-6">Clique no botão <a onClick={() =>
+                    this.cadastroButton({type: this.props.type, manager: this.props.managerName})}>Gerar Escala</a>,
                     <br/>
                      para criar uma escala para a sua equipe.
                 </p>
