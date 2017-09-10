@@ -9,6 +9,10 @@ class SaveButtonStore extends EventEmitter {
             broker: {
                 isSuccess: false,
                 isEdited: false
+            },
+            shiftplace: {
+                isSuccess: false,
+                isEdited: false
             }
         }
     }
@@ -31,6 +35,16 @@ class SaveButtonStore extends EventEmitter {
                 this.emit('change');
                 break;
             }
+            case 'SHIFTPLACE_BUTTON_SAVE' : {
+                this.state.shiftplace.isSuccess = true;
+                this.emit('change');
+                break;
+            }
+            case 'SHIFTPLACE_BUTTON_EDIT' : {
+                this.state.shiftplace.isEdited = true;
+                this.emit('change');
+                break;
+            }
         }
     }
 
@@ -43,9 +57,22 @@ class SaveButtonStore extends EventEmitter {
         };
     }
 
+    getShiftPlaceAll() {
+        console.log('saveButton getShiftPlaceAll:')
+        console.log(this.state)
+        return {
+            isSuccess: this.state.shiftplace.isSuccess,
+            isEdited: this.state.shiftplace.isEdited
+        };
+    }
+
     setDefaultState() {
         this.state = {
             broker: {
+                isSuccess: false,
+                isEdited: false
+            },
+            shiftplace: {
                 isSuccess: false,
                 isEdited: false
             }

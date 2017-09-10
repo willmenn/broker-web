@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
-
-const axiosConfig = () => {
-    return axios.create({
-        headers: {'Content-Type': "application/json; charset=utf-8"}
-    });
-}
+import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
+import SaveFormButtonComponent from '../components/SaveFormButtonComponent'
+import SaveButtonComponent from "./SaveFormButtonComponent";
 
 class ShiftPlaceFormComponent extends Component {
-
 
     constructor() {
         super();
@@ -25,10 +19,17 @@ class ShiftPlaceFormComponent extends Component {
         if (this.props.edit) {
             this.updateData(data);
             let body = JSON.stringify(data);
-            this.executePut(body, this.props.shiftPlaceData.shiftPlaceId);
+            SaveFormButtonAction.editFormButtonAction({
+                type: 'PLANTAO',
+                data: body,
+                id: this.props.shiftPlaceData.shiftPlaceId
+            });
         } else {
             let body = JSON.stringify(data);
-            this.executePost(body);
+            SaveFormButtonAction.saveFormButtonAction({
+                type: 'PLANTAO',
+                data: body
+            });
         }
         evt.preventDefault();
         return false;
@@ -42,26 +43,12 @@ class ShiftPlaceFormComponent extends Component {
 
     }
 
-    executePut(data, id) {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/" + id;
-
-        axiosConfig().put(url, data);
-    }
-
-
-    executePost(data) {
-        var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
-
-        //TODO missing managersName.
-        axiosConfig().post(url, data);
-    }
-
     createFormData(evt) {
         let body = Array.from(evt.target.elements)
             .filter(el => el.name)
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
-        body.days=[evt.target.elements.days.value];
+        body.days = [evt.target.elements.days.value];
         return body;
     }
 
@@ -98,7 +85,7 @@ class ShiftPlaceFormComponent extends Component {
                     <div className="field">
                         <label className="label">Dia para trabalhar no plantão:</label>
                         <p className="control">
-                        <span className="select" >
+                        <span className="select">
                           <select name="days">
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
@@ -111,18 +98,9 @@ class ShiftPlaceFormComponent extends Component {
                         </span>
                         </p>
                     </div>
-
-                    <div className="field is-grouped">
-                        <p className="control">
-                            <button className="button is-primary">Salvar</button>
-                        </p>
-                        <p className="control">
-                            <button className="button is-link">Resetar</button>
-                        </p>
-                    </div>
+                    <SaveButtonComponent/>
                 </form>
-            </
-                div >
+            </div >
         )
     }
 }
