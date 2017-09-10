@@ -47,7 +47,7 @@ class PanelComponent extends Component {
            return  <div>
                 <p>Você tem uma escala gerada, para visualizar clique <a>aqui</a>.
                     <br/>
-                    <small>{new Date().toString('dddd','MMMM','yyyy')}</small>
+                    <small>{new Date().toString('dddd','MMMM','yyyy').replace('(BRT)', ' ').replace('GMT-0300 ', ' ')}</small>
                 </p>
             </div>
 
