@@ -72,14 +72,14 @@ class LoginFormComponent extends Component {
                     <div className="field">
                         <label className="label">Usuário:</label>
                         <p className="control">
-                            <input className="input" type="text"
+                            <input className="input" type="text" style={{width: 209+ 'px'}}
                                    placeholder="Nome do Gerente" name="manager"/>
                         </p>
                     </div>
                     <div className="field">
                         <label className="label">Senha:</label>
                         <p className="control">
-                            <input className="input" type="password"
+                            <input className="input" type="password" style={{width: 209+ 'px'}}
                                    placeholder="Senha" name="password"/>
                         </p>
                     </div>
