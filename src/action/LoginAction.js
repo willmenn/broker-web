@@ -18,6 +18,10 @@ export const loginAction = function (data) {
             type: 'LOGIN_MANAGER',
             data: res.data
         })
-    });
+    }).catch(function () {
+        dispatcher.dispatch({
+            type: 'LOGIN_ERROR'
+        })
+    });;
 
 };

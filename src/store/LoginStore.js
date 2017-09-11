@@ -9,7 +9,8 @@ class LoginStore extends EventEmitter {
         this.state = {
             managerName: "",
             scheduleId: '',
-            loginLoading: false
+            loginLoading: false,
+            error: false
         }
     }
 
@@ -28,6 +29,12 @@ class LoginStore extends EventEmitter {
                 this.emit('change');
                 break;
             }
+            case 'LOGIN_ERROR' : {
+                console.log('Login Fail.')
+                this.state.error = true;
+                this.emit('errorLoginChange');
+                break;
+            }
         }
     }
 
@@ -42,8 +49,17 @@ class LoginStore extends EventEmitter {
         return this.state.loginLoading;
     }
 
+    getErrorLoginState() {
+        return this.state.error;
+    }
+
     setLoginStateToDefault() {
         this.state.loginLoading = false;
+        return false;
+    }
+
+    setErrorLoginStateToDefault() {
+        this.state.error = false;
         return false;
     }
 }

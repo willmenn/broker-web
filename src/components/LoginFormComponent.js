@@ -2,13 +2,24 @@ import React, {Component} from 'react';
 import * as LoginAction from '../action/LoginAction';
 import LoginStore from '../store/LoginStore'
 
+const displayNone = {
+    display: 'none'
+}
+
+const displayBlock = {
+    display: 'block',
+    fontSize: '12px',
+    marginBottom: 0
+}
+
 class LoginFormComponent extends Component {
 
 
     constructor() {
         super();
         this.state = {
-            loginLoading: false
+            loginLoading: false,
+            error: false
         }
     }
 
@@ -16,6 +27,11 @@ class LoginFormComponent extends Component {
         LoginStore.on('loginChange', () => {
             console.log("loginChange")
             this.setState({loginLoading: LoginStore.getLoginState()});
+        });
+        LoginStore.on('errorLoginChange', () => {
+            console.log("errorLoginChange")
+            this.setState({error: LoginStore.getErrorLoginState(),
+                loginLoading: LoginStore.setLoginStateToDefault()});
         })
     }
 
@@ -43,6 +59,12 @@ class LoginFormComponent extends Component {
         this.setState({loginLoading: LoginStore.setLoginStateToDefault()});
     }
 
+    handleNotificationExitButton() {
+        this.setState({loginLoading: LoginStore.setLoginStateToDefault()});
+        this.setState({error: LoginStore.setErrorLoginStateToDefault()});
+    }
+
+
     render() {
         return (
             <div className="box">
@@ -69,6 +91,12 @@ class LoginFormComponent extends Component {
                         <p className="control">
                             <button className="button is-link" type="reset"  onClick={() => this.resetLoginForm()}>Cancel</button>
                         </p>
+                    </div>
+                    <div className="notification is-danger"
+                         style={this.state.error ? displayBlock : displayNone}>
+                        <button type='reset' className="delete"
+                                onClick={() => this.handleNotificationExitButton()}></button>
+                        Por favor tente novamente.
                     </div>
                 </form>
             </div >
