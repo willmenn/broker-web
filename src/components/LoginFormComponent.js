@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as LoginAction from '../action/LoginAction';
 import LoginStore from '../store/LoginStore'
+import InputBulmaComponent from './InputBulmaComponent'
 
 const displayNone = {
     display: 'none'
@@ -19,7 +20,9 @@ class LoginFormComponent extends Component {
         super();
         this.state = {
             loginLoading: false,
-            error: false
+            error: false,
+            inputUsuarioValid: true,
+            inputSenhaValid: true
         }
     }
 
@@ -64,25 +67,44 @@ class LoginFormComponent extends Component {
         this.setState({error: LoginStore.setErrorLoginStateToDefault()});
     }
 
+    handleUsuarioInputValidation(isValid){
+        this.state.inputUsuarioValid = isValid;
+    }
+
+    handleSenhaInputValidation(isValid){
+        this.state.inputSenhaValid = isValid;
+    }
 
     render() {
         return (
-            <div className="box">
+            <div className="box" style={{backgroundColor: 'whitesmoke'}}>
                 <form classID="loginForm" onSubmit={this.onSubmit.bind(this)}>
-                    <div className="field">
-                        <label className="label">Usuário:</label>
-                        <p className="control">
-                            <input className="input" type="text" style={{width: 209+ 'px'}}
-                                   placeholder="Nome do Gerente" name="manager"/>
-                        </p>
-                    </div>
-                    <div className="field">
-                        <label className="label">Senha:</label>
-                        <p className="control">
-                            <input className="input" type="password" style={{width: 209+ 'px'}}
-                                   placeholder="Senha" name="password"/>
-                        </p>
-                    </div>
+                    <InputBulmaComponent
+                        customStyle={{width: 209+ 'px'}}
+                        placeHolder="Nome do Gerente"
+                        name="manager"
+                        labelName="Usuário:"
+                        type="text"
+                        inputMaxLength="20"
+                        errorMessage="Usuário inválido."
+                        warningMessage="Usuário não pode ser vazio."
+                        inputIsValid={this.handleUsuarioInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
+                    <InputBulmaComponent
+                        customStyle={{width: 209+ 'px'}}
+                        placeHolder="Senha"
+                        name="manager"
+                        labelName="Senha:"
+                        type="password"
+                        inputMaxLength="20"
+                        errorMessage="Senha inválida."
+                        warningMessage="A Senha não pode ser vazio."
+                        inputIsValid={this.handleSenhaInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
 
                     <div className="field is-grouped">
                         <p className="control">
