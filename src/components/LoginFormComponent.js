@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as LoginAction from '../action/LoginAction';
 import LoginStore from '../store/LoginStore'
 import InputBulmaComponent from './InputBulmaComponent'
+import classnames  from 'classnames';
 
 const displayNone = {
     display: 'none'
@@ -55,7 +56,8 @@ class LoginFormComponent extends Component {
     }
 
     submitButtonStateHandler(){
-        return this.state.loginLoading ? "button is-primary is-loading" : "button is-primary";
+        return classnames('button is-primary',
+            {'is-loading' : this.state.loginLoading});
     }
 
     resetLoginForm(){
@@ -84,7 +86,7 @@ class LoginFormComponent extends Component {
                         placeHolder="Nome do Gerente"
                         name="manager"
                         labelName="Usuário:"
-                        type="text"
+                        inputType="text"
                         inputMaxLength="20"
                         errorMessage="Usuário inválido."
                         warningMessage="Usuário não pode ser vazio."
@@ -97,7 +99,7 @@ class LoginFormComponent extends Component {
                         placeHolder="Senha"
                         name="manager"
                         labelName="Senha:"
-                        type="password"
+                        inputType="password"
                         inputMaxLength="20"
                         errorMessage="Senha inválida."
                         warningMessage="A Senha não pode ser vazio."

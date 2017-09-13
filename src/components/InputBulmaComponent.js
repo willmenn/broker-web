@@ -47,7 +47,7 @@ class InputBulmaComponent extends Component {
         } else if (!value.match(this.props.inputPattern)) {
             this.setState({isDanger: true});
             this.props.inputIsValid(false);
-            
+
         } else {
             this.setState({isValid: true});
         }
@@ -68,8 +68,8 @@ class InputBulmaComponent extends Component {
 
     handleInputStyle() {
         var styles = {
-            valid: {'width': '190px', 'padding-right': '0'},
-            normal: {'width': '190px'}
+            valid: {'width': '209px', 'padding-right': '0'},
+            normal: {'width': '209px'}
         }
         if (this.state.isValid) {
             return styles.valid;
