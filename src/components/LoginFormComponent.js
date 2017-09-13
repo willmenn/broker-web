@@ -22,8 +22,8 @@ class LoginFormComponent extends Component {
         this.state = {
             loginLoading: false,
             error: false,
-            inputUsuarioValid: true,
-            inputSenhaValid: true
+            inputUsuarioValid: false,
+            inputSenhaValid: false
         }
     }
 
@@ -34,8 +34,10 @@ class LoginFormComponent extends Component {
         });
         LoginStore.on('errorLoginChange', () => {
             console.log("errorLoginChange")
-            this.setState({error: LoginStore.getErrorLoginState(),
-                loginLoading: LoginStore.setLoginStateToDefault()});
+            this.setState({
+                error: LoginStore.getErrorLoginState(),
+                loginLoading: LoginStore.setLoginStateToDefault()
+            });
         })
     }
 
@@ -55,12 +57,12 @@ class LoginFormComponent extends Component {
         return body;
     }
 
-    submitButtonStateHandler(){
+    submitButtonStateHandler() {
         return classnames('button is-primary',
-            {'is-loading' : this.state.loginLoading});
+            {'is-loading': this.state.loginLoading});
     }
 
-    resetLoginForm(){
+    resetLoginForm() {
         this.setState({loginLoading: LoginStore.setLoginStateToDefault()});
     }
 
@@ -69,12 +71,16 @@ class LoginFormComponent extends Component {
         this.setState({error: LoginStore.setErrorLoginStateToDefault()});
     }
 
-    handleUsuarioInputValidation(isValid){
-        this.state.inputUsuarioValid = isValid;
+    handleUsuarioInputValidation(isValid) {
+        this.setState({inputUsuarioValid: isValid});
     }
 
-    handleSenhaInputValidation(isValid){
-        this.state.inputSenhaValid = isValid;
+    handleSenhaInputValidation(isValid) {
+        this.setState({inputSenhaValid: isValid});
+    }
+
+    loginButtonDisable(){
+        return !this.state.inputSenhaValid || !this.state.inputUsuarioValid;
     }
 
     render() {
@@ -82,7 +88,7 @@ class LoginFormComponent extends Component {
             <div className="box" style={{backgroundColor: 'whitesmoke'}}>
                 <form classID="loginForm" onSubmit={this.onSubmit.bind(this)}>
                     <InputBulmaComponent
-                        customStyle={{width: 209+ 'px'}}
+                        customStyle={{width: 209 + 'px'}}
                         placeHolder="Nome do Gerente"
                         name="manager"
                         labelName="Usuário:"
@@ -95,7 +101,7 @@ class LoginFormComponent extends Component {
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
                     <InputBulmaComponent
-                        customStyle={{width: 209+ 'px'}}
+                        customStyle={{width: 209 + 'px'}}
                         placeHolder="Senha"
                         name="manager"
                         labelName="Senha:"
@@ -110,10 +116,12 @@ class LoginFormComponent extends Component {
 
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className={this.submitButtonStateHandler()} type="submit">Login</button>
+                            <button className={this.submitButtonStateHandler()} type="submit" disabled={this.loginButtonDisable()}>Login</button>
                         </p>
                         <p className="control">
-                            <button className="button is-link" type="reset"  onClick={() => this.resetLoginForm()}>Cancel</button>
+                            <button className="button is-link" type="reset" onClick={() => this.resetLoginForm()}>
+                                Cancel
+                            </button>
                         </p>
                     </div>
                     <div className="notification is-danger"

@@ -50,6 +50,7 @@ class InputBulmaComponent extends Component {
 
         } else {
             this.setState({isValid: true});
+            this.props.inputIsValid(true);
         }
     }
 
