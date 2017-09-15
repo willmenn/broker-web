@@ -43,11 +43,12 @@ class PanelComponent extends Component {
     }
 
      escalaPanelText(scheduleId){
+         let now = new Date().toISOString().split('T');
         if(scheduleId){
            return  <div>
                 <p>Você tem uma escala gerada, para visualizar clique <a>aqui</a>.
                     <br/>
-                    <small>{new Date().toString('dddd','MMMM','yyyy').replace('(BRT)', ' ').replace('GMT-0300 ', ' ')}</small>
+                    <small>{now[0] + ' ' + now[1].split('.')[0]}</small>
                 </p>
             </div>
 
