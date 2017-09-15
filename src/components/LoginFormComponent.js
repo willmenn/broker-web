@@ -103,7 +103,7 @@ class LoginFormComponent extends Component {
                     <InputBulmaComponent
                         customStyle={{width: 209 + 'px'}}
                         placeHolder="Senha"
-                        name="manager"
+                        name="password"
                         labelName="Senha:"
                         inputType="password"
                         inputMaxLength="20"
