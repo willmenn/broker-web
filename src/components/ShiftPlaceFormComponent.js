@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
-import SaveFormButtonComponent from '../components/SaveFormButtonComponent'
 import SaveButtonComponent from "./SaveFormButtonComponent";
+import InputBulmaComponent from './InputBulmaComponent'
 
 class ShiftPlaceFormComponent extends Component {
 
     constructor() {
         super();
         this.state = {
-            name: ''
+            name: '',
+            inputPlantao: false,
+            inputEndereco: false,
+            inputNLugares: false
         }
     }
 
@@ -52,41 +55,77 @@ class ShiftPlaceFormComponent extends Component {
         return body;
     }
 
+    handlePlantaoInputValidation(isValid) {
+        this.setState({inputPlantao: isValid});
+    }
+
+    handleEnderecoInputValidation(isValid) {
+        this.setState({inputEndereco: isValid});
+    }
+
+    handleNLugaresInputValidation(isValid) {
+        this.setState({inputNLugares: isValid});
+    }
+
+    disableSubmitButton() {
+        if (this.state.inputEndereco
+            && this.state.inputNLugares
+            && this.state.inputPlantao) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     render() {
         return (
             <div className="column is-narrow-desktop is-offset-one-quarter">
-                <form classID="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}} onSubmit={this.onSubmit.bind(this)}>
+                <form classID="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}}
+                      onSubmit={this.onSubmit.bind(this)}>
+                    <InputBulmaComponent
+                        customStyle={{width: 209 + 'px'}}
+                        placeHolder={ this.props.shiftPlaceData.name }
+                        name="name"
+                        labelName="Nome do Plantão:"
+                        inputType="text"
+                        inputMaxLength="20"
+                        errorMessage="Plantão inválido."
+                        warningMessage="O campo plantão não pode ser vazio."
+                        inputIsValid={this.handlePlantaoInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
+                    <InputBulmaComponent
+                        customStyle={{width: 209 + 'px'}}
+                        placeHolder={this.props.shiftPlaceData.address}
+                        name="address"
+                        labelName="Endereço:"
+                        inputType="text"
+                        inputMaxLength="20"
+                        errorMessage="Endereço inválido."
+                        warningMessage="O campo endereço não pode ser vazio."
+                        inputIsValid={this.handleEnderecoInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
+                    <InputBulmaComponent
+                        customStyle={{width: 209 + 'px'}}
+                        placeHolder={this.props.shiftPlaceData.places }
+                        name="places"
+                        labelName="Número de lugares:"
+                        inputType="text"
+                        inputMaxLength="20"
+                        errorMessage="Número de lugares inválido."
+                        warningMessage="O campo n de lugares não pode ser vazio."
+                        inputIsValid={this.handleNLugaresInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[0-9]{1,}/}
+                    />
                     <div className="field">
-                        <label className="label">Nome do plantão</label>
-                        <p className="control">
-                            <input className="input" type="text"
-                                   placeholder={ this.props.shiftPlaceData.name } name="name"/>
-
-                        </p>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Endereço do plantão</label>
-                        <p className="control">
-                            <input className="input" type="text" name="address"
-                                   placeholder={this.props.shiftPlaceData.address}/>
-
-                        </p>
-                    </div>
-
-                    <div className="field">
-                        <label className="label">Número de lugares no plantão</label>
-                        <p className="control">
-                            <input className="input" type="text" name="places"
-                                   placeholder={this.props.shiftPlaceData.places }/>
-                        </p>
-                    </div>
-                    <div className="field">
-                        <label className="label">Dia para trabalhar no plantão:</label>
+                        <label className="label">Dia de trabalho:</label>
                         <p className="control">
                         <span className="select">
-                          <select name="days">
+                          <select name="days" style={{width: 209 + 'px'}}>
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
                             <option value="TUE">Terça-feira</option>
@@ -98,7 +137,7 @@ class ShiftPlaceFormComponent extends Component {
                         </span>
                         </p>
                     </div>
-                    <SaveButtonComponent/>
+                    <SaveButtonComponent  handleDisable={this.disableSubmitButton()}/>
                 </form>
             </div >
         )
