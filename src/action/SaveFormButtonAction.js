@@ -19,14 +19,16 @@ const executeBrokerPost = function (action) {
     });
 }
 
-const executeShiftPlacePost = function(data) {
+const executeShiftPlacePost = function(action) {
     var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace";
 
     //TODO missing managersName.
-    axiosConfig().post(url, data);
-    dispatcher.dispatch({
-        type: 'SHIFTPLACE_BUTTON_SAVE'
-    })
+    axiosConfig().post(url, action.data).then(res => {
+        dispatcher.dispatch({
+            type: 'SHIFTPLACE_BUTTON_SAVE'
+        })
+        PanelAction.createPanelCountAction({type: action.type, manager: action.manager})
+    });
 }
 
 
@@ -38,7 +40,7 @@ export const saveFormButtonAction = function (action) {
             break;
         }
         case 'PLANTAO' : {
-            executeShiftPlacePost(action.data);
+            executeShiftPlacePost(action);
             break;
         }
     }

@@ -31,7 +31,8 @@ class ShiftPlaceFormComponent extends Component {
             let body = JSON.stringify(data);
             SaveFormButtonAction.saveFormButtonAction({
                 type: 'PLANTAO',
-                data: body
+                data: body,
+                manager: this.props.managersName
             });
         }
         evt.preventDefault();
