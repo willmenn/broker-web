@@ -13,17 +13,21 @@ const createSchedule = function (data) {
     var url = "http://broker-scheduler.herokuapp.com/schedule";
     axiosConfig().post(url, data).then(res => {
         console.log(res);
-        axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + res.data.scheduleId + '&manager=' + data.manager)
-            .then(resGet => {
-                resGet.data.scheduleId = res.data.scheduleId;
-                dispatcher.dispatch({
-                    type: 'ESCALA_DATA',
-                    data: resGet.data
-                })
-                console.log(resGet.data);
-            })
+        fetchSchedule({scheduleId: res.data.scheduleId, manager: data.manager});
     })
 };
+
+const fetchSchedule = function (data) {
+    axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + data.scheduleId + '&manager=' + data.manager)
+        .then(resGet => {
+            resGet.data.scheduleId = data.scheduleId;
+            dispatcher.dispatch({
+                type: 'ESCALA_DATA',
+                data: resGet.data
+            })
+            console.log(resGet.data);
+        })
+}
 
 const fecthBrokersList = function (data) {
     var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + data.manager;
@@ -80,6 +84,16 @@ export function createPanelAction(event) {
             let data = {manager: event.manager};
             console.log(data);
             createSchedule(data);
+            fecthBrokersList(data);
+            break;
+        }
+        case 'ESCALA_VISUALIZATION' : {
+            dispatcher.dispatch({
+                type: 'ESCALA_CADASTRO'
+            });
+            let data = {manager: event.manager, scheduleId: event.scheduleId};
+            console.log(data);
+            fetchSchedule(data);
             fecthBrokersList(data);
             break;
         }

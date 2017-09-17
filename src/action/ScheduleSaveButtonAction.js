@@ -17,7 +17,8 @@ export const saveSchedule = function (data) {
     axiosConfig().put(url, data).then(res => {
         console.log("ESCALA_SAVE: " + res);
         dispatcher.dispatch({
-            type: 'ESCALA_SAVE'
+            type: 'ESCALA_SAVE',
+            scheduleId: data.scheduleId
         })
     })
 };

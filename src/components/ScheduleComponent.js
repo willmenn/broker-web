@@ -19,7 +19,7 @@ class ScheduleComponent extends Component {
 
 
     render() {
-        if (this.props.brokers.length !== 0 && this.props.scheduleWrapper.length !== 0) {
+        if (this.props.brokers.length !== 0 && this.props.scheduleWrapper) {
             return (
                 <div>
                     <table className="table is-striped is-narrow-desktop">
@@ -43,17 +43,20 @@ class ScheduleComponent extends Component {
                                 map.set(key, obj[key]);
                             });
                             let days = map.get(broker.name);
-
-                            return (<tr>
-                                <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
-                                <td className="has-text-centered">{this.containsDay('SUN', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('MON', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('TUE', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('WED', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('THU', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('FRI', days) ? 'Escalado' : '--'}</td>
-                                <td className="has-text-centered">{this.containsDay('SAT', days) ? 'Escalado' : '--'}</td>
-                            </tr>)
+                            if( days && days.length > 0) {
+                                return (<tr>
+                                    <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
+                                    <td className="has-text-centered">{this.containsDay('SUN', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('MON', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('TUE', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('WED', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('THU', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('FRI', days) ? 'Escalado' : '--'}</td>
+                                    <td className="has-text-centered">{this.containsDay('SAT', days) ? 'Escalado' : '--'}</td>
+                                </tr>)
+                            }else{
+                                return null;
+                            }
                         })
                         }
                         </tbody>

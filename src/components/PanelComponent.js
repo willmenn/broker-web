@@ -46,7 +46,7 @@ class PanelComponent extends Component {
          let now = new Date().toISOString().split('T');
         if(scheduleId){
            return  <div>
-                <p>Você tem uma escala gerada, para visualizar clique <a>aqui</a>.
+                <p>Você tem uma escala gerada, para visualizar clique <a onClick={() => this.visualizeSchedule()}>aqui</a>.
                     <br/>
                     <small>{now[0] + ' ' + now[1].split('.')[0]}</small>
                 </p>
@@ -63,6 +63,10 @@ class PanelComponent extends Component {
         }
 
 }
+
+    visualizeSchedule(){
+         PanelAction.createPanelAction({type: 'ESCALA_VISUALIZATION',manager: this.props.managerName, scheduleId: this.state.panel.scheduleId})
+    }
 
     render() {
         return (

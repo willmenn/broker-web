@@ -81,6 +81,11 @@ class PanelStore extends EventEmitter {
                 this.shiftPlaceCount(action.data);
                 break;
             }
+            case 'ESCALA_SAVE' : {
+                this.state.scheduleId = action.scheduleId;
+                this.emit('change');
+                break;
+            }
         }
     }
 
@@ -94,7 +99,7 @@ class PanelStore extends EventEmitter {
             brokerPanelVisible: false,
             scheduleVisible: false,
             shiftPlaceCount: this.state.shiftPlaceCount,
-            brokerCount:  this.state.brokerCount,
+            brokerCount: this.state.brokerCount,
             managerName: this.state.managerName ? this.state.managerName : '',
             scheduleId: this.state.scheduleId ? this.state.scheduleId : '',
             schedulePanelVisible: false,
@@ -196,10 +201,11 @@ class PanelStore extends EventEmitter {
         this.emit('componentChange');
     }
 
-    brokerCount(data){
-        this.state.brokerCount=data;
+    brokerCount(data) {
+        this.state.brokerCount = data;
         this.emit('componentChange');
     }
+
     getPanelData() {
         return {
             shiftPlaceCount: this.state.shiftPlaceCount,
