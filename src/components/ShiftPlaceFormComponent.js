@@ -56,7 +56,7 @@ class ShiftPlaceFormComponent extends Component {
     render() {
         return (
             <div className="column is-narrow-desktop is-offset-one-quarter">
-                <form classID="shiftPlaceForm" className="box" onSubmit={this.onSubmit.bind(this)}>
+                <form classID="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}} onSubmit={this.onSubmit.bind(this)}>
                     <div className="field">
                         <label className="label">Nome do plantão</label>
                         <p className="control">

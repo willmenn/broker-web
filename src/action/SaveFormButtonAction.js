@@ -1,6 +1,6 @@
 import dispatcher from '../Dispatcher';
 import axios from 'axios';
-
+import * as PanelAction from './PanelAction'
 
 const axiosConfig = () => {
     return axios.create({
@@ -8,13 +8,15 @@ const axiosConfig = () => {
     });
 }
 
-const executeBrokerPost = function (data) {
+const executeBrokerPost = function (action) {
     var url = "https://brokermanagement-dev.herokuapp.com/broker";
 
-    axiosConfig().post(url, data);
-    dispatcher.dispatch({
-        type: 'BROKER_BUTTON_SAVE'
-    })
+    axiosConfig().post(url, action.data).then(res => {
+        dispatcher.dispatch({
+            type: 'BROKER_BUTTON_SAVE'
+        })
+        PanelAction.createPanelCountAction({type: action.type, manager: action.manager})
+    });
 }
 
 const executeShiftPlacePost = function(data) {
@@ -32,7 +34,7 @@ export const saveFormButtonAction = function (action) {
     console.log("saveFormButtonAction")
     switch (action.type) {
         case 'CORRETOR' : {
-            executeBrokerPost(action.data);
+            executeBrokerPost(action);
             break;
         }
         case 'PLANTAO' : {

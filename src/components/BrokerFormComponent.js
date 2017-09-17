@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
 import SaveFormButtonComponent from './SaveFormButtonComponent'
+import InputBulmaComponent from './InputBulmaComponent'
 
 class BrokerFormComponent extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.state = {
+            inputCorretor: false
+        }
     }
 
     onSubmit(evt) {
@@ -21,7 +25,7 @@ class BrokerFormComponent extends Component {
             });
         } else {
             let body = JSON.stringify(data);
-            SaveFormButtonAction.saveFormButtonAction({type: 'CORRETOR', data: body})
+            SaveFormButtonAction.saveFormButtonAction({type: 'CORRETOR', data: body, manager: this.props.managersName})
         }
         evt.preventDefault();
         return false;
@@ -46,22 +50,40 @@ class BrokerFormComponent extends Component {
         return body;
     }
 
+    handleCorretorInputValidation(isValid) {
+        this.setState({inputCorretor: isValid});
+    }
+
+    disableSubmitButton() {
+        if (this.state.inputCorretor) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     render() {
         return (
             <div className="column is-narrow-desktop is-offset-one-quarter">
-                <form classID="brokerForm" className="box" onSubmit={this.onSubmit.bind(this)}>
-                    <div className="field">
-                        <label className="label">Nome do corretor</label>
-                        <p className="control">
-                            <input className="input" type="text"
-                                   placeholder={ this.props.brokerData.name } name="name"/>
-                        </p>
-                    </div>
-
+                <form classID="brokerForm" className="box" style={{backgroundColor: 'whitesmoke'}}
+                      onSubmit={this.onSubmit.bind(this)}>
+                    <InputBulmaComponent
+                        customStyle={{width: 209 + 'px'}}
+                        placeHolder={ this.props.brokerData.name }
+                        name="name"
+                        labelName="Nome do Corretor:"
+                        inputType="text"
+                        inputMaxLength="20"
+                        errorMessage="Nome inválido."
+                        warningMessage="O campo nome não pode ser vazio."
+                        inputIsValid={this.handleCorretorInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
                     <div className="field">
                         <label className="label">Preferência de dia:</label>
                         <p className="control">
-                        <span className="select">
+                        <span className="select" style={{width: 209 + 'px'}}>
                           <select name="days">
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
@@ -74,7 +96,7 @@ class BrokerFormComponent extends Component {
                         </span>
                         </p>
                     </div>
-                    <SaveFormButtonComponent/>
+                    <SaveFormButtonComponent handleDisable={this.disableSubmitButton()}/>
                 </form>
             </div >
         )
