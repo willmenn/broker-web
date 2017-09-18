@@ -83,8 +83,8 @@ class BrokerFormComponent extends Component {
                     <div className="field">
                         <label className="label">Preferência de dia:</label>
                         <p className="control">
-                        <span className="select" style={{width: 209 + 'px'}}>
-                          <select name="days">
+                        <span className="select">
+                          <select name="days" style={{width: 209 + 'px'}}>
                             <option value="SUN">Domingo</option>
                             <option value="MON">Segunda-feira</option>
                             <option value="TUE">Terça-feira</option>
