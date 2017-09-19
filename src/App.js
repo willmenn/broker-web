@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import 'bulma/css/bulma.css'
+import './bulma.css'
 
 const customizedCss = {
     width: '1000px',
     margin: 'auto',
     paddingTop: '50px'
 }
-
 
 class AppBodyComponent extends Component {
     render() {
