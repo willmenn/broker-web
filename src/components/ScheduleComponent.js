@@ -20,6 +20,8 @@ class ScheduleComponent extends Component {
 
     render() {
         if (this.props.brokers.length !== 0 && this.props.scheduleWrapper) {
+            console.log("scheduleComponent");
+            console.log(this.props.scheduleWrapper)
             return (
                 <div>
                     <table className="table is-striped is-narrow-desktop">

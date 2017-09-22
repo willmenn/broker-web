@@ -17,16 +17,7 @@ class PanelStore extends EventEmitter {
             brokerCount: 0,
             managerName: '',
             listData: [],
-            schedulePanelVisible: false,
-            scheduleData: {
-                weekSchedule: {
-                    dayScheduleList: [
-                        {
-                            brokers: []
-                        }
-                    ]
-                }
-            }
+            schedulePanelVisible: false
         };
     }
 
@@ -102,16 +93,7 @@ class PanelStore extends EventEmitter {
             brokerCount: this.state.brokerCount,
             managerName: this.state.managerName ? this.state.managerName : '',
             scheduleId: this.state.scheduleId ? this.state.scheduleId : '',
-            schedulePanelVisible: false,
-            scheduleData: {
-                weekSchedule: {
-                    dayScheduleList: [
-                        {
-                            brokers: []
-                        }
-                    ]
-                }
-            }
+            schedulePanelVisible: false
         };
     }
 
@@ -142,7 +124,7 @@ class PanelStore extends EventEmitter {
         this.setDefaultEventDetails();
         this.state.schedulePanelVisible = true;
         this.state.scheduleVisible = true;
-        this.state.scheduleData = {"fake": "fake"};
+        //this.state.scheduleData = {};
         this.state.brokers = [];
         this.emit('change');
     }
