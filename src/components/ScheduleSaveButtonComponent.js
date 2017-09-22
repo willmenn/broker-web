@@ -48,12 +48,16 @@ class ScheduleSaveButtonComponent extends Component {
                 <form classID="brokerForm" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field is-grouped">
                         <p className="control">
-                            <button className="button is-primary" type="submit">Salvar Escala</button>
+                            <button className="button is-primary tooltip is-tooltip-right is-tooltip-dark"
+                                    data-tooltip="Ao clicar no botão irá salvar uma nova escala."
+                                    type="submit">
+                                Salvar Escala
+                            </button>
                         </p>
                     </div>
                     <div className="notification is-success"
                          style={this.state.schedule.isSuccess ? displayBlock : displayNone}>
-                        <button type='reset' className="delete"
+                        <button type='reset'
                                 onClick={this.handleNotificationExitButton.bind(this)}></button>
                         Salvado com sucesso!
                     </div>
