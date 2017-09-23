@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 import HeaderComponent from './template/header'
+import FooterComponent from './template/Footer'
 import LoginHeaderComponent from './template/loginHeader'
 
 import AppComponent from './App';
@@ -80,8 +81,11 @@ class App extends Component {
                             {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
                                                                                    scheduleWrapper={this.state.panel.scheduleData}
                                                                                    managersName={this.state.panel.managerName}/> : null}
+
                 </AppComponent>
+
                 }
+                {this.state.panel.managerName !== "" ?<FooterComponent/> : null}
             </div>
         )
     }
