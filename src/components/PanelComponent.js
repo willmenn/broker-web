@@ -76,11 +76,6 @@ class PanelComponent extends Component {
                         <p className="card-header-title">
                             {this.props.cardTitle}
                         </p>
-                        <a className="card-header-icon">
-                      <span className="icon">
-                        <i className="fa fa-angle-down"></i>
-                      </span>
-                        </a>
                     </header>
                     <div className="card-content" style={this.props.type === 'ESCALA' &&
                     !this.state.panel.scheduleId ?{padding: 30 + 'px'}: null }>
