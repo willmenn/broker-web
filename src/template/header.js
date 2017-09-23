@@ -24,9 +24,6 @@ class HeaderComponent extends Component {
           <span></span>
         </span>
                             <div className="nav-right nav-menu">
-                                <a className="nav-item" onClick={() => this.home()}>
-                                    Home
-                                </a>
                                 <a className="nav-item">
                                     Sobre
                                 </a>
@@ -43,6 +40,18 @@ class HeaderComponent extends Component {
                             use o sistema para gerar a escala da semana do seu time.
                         </h2>
                     </div>
+                </div>
+                <div className="hero-foot">
+                    <nav className="tabs">
+                        <div className="container">
+                            <ul>
+                                <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                    Home
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
             </section>
         )
