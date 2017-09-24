@@ -8,7 +8,9 @@ class HeaderStore extends EventEmitter {
     constructor() {
         super();
         this.state = {
-            managerName: ""
+            managerName: "",
+            listAllComponentVisible: false,
+            isHomeVisible: false
         }
     }
 
@@ -17,6 +19,14 @@ class HeaderStore extends EventEmitter {
         switch (action.type) {
             case 'HOME_ACTION' : {
                 this.fireCountAction();
+                this.state.isHomeVisible = true;
+                this.state.listAllComponentVisible = false;
+                this.emit('change');
+                break;
+            }
+            case 'SHOW_ALL_BROKERS_ACTION' : {
+                this.state.listAllComponentVisible = true;
+                this.state.isHomeVisible = false;
                 this.emit('change');
                 break;
             }
@@ -31,7 +41,8 @@ class HeaderStore extends EventEmitter {
     getAll() {
         PanelStore.setDefaultEventDetails();
         let stateDefault = PanelStore.getAll();
-        stateDefault.isHomeVisible = true;
+        stateDefault.isHomeVisible = this.state.isHomeVisible;
+        stateDefault.listAllComponentVisible = this.state.listAllComponentVisible;
         return stateDefault;
     }
 }

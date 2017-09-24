@@ -7,6 +7,10 @@ class HeaderComponent extends Component {
         HeaderAction.homeAction();
     }
 
+    showAllBrokers(){
+        HeaderAction.showAllBrokersAction({manager: this.props.managerName});
+    }
+
     render() {
         return (
             <section className="hero is-primary">
@@ -47,6 +51,24 @@ class HeaderComponent extends Component {
                             <ul>
                                 <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
                                     Home
+                                </a></li>
+                                    <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                        Últimas Escalas
+                                    </a></li>
+                                        <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                            Recados
+                                        </a>
+                                </li>
+                            <li><a style={{paddingLeft: 0}} onClick={() => this.showAllBrokers()}>
+                                Corretores
+                            </a>
+                            </li>
+                                <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                    Plantões
+                                </a>
+                                </li>
+                                <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                    Dashboard
                                 </a>
                                 </li>
                             </ul>

@@ -5,7 +5,7 @@ class FooterComponent extends Component {
 
     render() {
         return (
-            <footer className="footer" style={{padding: 3+ 'rem '+ 1.5 +'rem ' +1+'rem', marginTop: 60+'px'}}>
+            <footer className="footer" style={{padding: 3+ 'rem '+ 1.5 +'rem ' +1+'rem', marginTop: 120+'px'}}>
                 <div className="container">
                     <div className="content has-text-centered">
                         <p>

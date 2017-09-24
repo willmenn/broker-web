@@ -17,7 +17,8 @@ class PanelStore extends EventEmitter {
             brokerCount: 0,
             managerName: '',
             listData: [],
-            schedulePanelVisible: false
+            schedulePanelVisible: false,
+            listAllComponentVisible: false
         };
     }
 
@@ -93,7 +94,8 @@ class PanelStore extends EventEmitter {
             brokerCount: this.state.brokerCount,
             managerName: this.state.managerName ? this.state.managerName : '',
             scheduleId: this.state.scheduleId ? this.state.scheduleId : '',
-            schedulePanelVisible: false
+            schedulePanelVisible: false,
+            listAllComponentVisible: false
         };
     }
 

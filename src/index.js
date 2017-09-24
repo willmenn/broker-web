@@ -9,6 +9,7 @@ import LoginHeaderComponent from './template/loginHeader'
 import AppComponent from './App';
 import PanelComponent from './components/PanelComponent';
 import ListComponent from './components/ListComponent';
+import ListAllComponent from './components/ListAllComponent';
 import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent';
 import BrokerFormComponent from './components/BrokerFormComponent';
 import ScheduleComponent from './components/ScheduleComponent';
@@ -29,19 +30,19 @@ class App extends Component {
 
     componentWillMount() {
         PanelStore.on('change', () => {
-            console.log("change")
+            console.log("Index: Panel change")
             this.setState({panel: PanelStore.getAll()});
         })
         ListStore.on('change', () => {
-            console.log("List change")
+            console.log("Index: List change")
             this.setState({panel: ListStore.getAll()});
         })
         LoginStore.on('change', () => {
-            console.log("Login change")
+            console.log("Index: Login change")
             this.setState({panel: LoginStore.getAll()});
         })
         HeaderStore.on('change', () => {
-            console.log("Login change")
+            console.log("Index:  Header change")
             this.setState({panel: HeaderStore.getAll()});
         })
     }
@@ -49,43 +50,43 @@ class App extends Component {
     render() {
         return (
             <div>
-                {this.state.panel.managerName !== "" ?<HeaderComponent managerName={this.state.panel.managerName}/>:
+                {this.state.panel.managerName !== "" ? <HeaderComponent managerName={this.state.panel.managerName}/> :
                     <LoginHeaderComponent/>}
-                {this.state.panel.managerName === "" ? <AppComponent><LoginComponent/></AppComponent>:
+                {this.state.panel.managerName === "" ? <AppComponent><LoginComponent/></AppComponent> :
                     <AppComponent>
-                            { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
-                                <PanelComponent cardTitle='Plantão'
-                                                type="PLANTAO"
-                                                managerName={this.state.panel.managerName}/> : null}
-                            { this.state.panel.isHomeVisible || this.state.panel.brokerPanelVisible ?
-                                <PanelComponent
-                                    cardTitle='Corretor'
-                                    managerName={this.state.panel.managerName}
-                                    type="CORRETOR"
-                                /> : null }
-                            { this.state.panel.isHomeVisible || this.state.panel.schedulePanelVisible ?
-                                <PanelComponent type='ESCALA'
-                                                managerName={this.state.panel.managerName}
-                                                cardTitle='Escala'/> : null}
-                            { this.state.panel.isShiftPlaceFormVisible ?
-                                <ShiftPlaceFormComponent shiftPlaceData={this.state.panel.shiftPlaceData}
-                                                         edit={this.state.panel.edit}
-                                                         managersName={this.state.panel.managerName}/> : null}
-                            { this.state.panel.isBrokerFormVisible ?
-                                <BrokerFormComponent brokerData={this.state.panel.brokerData} edit={this.state.panel.edit}
+                        { this.state.panel.isHomeVisible || this.state.panel.shiftPlacePanelVisible ?
+                            <PanelComponent cardTitle='Plantão'
+                                            type="PLANTAO"
+                                            managerName={this.state.panel.managerName}/> : null}
+                        { this.state.panel.isHomeVisible || this.state.panel.brokerPanelVisible ?
+                            <PanelComponent
+                                cardTitle='Corretor'
+                                managerName={this.state.panel.managerName}
+                                type="CORRETOR"
+                            /> : null }
+                        { this.state.panel.isHomeVisible || this.state.panel.schedulePanelVisible ?
+                            <PanelComponent type='ESCALA'
+                                            managerName={this.state.panel.managerName}
+                                            cardTitle='Escala'/> : null}
+                        { this.state.panel.isShiftPlaceFormVisible ?
+                            <ShiftPlaceFormComponent shiftPlaceData={this.state.panel.shiftPlaceData}
+                                                     edit={this.state.panel.edit}
                                                      managersName={this.state.panel.managerName}/> : null}
-                            { this.state.panel.isListComponentVisible ? <ListComponent
-                                listOptions={this.state.panel.listOptions}
-                                listData={this.state.panel.listData}
-                            /> : null}
-                            {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
-                                                                                   scheduleWrapper={this.state.panel.scheduleData}
-                                                                                   managersName={this.state.panel.managerName}/> : null}
-
-                </AppComponent>
+                        { this.state.panel.isBrokerFormVisible ?
+                            <BrokerFormComponent brokerData={this.state.panel.brokerData} edit={this.state.panel.edit}
+                                                 managersName={this.state.panel.managerName}/> : null}
+                        { this.state.panel.isListComponentVisible ? <ListComponent
+                            listOptions={this.state.panel.listOptions}
+                            listData={this.state.panel.listData}
+                        /> : null}
+                        {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
+                                                                               scheduleWrapper={this.state.panel.scheduleData}
+                                                                               managersName={this.state.panel.managerName}/> : null}
+                        {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
+                    </AppComponent>
 
                 }
-                {this.state.panel.managerName !== "" ?<FooterComponent/> : null}
+                {this.state.panel.managerName !== "" ? <FooterComponent/> : null}
             </div>
         )
     }
