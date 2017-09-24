@@ -9,8 +9,8 @@ class FooterComponent extends Component {
                 <div className="container">
                     <div className="content has-text-centered">
                         <p>
-                            <strong>BrokerScheduler</strong> by <a href="https://github.com/willmenn">William Ahrons</a>. To more details go to our
-                            <a> about</a> page.
+                            <strong>BrokerScheduler</strong> por <a href="https://github.com/willmenn">William Ahrons</a>. Para ver mais detalhes acesse a nossa
+                            página <a> sobre</a>.
                         </p>
                         <p>
                             <a className="icon" href="https://www.linkedin.com/in/williamahrons/">
