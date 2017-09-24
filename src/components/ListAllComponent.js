@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ListAllStore from '../store/ListAllStore'
+import * as BrokerUtils from '../util/Broker-util'
 
 const customizedCss = {
     margin: 'auto'
@@ -30,6 +31,7 @@ class ListAllComponent extends Component {
         )
     }
 
+
     renderTable() {
         return (<div className="box">
             <table className="table table is-striped is-narrow-desktop">
@@ -45,7 +47,7 @@ class ListAllComponent extends Component {
                     return (<tr>
                         <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
                         <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
-                        <td className="has-text-centered">{broker.preference.weekDay}</td>
+                        <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>
                     </tr>)
                 })
                 }
