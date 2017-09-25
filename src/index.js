@@ -84,7 +84,8 @@ class App extends Component {
                                                                                scheduleWrapper={this.state.panel.scheduleData}
                                                                                managersName={this.state.panel.managerName}/> : null}
                         {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
-                        {this.state.panel.listAllComponentVisible ? <StatisticsComponent/> : null}
+                        {this.state.panel.listAllComponentVisible ? <StatisticsComponent
+                            manager={this.state.panel.managerName}/> : null}
                     </AppComponent>
 
                 }

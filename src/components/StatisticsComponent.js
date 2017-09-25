@@ -8,8 +8,8 @@ const customizedCss = {
 
 class StatisticsComponent extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {list: ListAllStore.getDefault()};
     }
 
@@ -30,52 +30,76 @@ class StatisticsComponent extends Component {
     }
 
     renderCard() {
-        if(this.state.list.brokers.length > 0){
+        if (this.state.list.brokers.length > 0) {
             return this.renderBrokerCard();
-        }else{
+        } else {
             return this.renderShiftPlacesCard();
         }
     }
 
-    renderBrokerCard(){
+    renderBrokerCard() {
         let dayWithMoreOccurency = this.getTheMostOccurencyOfTheSameDay();
         return (
             <div className="card">
-                <div className="card-content">
-                    <div className="media">
-                        <div className="media-content">
-                            <p className="title is-4">{dayWithMoreOccurency.day}</p>
+                {this.state.list.brokers.length > 0 ?
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-content">
+                                <p className="title is-4">{dayWithMoreOccurency.day}</p>
+                            </div>
+                        </div>
+                        <div className="content">
+                            É o dia com maior preferência, com
+                            <a> {dayWithMoreOccurency.qty} corretores</a> escolhendo este dia.
+                        </div>
+                    </div> :
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-content">
+                                <p className="title is-4">{this.props.manager}</p>
+                            </div>
+                        </div>
+                        <div className="content">
+                            Você não tem nenhum<a> corretor</a>.
                         </div>
                     </div>
-                    <div className="content">
-                        É o dia com maior preferência, com
-                        <a> {dayWithMoreOccurency.qty} corretores</a> escolhendo este dia.
-                    </div>
-                </div>
+                }
             </div>
         )
     }
 
-    renderShiftPlacesCard(){
+    renderShiftPlacesCard() {
         let sp = this.getShiftPlaceWithLargeNumberOfPlaces();
         return (
             <div className="card">
-                <div className="card-content">
-                    <div className="media">
-                        <div className="media-content">
-                            <p className="title is-4">{sp.name}</p>
+                { this.state.list.shiftplaces.length > 0 ?
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-content">
+                                <p className="title is-4">{sp.name}</p>
+                            </div>
+                        </div>
+                        <div className="content">
+                            É o plantão com o maior número de lugares, que são
+                            <a> {sp.qty} lugares</a>.
+                        </div>
+                    </div> :
+                    <div className="card-content">
+                        <div className="media">
+                            <div className="media-content">
+                                <p className="title is-4">{this.props.manager}</p>
+                            </div>
+                        </div>
+                        <div className="content">
+                            Você não tem nenhum <a> plantão</a>.
                         </div>
                     </div>
-                    <div className="content">
-                        É o plantão com o maior número de lugares, que são
-                        <a> {sp.qty} lugares</a>.
-                    </div>
-                </div>
+                }
             </div>
         )
     }
 
-    getShiftPlaceWithLargeNumberOfPlaces(){
+    getShiftPlaceWithLargeNumberOfPlaces() {
         var biggest = 0;
         var biggestSP = "";
         this.state.list.shiftplaces.forEach(function (sp) {
