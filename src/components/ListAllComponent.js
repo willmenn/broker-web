@@ -37,9 +37,9 @@ class ListAllComponent extends Component {
             <table className="table table is-striped is-narrow-desktop">
                 <thead>
                 <tr>
-                    <th title="Nome">Nome</th>
-                    <th title="Email">Email</th>
-                    <th title="Dia de Preferencia">Dia de preferência</th>
+                    <th className="has-text-centered" title="Nome">Nome</th>
+                    <th className="has-text-centered" title="Email">Email</th>
+                    <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>
                 </tr>
                 </thead>
                 <tbody>
