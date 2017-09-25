@@ -72,8 +72,8 @@ class ListAllComponent extends Component {
     }
 
     renderTable() {
-        return (<div className="box">
-            <table className="table table is-striped is-narrow-desktop">
+        return (<div className="column transition5 ">
+            <table className="table table is-striped is-narrow-desktop box">
                 <thead>
                 {this.state.list.brokers.length > 0 ?
                     this.renderBrokerHeader() : this.renderShiftPlaceHeader()}
@@ -88,7 +88,7 @@ class ListAllComponent extends Component {
 
     render() {
         return (
-            <div style={customizedCss}>
+            <div>
                 {this.state.list.loading ?
                     this.loadingState() :
                     this.renderTable()}
