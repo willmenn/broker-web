@@ -25,12 +25,20 @@ class HeaderStore extends EventEmitter {
                 break;
             }
             case 'SHOW_ALL_BROKERS_ACTION' : {
-                this.state.listAllComponentVisible = true;
-                this.state.isHomeVisible = false;
-                this.emit('change');
+                this.makeListAllVisible();
+                break;
+            }
+            case 'SHOW_ALL_SHIFT_PLACES_ACTION' : {
+                this.makeListAllVisible();
                 break;
             }
         }
+    }
+
+    makeListAllVisible() {
+        this.state.listAllComponentVisible = true;
+        this.state.isHomeVisible = false;
+        this.emit('change');
     }
 
     fireCountAction() {

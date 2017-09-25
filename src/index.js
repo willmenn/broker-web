@@ -10,7 +10,7 @@ import AppComponent from './App';
 import PanelComponent from './components/PanelComponent';
 import ListComponent from './components/ListComponent';
 import ListAllComponent from './components/ListAllComponent';
-import BrokerStatisticsComponent from './components/BrokerStatisticsComponent'
+import StatisticsComponent from './components/StatisticsComponent'
 import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent';
 import BrokerFormComponent from './components/BrokerFormComponent';
 import ScheduleComponent from './components/ScheduleComponent';
@@ -84,7 +84,7 @@ class App extends Component {
                                                                                scheduleWrapper={this.state.panel.scheduleData}
                                                                                managersName={this.state.panel.managerName}/> : null}
                         {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
-                        {this.state.panel.listAllComponentVisible ? <BrokerStatisticsComponent/> : null}
+                        {this.state.panel.listAllComponentVisible ? <StatisticsComponent/> : null}
                     </AppComponent>
 
                 }

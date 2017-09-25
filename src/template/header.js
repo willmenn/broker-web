@@ -11,6 +11,10 @@ class HeaderComponent extends Component {
         HeaderAction.showAllBrokersAction({manager: this.props.managerName});
     }
 
+    showAllShiftPlaces(){
+        HeaderAction.showAllShiftPlacesAction({manager: this.props.managerName});
+    }
+
     render() {
         return (
             <section className="hero is-primary">
@@ -63,7 +67,7 @@ class HeaderComponent extends Component {
                                 Corretores
                             </a>
                             </li>
-                                <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                <li><a style={{paddingLeft: 0}} onClick={() => this.showAllShiftPlaces()}>
                                     Plantões
                                 </a>
                                 </li>

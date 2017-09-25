@@ -6,7 +6,7 @@ const customizedCss = {
     margin: 'auto'
 }
 
-class BrokerStatisticsComponent extends Component {
+class StatisticsComponent extends Component {
 
     constructor() {
         super()
@@ -30,6 +30,14 @@ class BrokerStatisticsComponent extends Component {
     }
 
     renderCard() {
+        if(this.state.list.brokers.length > 0){
+            return this.renderBrokerCard();
+        }else{
+            return this.renderShiftPlacesCard();
+        }
+    }
+
+    renderBrokerCard(){
         let dayWithMoreOccurency = this.getTheMostOccurencyOfTheSameDay();
         return (
             <div className="card">
@@ -46,6 +54,38 @@ class BrokerStatisticsComponent extends Component {
                 </div>
             </div>
         )
+    }
+
+    renderShiftPlacesCard(){
+        let sp = this.getShiftPlaceWithLargeNumberOfPlaces();
+        return (
+            <div className="card">
+                <div className="card-content">
+                    <div className="media">
+                        <div className="media-content">
+                            <p className="title is-4">{sp.name}</p>
+                        </div>
+                    </div>
+                    <div className="content">
+                        É o plantão com o maior número de lugares, que são
+                        <a> {sp.qty} lugares</a>.
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    getShiftPlaceWithLargeNumberOfPlaces(){
+        var biggest = 0;
+        var biggestSP = "";
+        this.state.list.shiftplaces.forEach(function (sp) {
+            if (sp.places >= biggest) {
+                biggest = sp.places;
+                biggestSP = sp.name;
+            }
+        });
+
+        return {name: biggestSP, qty: biggest}
     }
 
     getTheMostOccurencyOfTheSameDay() {
@@ -79,4 +119,4 @@ class BrokerStatisticsComponent extends Component {
     }
 }
 
-export default BrokerStatisticsComponent;
+export default StatisticsComponent;

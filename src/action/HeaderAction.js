@@ -32,3 +32,23 @@ export const showAllBrokersAction = function (event) {
     })
     fetchBrokersList(event.manager)
 }
+
+const fetchSchiftPlaceList = function (manager) {
+    var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + manager;
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: 'SHOW_ALL_SHIFT_PLACES',
+            data: res.data
+        })
+    });
+}
+
+export const showAllShiftPlacesAction = function (event) {
+    dispatcher.dispatch({
+        type: 'SHOW_ALL_SHIFT_PLACES_LOADING'
+    });
+    dispatcher.dispatch({
+        type: 'SHOW_ALL_SHIFT_PLACES_ACTION'
+    })
+    fetchSchiftPlaceList(event.manager)
+}

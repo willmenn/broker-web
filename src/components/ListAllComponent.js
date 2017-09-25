@@ -31,26 +31,56 @@ class ListAllComponent extends Component {
         )
     }
 
+    renderBrokerBody() {
+        return this.state.list.brokers.map((broker) => {
+            return (<tr>
+                <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
+                <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
+                <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>
+            </tr>)
+        })
+    }
+
+    renderBrokerHeader() {
+        return (
+            <tr>
+                <th className="has-text-centered" title="Nome">Nome</th>
+                <th className="has-text-centered" title="Email">Email</th>
+                <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>
+            </tr>
+        )
+    }
+
+    renderShiftPlaceHeader() {
+        return (
+            <tr>
+                <th className="has-text-centered" title="Nome">Nome</th>
+                <th className="has-text-centered" title="Enderco">Endereço</th>
+                <th className="has-text-centered" title="Lugares">Lugares</th>
+            </tr>
+        )
+    }
+
+    renderShiftPlacesBody() {
+        return this.state.list.shiftplaces.map((shiftplace) => {
+            return (<tr>
+                <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
+                <td className="has-text-centered">{shiftplace.address}</td>
+                <td className="has-text-centered">{shiftplace.places}</td>
+            </tr>)
+        })
+    }
 
     renderTable() {
         return (<div className="box">
             <table className="table table is-striped is-narrow-desktop">
                 <thead>
-                <tr>
-                    <th className="has-text-centered" title="Nome">Nome</th>
-                    <th className="has-text-centered" title="Email">Email</th>
-                    <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>
-                </tr>
+                {this.state.list.brokers.length > 0 ?
+                    this.renderBrokerHeader() : this.renderShiftPlaceHeader()}
                 </thead>
                 <tbody>
-                {this.state.list.brokers.map((broker) => {
-                    return (<tr>
-                        <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
-                        <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
-                        <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>
-                    </tr>)
-                })
-                }
+                {this.state.list.brokers.length > 0 ?
+                    this.renderBrokerBody() : this.renderShiftPlacesBody()}
                 </tbody>
             </table>
         </div>)
