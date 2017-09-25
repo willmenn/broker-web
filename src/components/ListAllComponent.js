@@ -3,7 +3,7 @@ import ListAllStore from '../store/ListAllStore'
 import * as BrokerUtils from '../util/Broker-util'
 
 const customizedCss = {
-    margin: 'auto'
+    margin: 'inherit'
 }
 
 class ListAllComponent extends Component {
@@ -88,7 +88,7 @@ class ListAllComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div style={customizedCss}>
                 {this.state.list.loading ?
                     this.loadingState() :
                     this.renderTable()}

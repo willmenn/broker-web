@@ -3,7 +3,7 @@ import ListAllStore from '../store/ListAllStore'
 import * as BrokerUtils from '../util/Broker-util'
 
 const customizedCss = {
-    margin: 'auto'
+    margin: 'inherit'
 }
 
 class StatisticsComponent extends Component {

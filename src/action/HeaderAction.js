@@ -14,6 +14,10 @@ const fetchBrokersList = function (data) {
             type: 'SHOW_ALL_BROKERS',
             data: resGet.data
         })
+    }).catch(function () {
+        dispatcher.dispatch({
+            type: 'SHOW_ALL_BROKERS_LOADING'
+        });
     });
 }
 
@@ -40,6 +44,10 @@ const fetchSchiftPlaceList = function (manager) {
             type: 'SHOW_ALL_SHIFT_PLACES',
             data: res.data
         })
+    }).catch(function () {
+        dispatcher.dispatch({
+            type: 'SHOW_ALL_SHIFT_PLACES_LOADING'
+        });
     });
 }
 
