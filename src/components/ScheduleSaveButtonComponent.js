@@ -57,7 +57,7 @@ class ScheduleSaveButtonComponent extends Component {
                     </div>
                     <div className="notification is-success"
                          style={this.state.schedule.isSuccess ? displayBlock : displayNone}>
-                        <button type='reset'
+                        <button type='reset' className="delete"
                                 onClick={this.handleNotificationExitButton.bind(this)}></button>
                         Salvado com sucesso!
                     </div>
