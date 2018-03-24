@@ -72,10 +72,15 @@ class InputBulmaComponent extends Component {
             valid: {'width': '209px', 'padding-right': '0'},
             normal: {'width': '209px'}
         }
-        if (this.state.isValid) {
+        if (this.state.isValid && this.props.customStyle) {
             return styles.valid;
         }
-        return styles.normal;
+        if(!this.props.customStyle){
+            return {};
+        }else{
+            return styles.normal;
+        }
+
     }
 
     render() {

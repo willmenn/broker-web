@@ -106,7 +106,14 @@ class PanelStore extends EventEmitter {
         this.state.shiftPlaceData = {
             name: "Plantão",
             address: "Endereço",
-            places: "Lugares"
+            places: "Lugares",
+            SUN:{value: 0},
+            MON:{value: 0},
+            TUE:{value: 0},
+            WED:{value: 0},
+            THU:{value: 0},
+            FRI:{value: 0},
+            SAT:{value: 0}
         };
 
         this.emit('change');

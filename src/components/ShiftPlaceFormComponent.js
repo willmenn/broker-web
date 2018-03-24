@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
 import SaveButtonComponent from "./SaveFormButtonComponent";
 import InputBulmaComponent from './InputBulmaComponent'
+import DayInputComponent from './DayInputComponent'
 
 class ShiftPlaceFormComponent extends Component {
 
@@ -52,7 +53,6 @@ class ShiftPlaceFormComponent extends Component {
             .filter(el => el.name)
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
-        body.days = [evt.target.elements.days.value];
         return body;
     }
 
@@ -70,7 +70,6 @@ class ShiftPlaceFormComponent extends Component {
 
     disableSubmitButton() {
         if (this.state.inputEndereco
-            && this.state.inputNLugares
             && this.state.inputPlantao) {
             return false;
         } else {
@@ -84,7 +83,6 @@ class ShiftPlaceFormComponent extends Component {
                 <form classID="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}}
                       onSubmit={this.onSubmit.bind(this)}>
                     <InputBulmaComponent
-                        customStyle={{width: 209 + 'px'}}
                         placeHolder={ this.props.shiftPlaceData.name }
                         name="name"
                         labelName="Nome do Plantão:"
@@ -97,7 +95,6 @@ class ShiftPlaceFormComponent extends Component {
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
                     <InputBulmaComponent
-                        customStyle={{width: 209 + 'px'}}
                         placeHolder={this.props.shiftPlaceData.address}
                         name="address"
                         labelName="Endereço:"
@@ -109,35 +106,13 @@ class ShiftPlaceFormComponent extends Component {
                         isRequired="true"
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
-                    <InputBulmaComponent
-                        customStyle={{width: 209 + 'px'}}
-                        placeHolder={this.props.shiftPlaceData.places }
-                        name="places"
-                        labelName="Número de lugares:"
-                        inputType="text"
-                        inputMaxLength="20"
-                        errorMessage="Número de lugares inválido."
-                        warningMessage="O campo n de lugares não pode ser vazio."
-                        inputIsValid={this.handleNLugaresInputValidation.bind(this)}
-                        isRequired="true"
-                        inputPattern={/[0-9]{1,}/}
-                    />
-                    <div className="field">
-                        <label className="label">Dia de trabalho:</label>
-                        <p className="control">
-                        <span className="select">
-                          <select name="days" style={{width: 209 + 'px'}}>
-                            <option value="SUN">Domingo</option>
-                            <option value="MON">Segunda-feira</option>
-                            <option value="TUE">Terça-feira</option>
-                              <option value="WED">Quarta-feira</option>
-                              <option value="THU">Quinta-feira</option>
-                              <option value="FRI">Sexta-feira</option>
-                              <option value="SAT">Sábado</option>
-                          </select>
-                        </span>
-                        </p>
-                    </div>
+                    <DayInputComponent dayName="Domingo" name="SUN" value={this.props.shiftPlaceData.SUN.value}/>
+                    <DayInputComponent dayName="Segunda" name="MON" value={this.props.shiftPlaceData.MON.value}/>
+                    <DayInputComponent dayName="Terça"   name="TUE" value={this.props.shiftPlaceData.TUE.value}/>
+                    <DayInputComponent dayName="Quarta"  name="WED" value={this.props.shiftPlaceData.WED.value}/>
+                    <DayInputComponent dayName="Quinta"  name="THU" value={this.props.shiftPlaceData.THU.value}/>
+                    <DayInputComponent dayName="Sexta"   name="FRI" value={this.props.shiftPlaceData.FRI.value}/>
+                    <DayInputComponent dayName="Sábado"  name="SAT" value={this.props.shiftPlaceData.SAT.value}/>
                     <SaveButtonComponent  handleDisable={this.disableSubmitButton()}/>
                 </form>
             </div >
