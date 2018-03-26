@@ -106,13 +106,13 @@ class ShiftPlaceFormComponent extends Component {
                         isRequired="true"
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
-                    <DayInputComponent dayName="Domingo" name="SUN" value={this.props.shiftPlaceData.SUN.value}/>
-                    <DayInputComponent dayName="Segunda" name="MON" value={this.props.shiftPlaceData.MON.value}/>
-                    <DayInputComponent dayName="Terça"   name="TUE" value={this.props.shiftPlaceData.TUE.value}/>
-                    <DayInputComponent dayName="Quarta"  name="WED" value={this.props.shiftPlaceData.WED.value}/>
-                    <DayInputComponent dayName="Quinta"  name="THU" value={this.props.shiftPlaceData.THU.value}/>
-                    <DayInputComponent dayName="Sexta"   name="FRI" value={this.props.shiftPlaceData.FRI.value}/>
-                    <DayInputComponent dayName="Sábado"  name="SAT" value={this.props.shiftPlaceData.SAT.value}/>
+                    <DayInputComponent dayName="Domingo" name="SUN" value={this.props.shiftPlaceData.SUN}/>
+                    <DayInputComponent dayName="Segunda" name="MON" value={this.props.shiftPlaceData.MON}/>
+                    <DayInputComponent dayName="Terça"   name="TUE" value={this.props.shiftPlaceData.TUE}/>
+                    <DayInputComponent dayName="Quarta"  name="WED" value={this.props.shiftPlaceData.WED}/>
+                    <DayInputComponent dayName="Quinta"  name="THU" value={this.props.shiftPlaceData.THU}/>
+                    <DayInputComponent dayName="Sexta"   name="FRI" value={this.props.shiftPlaceData.FRI}/>
+                    <DayInputComponent dayName="Sábado"  name="SAT" value={this.props.shiftPlaceData.SAT}/>
                     <SaveButtonComponent  handleDisable={this.disableSubmitButton()}/>
                 </form>
             </div >
