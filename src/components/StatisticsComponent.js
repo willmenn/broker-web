@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ListAllStore from '../store/ListAllStore'
-import * as BrokerUtils from '../util/Broker-util'
+import * as BrokerUtils from '../util/BrokerUtil'
+import * as ShiftPlaceUtils from "../util/ShiftPlaceUtil";
 
 const customizedCss = {
     margin: 'inherit'
@@ -103,8 +104,9 @@ class StatisticsComponent extends Component {
         var biggest = 0;
         var biggestSP = "";
         this.state.list.shiftplaces.forEach(function (sp) {
-            if (sp.places >= biggest) {
-                biggest = sp.places;
+            var places = ShiftPlaceUtils.sumDaysPlaces(sp.days);
+            if (places >= biggest) {
+                biggest = places;
                 biggestSP = sp.name;
             }
         });

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ListAllStore from '../store/ListAllStore'
-import * as BrokerUtils from '../util/Broker-util'
+import * as BrokerUtils from '../util/BrokerUtil'
+import * as ShiftPlaceUtils from '../util/ShiftPlaceUtil'
 
 const customizedCss = {
     margin: 'inherit'
@@ -63,13 +64,16 @@ class ListAllComponent extends Component {
 
     renderShiftPlacesBody() {
         return this.state.list.shiftplaces.map((shiftplace) => {
+            console.log(shiftplace);
             return (<tr>
                 <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
                 <td className="has-text-centered">{shiftplace.address}</td>
-                <td className="has-text-centered">{shiftplace.places}</td>
+                <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
+                </td>
             </tr>)
         })
     }
+
 
     renderTable() {
         return (<div className="column">
