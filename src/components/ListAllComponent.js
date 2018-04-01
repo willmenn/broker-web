@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import ListAllStore from '../store/ListAllStore'
 import * as BrokerUtils from '../util/BrokerUtil'
 import * as ShiftPlaceUtils from '../util/ShiftPlaceUtil'
+import dispatcher from '../Dispatcher';
 
 const customizedCss = {
     margin: 'inherit'
 }
 
 class ListAllComponent extends Component {
-
 
     constructor() {
         super()
@@ -17,11 +17,9 @@ class ListAllComponent extends Component {
 
     componentWillMount() {
         ListAllStore.on('change', () => {
-            console.log("ListAll: ListAll change")
             this.setState({list: ListAllStore.getAll()});
         })
     }
-
 
     loadingState() {
         return (
@@ -62,40 +60,64 @@ class ListAllComponent extends Component {
         )
     }
 
-    renderShiftPlacesBody() {
-        return this.state.list.shiftplaces.map((shiftplace) => {
-            console.log(shiftplace);
-            return (<tr>
-                <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
-                <td className="has-text-centered">{shiftplace.address}</td>
-                <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
-                </td>
-            </tr>)
+    onClickLine(spName){
+        this.setState({isSelected: spName});
+        dispatcher.dispatch({
+            type: 'CHANGE_SCHEDULE_SHIFTPLACE',
+            data: spName
         })
+
+    }
+
+    renderShiftPlacesBody(data) {
+        if (data) {
+            return data.map((shiftplace, index) => {
+                return (
+                    <tr
+                        className={shiftplace.shiftPlaceId === this.state.isSelected || (!this.state.isSelected && index === 0)  ? 'is-selected' : ''}>
+                        <td className="has-text-centered"><a title={shiftplace.name}
+                                                             onClick={() => this.onClickLine(shiftplace.shiftPlaceId)}>{shiftplace.name}</a></td>
+                        <td className="has-text-centered">{shiftplace.address}</td>
+                        <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
+                        </td>
+                    </tr>
+                )
+            })
+        } else {
+            return this.state.list.shiftplaces.map((shiftplace) => {
+                return (<tr>
+                    <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
+                    <td className="has-text-centered">{shiftplace.address}</td>
+                    <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
+                    </td>
+                </tr>)
+            })
+        }
     }
 
 
-    renderTable() {
-        return (<div className="column">
-            <table className="table table is-striped is-narrow-desktop box">
-                <thead>
-                {this.state.list.brokers.length > 0 ?
-                    this.renderBrokerHeader() : this.renderShiftPlaceHeader()}
-                </thead>
-                <tbody>
-                {this.state.list.brokers.length > 0 ?
-                    this.renderBrokerBody() : this.renderShiftPlacesBody()}
-                </tbody>
-            </table>
-        </div>)
+    renderTable(data) {
+        return (
+            <div className="column" style={{float: 'left'}}>
+                <table className="table table is-striped is-narrow-desktop box">
+                    <thead>
+                    {!data && this.state.list.brokers.length > 0 ?
+                        this.renderBrokerHeader() : this.renderShiftPlaceHeader()}
+                    </thead>
+                    <tbody>
+                    {!data && this.state.list.brokers.length > 0 ?
+                        this.renderBrokerBody() : this.renderShiftPlacesBody(data)}
+                    </tbody>
+                </table>
+            </div>)
     }
 
     render() {
         return (
-            <div style={this.state.list.loading ? customizedCss: null}>
+            <div style={this.state.list.loading ? customizedCss : null}>
                 {this.state.list.loading ?
                     this.loadingState() :
-                    this.renderTable()}
+                    this.renderTable(this.props.shiftPlaces)}
             </div>
         )
 

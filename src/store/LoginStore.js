@@ -15,14 +15,16 @@ class LoginStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
+
         switch (action.type) {
             case 'LOGIN_LOADING' : {
+                console.log('store: ' + action.type)
                 this.state.loginLoading = true;
                 this.emit('loginChange');
                 break;
             }
             case 'LOGIN_MANAGER' : {
+                console.log('store: ' + action.type)
                 console.log(action.data)
                 this.state.managerName = action.data.manager;
                 this.state.scheduleId = action.data.scheduleId;
@@ -30,6 +32,7 @@ class LoginStore extends EventEmitter {
                 break;
             }
             case 'LOGIN_ERROR' : {
+                console.log('store: ' + action.type)
                 console.log('Login Fail.')
                 this.state.error = true;
                 this.emit('errorLoginChange');

@@ -15,9 +15,10 @@ class ListAllStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('ListAll s=Store: ' + action.type)
+
         switch (action.type) {
             case 'SHOW_ALL_BROKERS' : {
+                console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
                 this.state.brokers = action.data;
                 this.state.loading = false;
@@ -25,18 +26,21 @@ class ListAllStore extends EventEmitter {
                 break;
             }
             case 'SHOW_ALL_BROKERS_LOADING' : {
+                console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
                 this.state.loading = true;
                 this.emit('change');
                 break;
             }
             case 'SHOW_ALL_SHIFT_PLACES_LOADING' : {
+                console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
                 this.state.loading = true;
                 this.emit('change');
                 break;
             }
             case 'SHOW_ALL_SHIFT_PLACES' : {
+                console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
                 this.state.shiftplaces = action.data;
                 this.state.loading = false;

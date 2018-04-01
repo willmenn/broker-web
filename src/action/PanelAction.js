@@ -1,5 +1,6 @@
 import dispatcher from '../Dispatcher';
 import axios from 'axios';
+import * as HeaderAction from "./HeaderAction";
 
 
 const axiosConfig = () => {
@@ -10,17 +11,17 @@ const axiosConfig = () => {
 
 const createSchedule = function (data) {
     console.log("createSchedule")
-    var url = "http://broker-scheduler.herokuapp.com/schedule";
+    var url = "http://broker-scheduler.herokuapp.com/v2/schedule";
     axiosConfig().post(url, data).then(res => {
         console.log(res);
-        fetchSchedule({scheduleId: res.data.scheduleId, manager: data.manager});
+        fetchSchedule({scheduleId: res.data.id, manager: data.manager});
     })
 };
 
 const fetchSchedule = function (data) {
-    axiosConfig().get('http://broker-scheduler.herokuapp.com/schedule/broker?id=' + data.scheduleId + '&manager=' + data.manager)
+    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId + '&manager=' + data.manager)
         .then(resGet => {
-            resGet.data.scheduleId = data.scheduleId;
+            //resGet.data.scheduleId = data.scheduleId;
             dispatcher.dispatch({
                 type: 'ESCALA_DATA',
                 data: resGet.data
@@ -85,6 +86,7 @@ export function createPanelAction(event) {
             console.log(data);
             createSchedule(data);
             fecthBrokersList(data);
+            HeaderAction.showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
             break;
         }
         case 'ESCALA_VISUALIZATION' : {

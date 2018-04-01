@@ -52,11 +52,14 @@ const fetchSchiftPlaceList = function (manager) {
 }
 
 export const showAllShiftPlacesAction = function (event) {
-    dispatcher.dispatch({
-        type: 'SHOW_ALL_SHIFT_PLACES_LOADING'
-    });
-    dispatcher.dispatch({
-        type: 'SHOW_ALL_SHIFT_PLACES_ACTION'
-    })
+    if (!event.subType) {
+        dispatcher.dispatch({
+            type: 'SHOW_ALL_SHIFT_PLACES_LOADING'
+        });
+        dispatcher.dispatch({
+            type: 'SHOW_ALL_SHIFT_PLACES_ACTION'
+        });
+    }
+
     fetchSchiftPlaceList(event.manager)
 }

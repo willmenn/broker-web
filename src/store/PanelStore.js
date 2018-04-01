@@ -23,57 +23,69 @@ class PanelStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
         switch (action.type) {
             case 'PLANTAO_CADASTRO' : {
+                console.log('store: ' + action.type)
                 this.plantaoCadastroVisible();
                 break;
             }
             case 'CORRETOR_CADASTRO' : {
+                console.log('store: ' + action.type)
                 this.corretorCadastroVisible();
                 break;
             }
             case 'CORRETOR_CADASTRO' : {
+                console.log('store: ' + action.type)
                 this.corretorCadastroVisible();
                 break;
             }
             case 'ESCALA_CADASTRO' : {
+                console.log('store: ' + action.type)
                 this.escalaCadastroVisible();
                 break;
             }
             case 'ESCALA_DATA' : {
+                console.log('store: ' + action.type)
                 this.escalaData(action.data);
                 break;
             }
             case 'ESCALA_BROKERS' : {
+                console.log('store: ' + action.type)
                 this.escalaBrokers(action.data);
                 break;
             }
             case 'CORRETOR_DELETE' : {
+                console.log('store: ' + action.type)
                 this.brokerDelete(action.data);
                 break;
             }
             case 'PLANTAO_DELETE' : {
+                console.log('store: ' + action.type)
                 this.shiftPlaeDelete(action.data);
                 break;
             }
             case 'CORRETOR_EDIT' : {
+                console.log('store: ' + action.type)
                 this.brokerEdit(action.data);
                 break;
             }
             case 'PLANTAO_EDIT' : {
+                console.log('store: ' + action.type)
                 this.shiftPlaceEdit(action.data);
                 break;
             }
             case 'CORRETOR_COUNT' : {
+                console.log('store: ' + action.type)
                 this.brokerCount(action.data);
                 break;
             }
             case 'PLANTAO_COUNT' : {
+                console.log('store: ' + action.type)
                 this.shiftPlaceCount(action.data);
                 break;
             }
             case 'ESCALA_SAVE' : {
+                console.log('store: ' + action.type)
                 this.state.scheduleId = action.scheduleId;
                 this.emit('change');
                 break;
@@ -131,9 +143,8 @@ class PanelStore extends EventEmitter {
 
     escalaCadastroVisible() {
         this.setDefaultEventDetails();
-        this.state.schedulePanelVisible = true;
+        this.state.schedulePanelVisible = false;
         this.state.scheduleVisible = true;
-        //this.state.scheduleData = {};
         this.state.brokers = [];
         this.emit('change');
     }

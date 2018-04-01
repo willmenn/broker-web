@@ -18,29 +18,33 @@ class SaveButtonStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
         switch (action.type) {
             case 'BROKER_BUTTON_SAVE' : {
+                console.log('save Form Button store: ' + action.type)
                 this.state.broker.isSuccess = true;
                 this.emit('change');
                 break;
             }
             case 'BROKER_BUTTON_EDIT' : {
+                console.log('save Form Button store: ' + action.type)
                 this.state.broker.isEdited = true;
                 this.emit('change');
                 break;
             }
             case 'BROKER_BUTTON_RESET' : {
+                console.log('save Form Button store: ' + action.type)
                 this.setDefaultState();
                 this.emit('change');
                 break;
             }
             case 'SHIFTPLACE_BUTTON_SAVE' : {
+                console.log('save Form Button store: ' + action.type)
                 this.state.shiftplace.isSuccess = true;
                 this.emit('change');
                 break;
             }
             case 'SHIFTPLACE_BUTTON_EDIT' : {
+                console.log('save Form Button store: ' + action.type)
                 this.state.shiftplace.isEdited = true;
                 this.emit('change');
                 break;

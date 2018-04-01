@@ -12,15 +12,17 @@ class ScheduleSaveButtonStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
+
         switch (action.type) {
             case 'ESCALA_SAVE' : {
+                console.log('Schedule Save Button Store: ' + action.type)
                 console.log(action)
                 this.state.isSuccess = true;
                 this.emit('change');
                 break;
             }
             case 'ESCALA_DATA' :{
+                console.log('Schedule Save Button Store: ' + action.type)
                 console.log("ScheduleButtonAction: ")
                 console.log(action)
                 this.state.scheduleId=action.data.scheduleId;

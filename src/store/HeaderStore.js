@@ -15,9 +15,10 @@ class HeaderStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
+
         switch (action.type) {
             case 'HOME_ACTION' : {
+                console.log('Header Store: ' + action.type)
                 this.fireCountAction();
                 this.state.isHomeVisible = true;
                 this.state.listAllComponentVisible = false;
@@ -25,10 +26,12 @@ class HeaderStore extends EventEmitter {
                 break;
             }
             case 'SHOW_ALL_BROKERS_ACTION' : {
+                console.log('Header Store: ' + action.type)
                 this.makeListAllVisible();
                 break;
             }
             case 'SHOW_ALL_SHIFT_PLACES_ACTION' : {
+                console.log('Header Store: ' + action.type)
                 this.makeListAllVisible();
                 break;
             }

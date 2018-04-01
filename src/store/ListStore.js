@@ -22,13 +22,15 @@ class ListStore extends EventEmitter {
     }
 
     handleAction(action) {
-        console.log('store: ' + action.type)
+
         switch (action.type) {
             case 'PLANTAO_EDIT_LIST' : {
+                console.log('List Store: ' + action.type)
                 this.plantaoEditVisible(action.data);
                 break;
             }
             case 'CORRETOR_EDIT_LIST' : {
+                console.log('List Store: ' + action.type)
                 this.corretorEditVisible(action.data);
                 break;
             }
