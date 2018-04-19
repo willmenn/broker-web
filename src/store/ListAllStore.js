@@ -10,7 +10,8 @@ class ListAllStore extends EventEmitter {
         this.state = {
             brokers: [],
             shiftplaces: [],
-            loading: false
+            loading: false,
+            schedules: []
         }
     }
 
@@ -47,6 +48,14 @@ class ListAllStore extends EventEmitter {
                 this.emit('change');
                 break;
             }
+            case 'SHOW_LIST_SCHEDULE' : {
+                console.log('ListAll s=Store: ' + action.type)
+                this.getDefault();
+                this.state.schedules = action.data;
+                this.state.loading = false;
+                this.emit('change');
+                break;
+            }
         }
     }
 
@@ -54,7 +63,8 @@ class ListAllStore extends EventEmitter {
         let defaultState = {
             brokers: [],
             shiftplaces: [],
-            loading: false
+            loading: false,
+            schedules: []
         };
 
         this.state = defaultState;

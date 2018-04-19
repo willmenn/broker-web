@@ -15,6 +15,10 @@ class HeaderComponent extends Component {
         HeaderAction.showAllShiftPlacesAction({manager: this.props.managerName});
     }
 
+    showScheduleList(){
+        HeaderAction.showScheduleListAction({manager: this.props.managerName});
+    }
+
     render() {
         return (
             <section className="hero is-primary">
@@ -56,7 +60,7 @@ class HeaderComponent extends Component {
                                 <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
                                     Home
                                 </a></li>
-                                    <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                                    <li><a style={{paddingLeft: 0}} onClick={() => this.showScheduleList()}>
                                         Últimas Escalas
                                     </a></li>
                                         <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>

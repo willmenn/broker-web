@@ -22,6 +22,7 @@ class HeaderStore extends EventEmitter {
                 this.fireCountAction();
                 this.state.isHomeVisible = true;
                 this.state.listAllComponentVisible = false;
+                this.state.listScheduleVisible = false;
                 this.emit('change');
                 break;
             }
@@ -35,11 +36,24 @@ class HeaderStore extends EventEmitter {
                 this.makeListAllVisible();
                 break;
             }
+            case 'SHOW_LIST_SCHEDULE_ACTION' : {
+                console.log('Header Store: ' + action.type)
+                this.makeScheduleListVisible();
+                break;
+            }
         }
     }
 
     makeListAllVisible() {
         this.state.listAllComponentVisible = true;
+        this.state.listScheduleVisible = false;
+        this.state.isHomeVisible = false;
+        this.emit('change');
+    }
+
+    makeScheduleListVisible() {
+        this.state.listAllComponentVisible = false;
+        this.state.listScheduleVisible = true;
         this.state.isHomeVisible = false;
         this.emit('change');
     }
@@ -54,6 +68,7 @@ class HeaderStore extends EventEmitter {
         let stateDefault = PanelStore.getAll();
         stateDefault.isHomeVisible = this.state.isHomeVisible;
         stateDefault.listAllComponentVisible = this.state.listAllComponentVisible;
+        stateDefault.listScheduleVisible = this.state.listScheduleVisible;
         return stateDefault;
     }
 }

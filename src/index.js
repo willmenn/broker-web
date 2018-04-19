@@ -21,6 +21,7 @@ import PanelStore from './store/PanelStore'
 import ListStore from './store/ListStore'
 import LoginStore from './store/LoginStore'
 import HeaderStore  from './store/HeaderStore'
+import ListSchedule from "./components/ListSchedule";
 
 class App extends Component {
 
@@ -86,6 +87,8 @@ class App extends Component {
                         {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
                         {this.state.panel.listAllComponentVisible ? <StatisticsComponent
                             manager={this.state.panel.managerName}/> : null}
+                        {this.state.panel.listScheduleVisible ? <ListSchedule/>
+                            : null}
                     </AppComponent>
 
                 }

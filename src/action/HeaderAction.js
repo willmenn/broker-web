@@ -63,3 +63,28 @@ export const showAllShiftPlacesAction = function (event) {
 
     fetchSchiftPlaceList(event.manager)
 }
+
+export const showScheduleListAction = function (event) {
+        dispatcher.dispatch({
+            type: 'SHOW_LIST_SCHEDULE_LOADING'
+        });
+        dispatcher.dispatch({
+            type: 'SHOW_LIST_SCHEDULE_ACTION'
+        });
+
+    fetchScheduleList(event.manager);
+}
+
+const fetchScheduleList = function (manager) {
+    var url = "https://broker-scheduler.herokuapp.com/v2/schedules?managerName=" + manager;
+    axiosConfig().get(url).then(res => {
+        dispatcher.dispatch({
+            type: 'SHOW_LIST_SCHEDULE',
+            data: res.data
+        })
+    }).catch(function () {
+        dispatcher.dispatch({
+            type: 'SHOW_LIST_SCHEDULE_LOADING'
+        });
+    });
+}
