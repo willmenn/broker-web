@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ListAllStore from '../store/ListAllStore'
-import dispatcher from '../Dispatcher';
+import * as PanelAction from "../action/PanelAction";
 
 const customizedCss = {
     margin: 'inherit'
@@ -18,6 +18,15 @@ class ListSchedule extends Component {
             this.setState({list: ListAllStore.getAll()});
         })
     }
+
+    visualizeSchedule(manager,id) {
+        PanelAction.createPanelAction({
+            type: 'ESCALA_VISUALIZATION',
+            manager: manager,
+            scheduleId: id
+        })
+    }
+
 
     render() {
         return (
@@ -42,7 +51,9 @@ class ListSchedule extends Component {
                                     <td className="has-text-centered" title="Dia">
                                         {s.timestamp}</td>
                                     <td className="has-text-centered" title="icon">
-                                        <i className="fa fa-calendar-check-o fa-3x fa-fw"/>
+                                        <a onClick={() => this.visualizeSchedule(s.managerName,s.id)}>
+                                            <i className="fa fa-calendar-check-o fa-3x fa-fw"/>
+                                        </a>
                                     </td>
                                 </tr>
 

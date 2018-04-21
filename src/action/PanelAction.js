@@ -19,7 +19,7 @@ const createSchedule = function (data) {
 };
 
 const fetchSchedule = function (data) {
-    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId + '&manager=' + data.manager)
+    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId )
         .then(resGet => {
             //resGet.data.scheduleId = data.scheduleId;
             dispatcher.dispatch({
@@ -97,6 +97,7 @@ export function createPanelAction(event) {
             console.log(data);
             fetchSchedule(data);
             fecthBrokersList(data);
+            HeaderAction.showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
             break;
         }
     }
