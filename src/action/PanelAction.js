@@ -21,7 +21,7 @@ const createSchedule = function (data) {
 const fetchSchedule = function (data) {
     axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId )
         .then(resGet => {
-            //resGet.data.scheduleId = data.scheduleId;
+            resGet.data.scheduleId = resGet.data.id;
             dispatcher.dispatch({
                 type: 'ESCALA_DATA',
                 data: resGet.data

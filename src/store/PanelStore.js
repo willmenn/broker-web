@@ -153,7 +153,7 @@ class PanelStore extends EventEmitter {
 
     escalaData(data) {
         this.state.scheduleData = data;
-        this.state.scheduleId = data.scheduleId;
+        this.state.scheduleId = data.id;
         this.emit('change');
     }
 

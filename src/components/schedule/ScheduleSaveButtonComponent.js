@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import * as SchedulesaveButtonAction from '../action/ScheduleSaveButtonAction';
-import ScheduleSaveButtonStore from '../store/ScheduleSaveButtonStore'
+import * as SchedulesaveButtonAction from '../../action/ScheduleSaveButtonAction';
+import ScheduleSaveButtonStore from '../../store/ScheduleSaveButtonStore'
 const displayNone = {
     display: 'none'
 }
@@ -21,7 +21,6 @@ class ScheduleSaveButtonComponent extends Component {
 
     componentWillMount() {
         ScheduleSaveButtonStore.on('change', () => {
-            console.log("change")
             this.setState({schedule: ScheduleSaveButtonStore.getAll()});
         })
     }

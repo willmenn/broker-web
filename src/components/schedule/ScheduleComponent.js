@@ -1,29 +1,10 @@
 import React, {Component} from 'react';
-import ScheduleSaveButtonComponent from '../components/ScheduleSaveButtonComponent';
-import ListAll from './ListAllComponent'
-import ListAllStore from "../store/ListAllStore";
-import ScheduleStore from "../store/ScheduleStore";
-
-const customizedCss = {
-    margin: 'auto'
-}
+import ScheduleSaveButtonComponent from './ScheduleSaveButtonComponent';
 
 class ScheduleComponent extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            list: ListAllStore.getDefault()
-        };
-    }
-
-    componentDidMount() {
-        ListAllStore.on('change', () => {
-            this.setState({list: ListAllStore.getAll()});
-        })
-        ScheduleStore.on('change', () => {
-            this.setState({isSelected: ScheduleStore.getAll()});
-        })
+    constructor(props) {
+        super(props)
     }
 
     containsDay(weekDay, days) {
@@ -42,10 +23,7 @@ class ScheduleComponent extends Component {
     }
 
     render() {
-        if (this.props.brokers.length !== 0 && this.props.scheduleWrapper) {
             return (
-                <div style={{width: 'inherit'}}>
-                    <ListAll shiftPlaces={this.state.list.shiftplaces}/>
                     <table className="table is-striped is-narrow-desktop">
                         <thead>
                         <tr>
@@ -62,32 +40,11 @@ class ScheduleComponent extends Component {
                         {this.CreateTableBody().map(s => s)}
                         </tbody>
                     </table>
-                    <ScheduleSaveButtonComponent manager={this.props.managersName}/>
-                </div>
             )
-        } else {
-            return (
-                <div className="is-half" style={customizedCss}>
-                    <i className="fa fa-refresh fa-spin fa-3x fa-fw"></i>
-                    <span className="sr-only"></span>
-                </div>
-            )
-        }
     }
 
     CreateTableBody() {
-        let sp = {};
-        if (!this.state.isSelected ) {
-            sp = this.props.scheduleWrapper.plantaos[0];
-        } else {
-            this.props.scheduleWrapper.plantaos.forEach(p => {
-                if (p.shiftPlaceId === this.state.isSelected.shiftplaceSelected) {
-                    sp = p;
-                }
-            });
-
-        }
-        let obj = sp.scheduled;
+        let obj = this.props.schedule.scheduled;
         var biggest = this.getBiggestObjectWithLength(obj);
 
         var tableLines = new Array();

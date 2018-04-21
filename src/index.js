@@ -13,7 +13,7 @@ import ListAllComponent from './components/ListAllComponent';
 import StatisticsComponent from './components/StatisticsComponent'
 import ShiftPlaceFormComponent from './components/ShiftPlaceFormComponent';
 import BrokerFormComponent from './components/BrokerFormComponent';
-import ScheduleComponent from './components/ScheduleComponent';
+import ScheduleComponent from './components/schedule/ScheduleComponent';
 import LoginComponent from './components/LoginFormComponent';
 import './index.css';
 
@@ -22,6 +22,7 @@ import ListStore from './store/ListStore'
 import LoginStore from './store/LoginStore'
 import HeaderStore  from './store/HeaderStore'
 import ListSchedule from "./components/ListSchedule";
+import ScheduleContainer from "./components/schedule/ScheduleContainer";
 
 class App extends Component {
 
@@ -81,7 +82,7 @@ class App extends Component {
                             listOptions={this.state.panel.listOptions}
                             listData={this.state.panel.listData}
                         /> : null}
-                        {this.state.panel.scheduleVisible ? <ScheduleComponent brokers={this.state.panel.brokers}
+                        {this.state.panel.scheduleVisible ? <ScheduleContainer brokers={this.state.panel.brokers}
                                                                                scheduleWrapper={this.state.panel.scheduleData}
                                                                                managersName={this.state.panel.managerName}/> : null}
                         {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
