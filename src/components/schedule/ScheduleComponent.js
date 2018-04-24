@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ScheduleSaveButtonComponent from './ScheduleSaveButtonComponent';
 
 class ScheduleComponent extends Component {
 
@@ -23,24 +22,53 @@ class ScheduleComponent extends Component {
     }
 
     render() {
+        if(this.props.brokerSchedule === null) {
             return (
-                    <table className="table is-striped is-narrow-desktop">
-                        <thead>
-                        <tr>
-                            <th title="SUN">Domingo</th>
-                            <th title="MON">Segunda</th>
-                            <th title="TUE">Terça</th>
-                            <th title="WED">Quarta</th>
-                            <th title="THU">Quinta</th>
-                            <th title="FRI">Sexta</th>
-                            <th title="SAT">Sábado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.CreateTableBody().map(s => s)}
-                        </tbody>
-                    </table>
+                <div className="content" style={{textAlign: 'center'}}><h3>Por favor escolha um corretor para visualizar a escala.</h3></div>)
+        }else {
+            return (
+                <table className="table is-striped is-narrow-desktop">
+                    <thead>
+                    <tr>
+                        <th title="SUN">Domingo</th>
+                        <th title="MON">Segunda</th>
+                        <th title="TUE">Terça</th>
+                        <th title="WED">Quarta</th>
+                        <th title="THU">Quinta</th>
+                        <th title="FRI">Sexta</th>
+                        <th title="SAT">Sábado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.props.isBroker ? this.CreateTableBrokerBody() : this.CreateTableBody().map(s => s)}
+                    </tbody>
+                </table>
             )
+        }
+    }
+
+    CreateTableBrokerBody() {
+            return (
+                <tr>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('SUN')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('MON')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('TUE')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('WED')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('THU')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('FRI')}</td>
+                    <td className="has-text-centered">{this.getShiftPlaceForDay('SAT')}</td>
+                </tr>)
+
+    }
+
+    getShiftPlaceForDay(day){
+        let sp = '';
+        this.props.brokerSchedule.forEach( s => {
+           if(s.day === day){
+                sp = s.plantaoName;
+           }
+        });
+        return sp;
     }
 
     CreateTableBody() {

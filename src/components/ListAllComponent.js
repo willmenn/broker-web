@@ -30,22 +30,28 @@ class ListAllComponent extends Component {
         )
     }
 
-    renderBrokerBody() {
-        return this.state.list.brokers.map((broker) => {
-            return (<tr>
-                <td className="has-text-centered"><a title={broker.name}>{broker.name}</a></td>
-                <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
-                <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>
-            </tr>)
+    renderBrokerBody(data) {
+        let brokers = data ? data : this.state.list.brokers;
+        return brokers.map((broker, index) => {
+            return (
+                <tr className={(this.props.activeBroker == broker.name && data) ? 'is-selected': ''}>
+                    <td className="has-text-centered"><a onClick={this.props.isSchedule ?
+                        () => this.props.changeActiveBroker(broker.name)
+                        : null} title={broker.name}>{broker.name}</a>
+                    </td>
+                    <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
+                    {data ? null :
+                        <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>}
+                </tr>)
         })
     }
 
-    renderBrokerHeader() {
+    renderBrokerHeader(data) {
         return (
             <tr>
                 <th className="has-text-centered" title="Nome">Nome</th>
                 <th className="has-text-centered" title="Email">Email</th>
-                <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>
+                {data ? null : <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>}
             </tr>
         )
     }
@@ -60,7 +66,7 @@ class ListAllComponent extends Component {
         )
     }
 
-    onClickLine(spName){
+    onClickLine(spName) {
         this.setState({isSelected: spName});
         dispatcher.dispatch({
             type: 'CHANGE_SCHEDULE_SHIFTPLACE',
@@ -74,9 +80,10 @@ class ListAllComponent extends Component {
             return data.map((shiftplace, index) => {
                 return (
                     <tr
-                        className={shiftplace.shiftPlaceId === this.state.isSelected || (!this.state.isSelected && index === 0)  ? 'is-selected' : ''}>
+                        className={shiftplace.shiftPlaceId === this.state.isSelected || (!this.state.isSelected && index === 0) ? 'is-selected' : ''}>
                         <td className="has-text-centered"><a title={shiftplace.name}
-                                                             onClick={() => this.onClickLine(shiftplace.shiftPlaceId)}>{shiftplace.name}</a></td>
+                                                             onClick={() => this.onClickLine(shiftplace.shiftPlaceId)}>{shiftplace.name}</a>
+                        </td>
                         <td className="has-text-centered">{shiftplace.address}</td>
                         <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
                         </td>
@@ -101,12 +108,12 @@ class ListAllComponent extends Component {
             <div className="column" style={{float: 'left'}}>
                 <table className="table table is-striped is-narrow-desktop box">
                     <thead>
-                    {!data && this.state.list.brokers.length > 0 ?
-                        this.renderBrokerHeader() : this.renderShiftPlaceHeader()}
+                    {this.props.brokers || this.state.list.brokers.length > 0 ?
+                        this.renderBrokerHeader(this.props.brokers) : this.renderShiftPlaceHeader()}
                     </thead>
                     <tbody>
-                    {!data && this.state.list.brokers.length > 0 ?
-                        this.renderBrokerBody() : this.renderShiftPlacesBody(data)}
+                    {this.props.brokers || this.state.list.brokers.length > 0 ?
+                        this.renderBrokerBody(this.props.brokers) : this.renderShiftPlacesBody(data)}
                     </tbody>
                 </table>
             </div>)
