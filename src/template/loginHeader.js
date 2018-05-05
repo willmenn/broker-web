@@ -10,7 +10,7 @@ class LoginHeaderComponent extends Component {
                             Entre no Sistema
                         </h1>
                         <h2 className="subtitle">
-                            para gerar escalas para a sua equipe de corretores.
+                            e crie escalas para a sua equipe de corretores.
                         </h2>
                     </div>
                 </div>

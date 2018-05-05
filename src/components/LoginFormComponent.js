@@ -111,7 +111,7 @@ class LoginFormComponent extends Component {
                         warningMessage="A Senha não pode ser vazio."
                         inputIsValid={this.handleSenhaInputValidation.bind(this)}
                         isRequired="true"
-                        inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                        inputPattern={/[a-zA-Z]{0,}[0-9]{0,}/}
                     />
 
                     <div className="field is-grouped">
