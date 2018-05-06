@@ -52,7 +52,13 @@ class ShiftPlaceFormComponent extends Component {
         let body = Array.from(evt.target.elements)
             .filter(el => el.name)
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
-
+        body.SUN = this.state.SUN;
+        body.MON = this.state.MON;
+        body.TUE = this.state.TUE;
+        body.WED = this.state.WED;
+        body.THU = this.state.THU;
+        body.FRI = this.state.FRI;
+        body.SAT = this.state.SAT;
         return body;
     }
 
@@ -77,13 +83,42 @@ class ShiftPlaceFormComponent extends Component {
         }
     }
 
+    handleSUNChange(value) {
+        console.log(value)
+        this.setState({SUN: value});
+    }
+
+    handleMONChange(value) {
+        this.setState({MON: value});
+    }
+
+    handleTUEChange(value) {
+        this.setState({TUE: value});
+    }
+
+    handleWEDChange(value) {
+        this.setState({WED: value});
+    }
+
+    handleTHUChange(value) {
+        this.setState({THU: value});
+    }
+
+    handleFRIChange(value) {
+        this.setState({FRI: value});
+    }
+
+    handleSATChange(value) {
+        this.setState({SAT: value});
+    }
+
     render() {
         return (
-            <div className="column is-narrow-desktop is-offset-one-quarter">
-                <form classID="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}}
+            <div className="column is-half">
+                <form id="shiftPlaceForm" className="box" style={{backgroundColor: 'whitesmoke'}}
                       onSubmit={this.onSubmit.bind(this)}>
                     <InputBulmaComponent
-                        placeHolder={ this.props.shiftPlaceData.name }
+                        placeHolder={this.props.shiftPlaceData.name}
                         name="name"
                         labelName="Nome do Plantão:"
                         inputType="text"
@@ -106,18 +141,25 @@ class ShiftPlaceFormComponent extends Component {
                         isRequired="true"
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
-                    <DayInputComponent dayName="Domingo" name="SUN" value={this.props.shiftPlaceData.SUN}/>
-                    <DayInputComponent dayName="Segunda" name="MON" value={this.props.shiftPlaceData.MON}/>
-                    <DayInputComponent dayName="Terça"   name="TUE" value={this.props.shiftPlaceData.TUE}/>
-                    <DayInputComponent dayName="Quarta"  name="WED" value={this.props.shiftPlaceData.WED}/>
-                    <DayInputComponent dayName="Quinta"  name="THU" value={this.props.shiftPlaceData.THU}/>
-                    <DayInputComponent dayName="Sexta"   name="FRI" value={this.props.shiftPlaceData.FRI}/>
-                    <DayInputComponent dayName="Sábado"  name="SAT" value={this.props.shiftPlaceData.SAT}/>
-                    <SaveButtonComponent  handleDisable={this.disableSubmitButton()}/>
+                    <DayInputComponent dayName="Domingo" name="SUN" value={this.props.shiftPlaceData.SUN}
+                                       dayChange={this.handleSUNChange.bind(this)}/>
+                    <DayInputComponent dayName="Segunda" name="MON" value={this.props.shiftPlaceData.MON}
+                                       dayChange={this.handleMONChange.bind(this)}/>
+                    <DayInputComponent dayName="Terça" name="TUE" value={this.props.shiftPlaceData.TUE}
+                                       dayChange={this.handleTUEChange.bind(this)}/>
+                    <DayInputComponent dayName="Quarta" name="WED" value={this.props.shiftPlaceData.WED}
+                                       dayChange={this.handleWEDChange.bind(this)}/>
+                    <DayInputComponent dayName="Quinta" name="THU" value={this.props.shiftPlaceData.THU}
+                                       dayChange={this.handleTHUChange.bind(this)}/>
+                    <DayInputComponent dayName="Sexta" name="FRI" value={this.props.shiftPlaceData.FRI}
+                                       dayChange={this.handleFRIChange.bind(this)}/>
+                    <DayInputComponent dayName="Sábado" name="SAT" value={this.props.shiftPlaceData.SAT}
+                                       dayChange={this.handleSATChange.bind(this)}/>
+                    <SaveButtonComponent handleDisable={this.disableSubmitButton()}/>
                 </form>
-            </div >
+            </div>
         )
     }
 }
 
-export  default ShiftPlaceFormComponent;
+export default ShiftPlaceFormComponent;
