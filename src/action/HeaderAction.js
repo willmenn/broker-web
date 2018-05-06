@@ -76,7 +76,7 @@ export const showScheduleListAction = function (event) {
 }
 
 const fetchScheduleList = function (manager) {
-    var url = "https://broker-scheduler.herokuapp.com/v2/schedules?managerName=" + manager;
+    var url = "https://broker-scheduler.herokuapp.com/v3/schedules/manager/" + manager;
     axiosConfig().get(url).then(res => {
         dispatcher.dispatch({
             type: 'SHOW_LIST_SCHEDULE',

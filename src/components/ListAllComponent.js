@@ -85,7 +85,7 @@ class ListAllComponent extends Component {
                                                              onClick={() => this.onClickLine(shiftplace.shiftPlaceId)}>{shiftplace.name}</a>
                         </td>
                         <td className="has-text-centered">{shiftplace.address}</td>
-                        <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
+                        <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(Object.keys(shiftplace.daysV3))}
                         </td>
                     </tr>
                 )
@@ -95,7 +95,7 @@ class ListAllComponent extends Component {
                 return (<tr>
                     <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
                     <td className="has-text-centered">{shiftplace.address}</td>
-                    <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(shiftplace.days)}
+                    <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(Object.keys(shiftplace.daysV3))}
                     </td>
                 </tr>)
             })

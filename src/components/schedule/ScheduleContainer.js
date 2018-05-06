@@ -39,10 +39,10 @@ class ScheduleContainer extends Component {
     getSchedule() {
         let sp = {};
         if (!this.state.isSelected) {
-            sp = this.props.scheduleWrapper.plantaos[0];
+            sp = this.props.scheduleWrapper.shiftPlaceV3List[0];
         } else {
-            this.props.scheduleWrapper.plantaos.forEach(p => {
-                if (p.shiftPlaceId === this.state.isSelected.shiftplaceSelected) {
+            this.props.scheduleWrapper.shiftPlaceV3List.forEach(p => {
+                if (p.id === this.state.isSelected.shiftplaceSelected) {
                     sp = p;
                 }
             });

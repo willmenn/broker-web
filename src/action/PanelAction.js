@@ -5,21 +5,21 @@ import * as HeaderAction from "./HeaderAction";
 
 const axiosConfig = () => {
     return axios.create({
-        headers: {'Content-Type': "application/json; charset=utf-8"}
+        headers: {'Content-Type': "application/json"}
     });
 }
 
 const createSchedule = function (data) {
     console.log("createSchedule")
-    var url = "http://broker-scheduler.herokuapp.com/v2/schedule";
-    axiosConfig().post(url, data).then(res => {
+    var url = "http://broker-scheduler.herokuapp.com/v3/schedules?manager=" + data.manager;
+    axiosConfig().post(url,data).then(res => {
         console.log(res);
         fetchSchedule({scheduleId: res.data.id, manager: data.manager});
     })
 };
 
 const fetchSchedule = function (data) {
-    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId)
+    axiosConfig().get('http://broker-scheduler.herokuapp.com/v3/schedules/' + data.scheduleId)
         .then(resGet => {
             resGet.data.scheduleId = resGet.data.id;
             dispatcher.dispatch({
@@ -59,6 +59,7 @@ const fetchSchiftPlaceList = function (type, manager) {
         })
     });
 }
+
 export function createPanelAction(event) {
     console.log(event.type)
 
@@ -70,7 +71,7 @@ export function createPanelAction(event) {
             break;
         }
         case 'CORRETOR' : {
-           fetchSchiftPlaceList('CORRETOR_CADASTRO', event.manager);
+            fetchSchiftPlaceList('CORRETOR_CADASTRO', event.manager);
             dispatcher.dispatch({
                 type: 'BROKER_BUTTON_RESET'
             })
