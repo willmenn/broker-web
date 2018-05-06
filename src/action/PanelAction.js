@@ -19,7 +19,7 @@ const createSchedule = function (data) {
 };
 
 const fetchSchedule = function (data) {
-    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId )
+    axiosConfig().get('http://broker-scheduler.herokuapp.com/v2/schedule?id=' + data.scheduleId)
         .then(resGet => {
             resGet.data.scheduleId = resGet.data.id;
             dispatcher.dispatch({
@@ -70,9 +70,7 @@ export function createPanelAction(event) {
             break;
         }
         case 'CORRETOR' : {
-            dispatcher.dispatch({
-                type: 'CORRETOR_CADASTRO'
-            });
+           fetchSchiftPlaceList('CORRETOR_CADASTRO', event.manager);
             dispatcher.dispatch({
                 type: 'BROKER_BUTTON_RESET'
             })

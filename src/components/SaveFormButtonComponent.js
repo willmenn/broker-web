@@ -37,8 +37,8 @@ class SaveButtonComponent extends Component {
         this.setState({shiftplace: SaveFormButtonStore.setDefaultState()});
     }
 
-    isSubmitButtonDisabled(){
-        return this.props.handleDisable ? this.props.handleDisable : false;
+    isSubmitButtonDisabled() {
+        return this.props.handleDisable;
     }
 
     render() {
@@ -46,7 +46,9 @@ class SaveButtonComponent extends Component {
             <div>
                 <div className="field is-grouped">
                     <p className="control">
-                        <button className="button is-primary" type="submit" disabled={this.isSubmitButtonDisabled()}>Salvar</button>
+                        <button className="button is-primary" type="submit"
+                                disabled={this.isSubmitButtonDisabled()}>Salvar
+                        </button>
                     </p>
                     <p className="control">
                         <button className="button is-link" type="reset">Resetar</button>
@@ -64,7 +66,7 @@ class SaveButtonComponent extends Component {
                             onClick={this.handleNotificationExitButton.bind(this)}></button>
                     Editado com sucesso!
                 </div>
-            </div >
+            </div>
         )
     }
 }

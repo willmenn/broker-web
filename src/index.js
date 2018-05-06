@@ -77,7 +77,8 @@ class App extends Component {
                                                      managersName={this.state.panel.managerName}/> : null}
                         { this.state.panel.isBrokerFormVisible ?
                             <BrokerFormComponent brokerData={this.state.panel.brokerData} edit={this.state.panel.edit}
-                                                 managersName={this.state.panel.managerName}/> : null}
+                                                 managersName={this.state.panel.managerName}
+                                                 shiftPlaceList={this.state.panel.shiftPlaceList}/> : null}
                         { this.state.panel.isListComponentVisible ? <ListComponent
                             listOptions={this.state.panel.listOptions}
                             listData={this.state.panel.listData}

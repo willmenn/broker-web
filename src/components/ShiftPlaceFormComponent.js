@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
 import SaveButtonComponent from "./SaveFormButtonComponent";
-import InputBulmaComponent from './InputBulmaComponent'
+import InputBulmaComponent from './bulma/InputBulmaComponent'
 import DayInputComponent from './DayInputComponent'
 
 class ShiftPlaceFormComponent extends Component {

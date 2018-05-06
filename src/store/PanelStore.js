@@ -19,7 +19,8 @@ class PanelStore extends EventEmitter {
             listData: [],
             schedulePanelVisible: false,
             listAllComponentVisible: false,
-            listScheduleVisible: false
+            listScheduleVisible: false,
+            shiftPlaceList: []
         };
     }
 
@@ -32,12 +33,7 @@ class PanelStore extends EventEmitter {
             }
             case 'CORRETOR_CADASTRO' : {
                 console.log('store: ' + action.type)
-                this.corretorCadastroVisible();
-                break;
-            }
-            case 'CORRETOR_CADASTRO' : {
-                console.log('store: ' + action.type)
-                this.corretorCadastroVisible();
+                this.corretorCadastroVisible(action.data);
                 break;
             }
             case 'ESCALA_CADASTRO' : {
@@ -109,7 +105,8 @@ class PanelStore extends EventEmitter {
             scheduleId: this.state.scheduleId ? this.state.scheduleId : '',
             schedulePanelVisible: false,
             listAllComponentVisible: false,
-            listScheduleVisible: false
+            listScheduleVisible: false,
+            shiftPlaceList: []
         };
     }
 
@@ -133,10 +130,11 @@ class PanelStore extends EventEmitter {
         this.emit('change');
     }
 
-    corretorCadastroVisible() {
+    corretorCadastroVisible(shiftPlaceList) {
         this.setDefaultEventDetails();
         this.state.isBrokerFormVisible = true;
         this.state.brokerPanelVisible = true;
+        this.state.shiftPlaceList = shiftPlaceList;
         this.state.brokerData = {
             name: "Nome do Corretor"
         };

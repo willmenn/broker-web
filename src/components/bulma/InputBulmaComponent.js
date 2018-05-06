@@ -54,14 +54,6 @@ class InputBulmaComponent extends Component {
         }
     }
 
-    handleIsValid() {
-        return this.state.isValid ?
-            <span className="icon is-right">
-                <i className="fa fa-check"></i>
-            </span>
-            : null;
-    }
-
     handleDivClass() {
         return classnames('control',
             {'has-icons-right': this.state.isValid});
@@ -97,7 +89,6 @@ class InputBulmaComponent extends Component {
                            maxLength={this.props.inputMaxLength}
                            onChange={this.inputOnChange.bind(this)}
                     />
-                    {this.handleIsValid()}
                     {this.handleDangerErrorMessage()}
                 </p>
             </div>

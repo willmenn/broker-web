@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as LoginAction from '../action/LoginAction';
 import LoginStore from '../store/LoginStore'
-import InputBulmaComponent from './InputBulmaComponent'
+import InputBulmaComponent from './bulma/InputBulmaComponent'
 import classnames  from 'classnames';
 
 const displayNone = {
@@ -127,7 +127,7 @@ class LoginFormComponent extends Component {
                     <div className="notification is-danger"
                          style={this.state.error ? displayBlock : displayNone}>
                         <button type='reset' className="delete"
-                                onClick={() => this.handleNotificationExitButton()}></button>
+                                onClick={() => this.handleNotificationExitButton()}/>
                         Por favor tente novamente.
                     </div>
                 </form>

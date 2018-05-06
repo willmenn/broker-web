@@ -1,14 +1,22 @@
 import React, {Component} from 'react';
 import * as SaveFormButtonAction from '../action/SaveFormButtonAction'
 import SaveFormButtonComponent from './SaveFormButtonComponent'
-import InputBulmaComponent from './InputBulmaComponent'
+import InputBulmaComponent from './bulma/InputBulmaComponent'
+import MultipleChoiceInput from "./bulma/MultipleChoiceInput";
+import {convertDayPtBrToEnglish, convertShiftPtBrToEnglish} from "../util/BrokerUtil";
 
 class BrokerFormComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            inputCorretor: false
+            inputCorretor: false,
+            notWorkShift: [],
+            preferNotWorkShift: [],
+            notWorkDay: [],
+            preferNotWorkDay: [],
+            notWorkShiftPlace: [],
+            preferNotWorkShiftPlace: []
         }
     }
 
@@ -25,6 +33,7 @@ class BrokerFormComponent extends Component {
             });
         } else {
             let body = JSON.stringify(data);
+            console.log(body);
             SaveFormButtonAction.saveFormButtonAction({type: 'CORRETOR', data: body, manager: this.props.managersName})
         }
         evt.preventDefault();
@@ -38,38 +47,86 @@ class BrokerFormComponent extends Component {
 
     createFormData(evt) {
         let body = Array.from(evt.target.elements)
-            .filter(el => el.name)
+            .filter(el => el.name === 'name')
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
-        body.preference =
-            {
-                weekDay: evt.target.elements.days.value
-            }
-        ;
+        let constraints = {};
+        constraints.DAY = this.convertDays(this.state.notWorkDay);
+        constraints.PARTIAL_DAY = this.convertDays(this.state.preferNotWorkDay);
+        constraints.SHIFT = this.convertShift(this.state.notWorkShift);
+        constraints.PARTIAL_SHIFT = this.convertShift(this.state.preferNotWorkShift);
+        constraints.SHIFT_PLACE = this.state.preferNotWorkShiftPlace;
+        constraints.PARTIAL_SHIFT_PLACE = this.state.preferNotWorkShiftPlace;
+        body.constraints = constraints;
         console.log(body);
         return body;
+    }
+
+    convertDays(arr){
+        return arr.map(name => convertDayPtBrToEnglish(name));
+    }
+
+    convertShift(arr){
+        return arr.map(name => convertShiftPtBrToEnglish(name));
     }
 
     handleCorretorInputValidation(isValid) {
         this.setState({inputCorretor: isValid});
     }
 
-    disableSubmitButton() {
-        if (this.state.inputCorretor) {
-            return false;
+    notWorkShift(name) {
+        let arr = this.extractNewArray(this.state.notWorkShift, name);
+        this.setState({notWorkShift: arr});
+    }
+
+    preferNotWorkShift(name) {
+        let arr = this.extractNewArray(this.state.preferNotWorkShift, name);
+        this.setState({preferNotWorkShift: arr});
+    }
+
+    notWorkDay(name) {
+        let arr = this.extractNewArray(this.state.notWorkDay, name);
+        this.setState({notWorkDay: arr});
+    }
+
+    preferNotWorkDay(name) {
+        let arr = this.extractNewArray(this.state.preferNotWorkDay, name);
+        this.setState({preferNotWorkDay: arr});
+    }
+
+    notWorkShiftPlace(name) {
+        let arr = this.extractNewArray(this.state.notWorkShiftPlace, name);
+        this.setState({notWorkShiftPlace: arr});
+    }
+
+    preferNotWorkShiftPlace(name) {
+        let arr = this.extractNewArray(this.state.preferNotWorkShiftPlace, name);
+        this.setState({preferNotWorkShiftDay: arr});
+    }
+
+    extractNewArray(old, name) {
+        let arr;
+        if (this.isActive(old, name)) {
+            arr = old.filter(value => value !== name);
         } else {
-            return true;
+            old.push(name);
+            arr = old;
         }
+        return arr;
+    }
+
+    isActive(arr, name) {
+        return arr.find(value => value === name);
     }
 
     render() {
         return (
-            <div className="column is-narrow-desktop is-offset-one-quarter">
-                <form classID="brokerForm" className="box" style={{backgroundColor: 'whitesmoke'}}
+            <div className="column is-offset-one-quarter">
+                <form id="brokerForm" className="box" style={{backgroundColor: 'whitesmoke'}}
                       onSubmit={this.onSubmit.bind(this)}>
                     <InputBulmaComponent
                         customStyle={{width: 209 + 'px'}}
-                        placeHolder={ this.props.brokerData.name }
+                        placeHolder={this.props.brokerData.name}
                         name="name"
                         labelName="Nome do Corretor:"
                         inputType="text"
@@ -80,25 +137,47 @@ class BrokerFormComponent extends Component {
                         isRequired="true"
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
                     />
-                    <div className="field">
-                        <label className="label">Preferência de dia:</label>
-                        <p className="control">
-                        <span className="select">
-                          <select name="days" style={{width: 209 + 'px'}}>
-                            <option value="SUN">Domingo</option>
-                            <option value="MON">Segunda-feira</option>
-                            <option value="TUE">Terça-feira</option>
-                              <option value="WED">Quarta-feira</option>
-                              <option value="THU">Quinta-feira</option>
-                              <option value="FRI">Sexta-feira</option>
-                              <option value="SAT">Sábado</option>
-                          </select>
-                        </span>
-                        </p>
-                    </div>
-                    <SaveFormButtonComponent handleDisable={this.disableSubmitButton()}/>
+                    <MultipleChoiceInput
+                        title="Não pode trabalhar nos turnos:"
+                        data={["Manhã", "Tarde", "Noite"]}
+                        onClick={this.notWorkShift.bind(this)}
+                        actives={this.state.notWorkShift}
+                    />
+                    <MultipleChoiceInput
+                        title="Prefere não trabalhar nos turnos:"
+                        data={["Manhã", "Tarde", "Noite"]}
+                        onClick={this.preferNotWorkShift.bind(this)}
+                        actives={this.state.preferNotWorkShift}
+                    />
+                    <MultipleChoiceInput
+                        title="Não pode trabalhar nos Dias:"
+                        data={["Segunda", "Terça", "Quarta",
+                            "Quinta", "Sexta", "Sábado", "Domingo"]}
+                        onClick={this.notWorkDay.bind(this)}
+                        actives={this.state.notWorkDay}
+                    />
+                    <MultipleChoiceInput
+                        title="Prefere não trabalhar nos Dias:"
+                        data={["Segunda", "Terça", "Quarta",
+                            "Quinta", "Sexta", "Sábado", "Domingo"]}
+                        onClick={this.preferNotWorkDay.bind(this)}
+                        actives={this.state.preferNotWorkDay}
+                    />
+                    <MultipleChoiceInput
+                        title="Não pode trabalhar nos Plantões:"
+                        data={this.props.shiftPlaceList.map(sp => sp.name)}
+                        onClick={this.notWorkShiftPlace.bind(this)}
+                        actives={this.state.notWorkShiftPlace}
+                    />
+                    <MultipleChoiceInput
+                        title="Prefere não trabalhar nos Plantões:"
+                        data={this.props.shiftPlaceList.map(sp => sp.name)}
+                        onClick={this.preferNotWorkShiftPlace.bind(this)}
+                        actives={this.state.preferNotWorkShiftPlace}
+                    />
+                    <SaveFormButtonComponent handleDisable={!this.state.inputCorretor}/>
                 </form>
-            </div >
+            </div>
         )
     }
 
