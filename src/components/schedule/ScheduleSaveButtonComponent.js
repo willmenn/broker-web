@@ -43,7 +43,7 @@ class ScheduleSaveButtonComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{float:'right', paddingRight: '90px'}}>
                 <form classID="brokerForm" onSubmit={this.onSubmit.bind(this)}>
                     <div className="field is-grouped">
                         <p className="control">

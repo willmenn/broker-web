@@ -64,8 +64,7 @@ class ScheduleContainer extends Component {
             && this.props.scheduleWrapper
             && this.state.list.shiftplaces.length > 0) {
             if (this.state.activeTab === 'Plantão'
-                || (this.state.activeTab === 'Corretor'
-                    && this.state.brokers.scheduleBroker.brokersSchedule)) {
+                || (this.state.activeTab === 'Corretor')) {
                 return (
                     <div style={{width: 'inherit'}}>
                         <ScheduleTab
@@ -118,7 +117,7 @@ class ScheduleContainer extends Component {
 
     getScheduleByBroker() {
         return <div style={{width: 'inherit'}}>
-            <ListAll brokers={this.state.brokers.scheduleBroker.brokers}
+            <ListAll brokers={this.props.brokers}
                      changeActiveBroker={this.changeActiveBroker.bind(this)}
                      activeBroker={this.state.activeBroker}
                      isSchedule={true}
@@ -131,7 +130,7 @@ class ScheduleContainer extends Component {
                 isSelected={this.state.isSelected}
                 schedule={this.getSchedule()}
                 isBroker={true}
-                brokerSchedule={this.state.activeBroker ? this.buildMap(this.state.brokers.scheduleBroker.brokersSchedule)
+                brokerSchedule={this.state.activeBroker ? this.buildMap(this.props.scheduleWrapper.brokerSchedule)
                     .get(this.state.activeBroker): null}
             />
         </div>;

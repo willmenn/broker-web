@@ -8,11 +8,8 @@ const axiosConfig = () => {
 }
 
 export function createScheduleTabAction(id) {
-    var url = "https://broker-scheduler.herokuapp.com/v2/schedule/" + id +"/broker";
-    axiosConfig().get(url).then(res => {
         dispatcher.dispatch({
             type: 'ESCALA_CORRETOR',
-            data: res.data
+            data: ''
         })
-    });
 }

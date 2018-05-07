@@ -104,7 +104,7 @@ class StatisticsComponent extends Component {
         var biggest = 0;
         var biggestSP = "";
         this.state.list.shiftplaces.forEach(function (sp) {
-            var places = ShiftPlaceUtils.sumDaysPlaces(sp.days);
+            var places = parseInt(sp.places);
             if (places >= biggest) {
                 biggest = places;
                 biggestSP = sp.name;

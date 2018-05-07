@@ -42,7 +42,7 @@ class ScheduleComponent extends Component {
                     </tr>
                     </thead>
                     {this.props.isBroker ?
-                        <tbody> tableBody</tbody>
+                        <tbody>{tableBody.map(line => line)}</tbody>
                         : <tbody>
                         {this.createEmpyLineForshift("Manhã")}
                         {tableBody.morning.map(broker => broker)}
@@ -57,7 +57,7 @@ class ScheduleComponent extends Component {
         }
     }
 
-    createEmpyLineForshift(shift){
+    createEmpyLineForshift(shift) {
         return (<tr className="is-selected">
             <td className="has-text-centered">{shift}</td>
             <td className="has-text-centered">{" "}</td>
@@ -68,28 +68,67 @@ class ScheduleComponent extends Component {
             <td className="has-text-centered">{" "}</td>
         </tr>)
     }
-    CreateTableBrokerBody() {
-        return (
-            <tr>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('SUN')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('MON')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('TUE')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('WED')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('THU')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('FRI')}</td>
-                <td className="has-text-centered">{this.getShiftPlaceForDay('SAT')}</td>
-            </tr>)
 
+    CreateTableBrokerBody() {
+        var lines = new Array();
+        lines.push(this.createEmpyLineForshift('Manhã'));
+        lines.push(<tr>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'MORNING')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'MORNING')}</td>
+        </tr>);
+        lines.push(
+            this.createEmpyLineForshift('Tarde')
+        );
+        lines.push(
+        <tr>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'AFTERNOON')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'AFTERNOON')}</td>
+        </tr>)
+        lines.push(
+            this.createEmpyLineForshift('Noite')
+        );
+        lines.push(
+        <tr>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'NIGHT')}</td>
+            <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'NIGHT')}</td>
+        </tr>)
+        return lines;
     }
 
-    getShiftPlaceForDay(day) {
-        let sp = '';
-        this.props.brokerSchedule.forEach(s => {
-            if (s.day === day) {
-                sp = s.plantaoName;
+    getShiftPlaceForDay(day, shift) {
+        if (this.props.brokerSchedule.length > 0) {
+            let days = this.props.brokerSchedule
+                .filter(d => d.name === day)[0];
+            let sps = [];
+            if (days) {
+                if (shift === 'MORNING') {
+                    sps = days.morning.shiftPlaceV3s;
+                } else if (shift === 'AFTERNOON') {
+                    sps = days.afternoon.shiftPlaceV3s;
+                } else if (shift === 'NIGHT') {
+                    sps = days.night.shiftPlaceV3s;
+                }
             }
-        });
-        return sp;
+            if (sps.length > 0) {
+                return sps[0].name;
+            }
+        }
+        return ' ';
     }
 
     CreateTableBody() {

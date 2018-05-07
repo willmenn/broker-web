@@ -3,6 +3,7 @@ import ListAllStore from '../store/ListAllStore'
 import * as BrokerUtils from '../util/BrokerUtil'
 import * as ShiftPlaceUtils from '../util/ShiftPlaceUtil'
 import dispatcher from '../Dispatcher';
+import {buildMap} from "../util/MapUtils";
 
 const customizedCss = {
     margin: 'inherit'
@@ -34,14 +35,14 @@ class ListAllComponent extends Component {
         let brokers = data ? data : this.state.list.brokers;
         return brokers.map((broker, index) => {
             return (
-                <tr className={(this.props.activeBroker == broker.name && data) ? 'is-selected': ''}>
+                <tr className={(this.props.activeBroker == broker.name && data) ? 'is-selected' : ''}>
                     <td className="has-text-centered"><a onClick={this.props.isSchedule ?
                         () => this.props.changeActiveBroker(broker.name)
                         : null} title={broker.name}>{broker.name}</a>
                     </td>
                     <td className="has-text-centered">{broker.email ? broker.email : " sem email"}</td>
                     {data ? null :
-                        <td className="has-text-centered">{BrokerUtils.convertEnglishDaysToPtBr(broker.preference.weekDay)}</td>}
+                        <td className="has-text-centered">{broker.qtdConstraints}</td>}
                 </tr>)
         })
     }
@@ -51,7 +52,7 @@ class ListAllComponent extends Component {
             <tr>
                 <th className="has-text-centered" title="Nome">Nome</th>
                 <th className="has-text-centered" title="Email">Email</th>
-                {data ? null : <th className="has-text-centered" title="Dia de Preferencia">Dia de preferência</th>}
+                {data ? null : <th className="has-text-centered" title="Dia de Preferencia">Restrições</th>}
             </tr>
         )
     }
@@ -85,7 +86,7 @@ class ListAllComponent extends Component {
                                                              onClick={() => this.onClickLine(shiftplace.shiftPlaceId)}>{shiftplace.name}</a>
                         </td>
                         <td className="has-text-centered">{shiftplace.address}</td>
-                        <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(Object.keys(shiftplace.daysV3))}
+                        <td className="has-text-centered">{shiftplace.places}
                         </td>
                     </tr>
                 )
@@ -95,17 +96,24 @@ class ListAllComponent extends Component {
                 return (<tr>
                     <td className="has-text-centered"><a title={shiftplace.name}>{shiftplace.name}</a></td>
                     <td className="has-text-centered">{shiftplace.address}</td>
-                    <td className="has-text-centered">{ShiftPlaceUtils.sumDaysPlaces(Object.keys(shiftplace.daysV3))}
+                    <td className="has-text-centered">{shiftplace.places}
                     </td>
                 </tr>)
             })
         }
     }
 
+    createTableStyle(data) {
+        if (data) {
+            return {float: 'left', fontSize: '0.8rem'}
+        } else {
+            return {float: 'left'}
+        }
+    }
 
     renderTable(data) {
         return (
-            <div className="column" style={{float: 'left'}}>
+            <div className="column" style={this.createTableStyle(data || this.props.brokers)}>
                 <table className="table table is-striped is-narrow-desktop box">
                     <thead>
                     {this.props.brokers || this.state.list.brokers.length > 0 ?
