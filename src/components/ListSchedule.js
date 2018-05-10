@@ -36,7 +36,7 @@ class ListSchedule extends Component {
                         <thead>
                         <tr>
                             <th className="has-text-centered" title="Numero">Número</th>
-                            <th className="has-text-centered" title="Id">Id</th>
+                            <th className="has-text-centered" title="Id">Nome da Escala</th>
                             <th className="has-text-centered" title="Dia">Dia</th>
                             <th className="has-text-centered" title="Icon"></th>
                         </tr>
@@ -47,7 +47,7 @@ class ListSchedule extends Component {
                             return (
                                 <tr>
                                     <th className="has-text-centered" title="Numero">{index}</th>
-                                    <td className="has-text-centered" title="id">{s.id}</td>
+                                    <td className="has-text-centered" title="id">{s.name? s.name : s.id}</td>
                                     <td className="has-text-centered" title="Dia">
                                         {s.timestamp}</td>
                                     <td className="has-text-centered" title="icon">
