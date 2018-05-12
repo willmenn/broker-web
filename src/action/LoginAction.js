@@ -19,9 +19,13 @@ export const loginAction = function (data) {
             data: res.data
         })
     }).catch(function () {
-        dispatcher.dispatch({
-            type: 'LOGIN_ERROR'
+        var url_broker ="http://brokermanagement-dev.herokuapp.com/broker?name="
+            + data.manager + "&password=" + data.password;
+        axiosConfig().get(url_broker).then(res => {
+            dispatcher.dispatch({
+                type: 'LOGIN_BROKER'
+            })
         })
-    });;
+    });
 
 };

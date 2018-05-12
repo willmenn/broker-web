@@ -10,7 +10,8 @@ class LoginStore extends EventEmitter {
             managerName: "",
             scheduleId: '',
             loginLoading: false,
-            error: false
+            error: false,
+            broker: false
         }
     }
 
@@ -38,6 +39,11 @@ class LoginStore extends EventEmitter {
                 this.emit('errorLoginChange');
                 break;
             }
+            case 'LOGIN_BROKER' : {
+                this.state.broker = true;
+                this.emit('change');
+                break;
+            }
         }
     }
 
@@ -45,6 +51,7 @@ class LoginStore extends EventEmitter {
         let stateDefault = PanelStore.getAll();
         stateDefault.managerName = this.state.managerName;
         stateDefault.scheduleId = this.state.scheduleId ? this.state.scheduleId : '';
+        stateDefault.broker = this.state.broker;
         return stateDefault;
     }
 
