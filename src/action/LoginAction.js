@@ -23,7 +23,8 @@ export const loginAction = function (data) {
             + data.manager + "&password=" + data.password;
         axiosConfig().get(url_broker).then(res => {
             dispatcher.dispatch({
-                type: 'LOGIN_BROKER'
+                type: 'LOGIN_BROKER',
+                data: res.data
             })
         })
     });

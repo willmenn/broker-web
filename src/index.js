@@ -53,7 +53,10 @@ class App extends Component {
     render() {
         return (
             <div>
-                {this.state.panel.managerName !== "" ? <HeaderComponent managerName={this.state.panel.managerName}/> :
+                {this.state.panel.managerName !== "" || this.state.panel.broker ?
+                    <HeaderComponent managerName={this.state.panel.managerName}
+                                     isBroker={this.state.panel.broker}
+                            brokerName={this.state.panel.brokerName}/> :
                     <LoginHeaderComponent/>}
                 {this.state.panel.managerName === "" && !this.state.panel.broker ?
                     <AppComponent><LoginComponent/></AppComponent> :

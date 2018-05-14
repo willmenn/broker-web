@@ -41,6 +41,7 @@ class LoginStore extends EventEmitter {
             }
             case 'LOGIN_BROKER' : {
                 this.state.broker = true;
+                this.state.brokerName = action.data.name
                 this.emit('change');
                 break;
             }
@@ -52,6 +53,7 @@ class LoginStore extends EventEmitter {
         stateDefault.managerName = this.state.managerName;
         stateDefault.scheduleId = this.state.scheduleId ? this.state.scheduleId : '';
         stateDefault.broker = this.state.broker;
+        stateDefault.brokerName = this.state.brokerName;
         return stateDefault;
     }
 
