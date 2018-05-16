@@ -65,14 +65,40 @@ export const showAllShiftPlacesAction = function (event) {
 }
 
 export const showScheduleListAction = function (event) {
-        dispatcher.dispatch({
-            type: 'SHOW_LIST_SCHEDULE_LOADING'
-        });
-        dispatcher.dispatch({
-            type: 'SHOW_LIST_SCHEDULE_ACTION'
-        });
+    dispatcher.dispatch({
+        type: 'SHOW_LIST_SCHEDULE_LOADING'
+    });
+    dispatcher.dispatch({
+        type: 'SHOW_LIST_SCHEDULE_ACTION'
+    });
 
     fetchScheduleList(event.manager);
+}
+
+export const showActiveScheduleAction = function (event) {
+    dispatcher.dispatch({
+        type: 'ESCALA_CADASTRO'
+    })
+    var urlToGetScheduleId = "https://brokermanagement-dev.herokuapp.com/manager/schedule?manager=" + event.manager;
+    axiosConfig().get(urlToGetScheduleId).then(res => {
+        console.log(res.data.scheduleId)
+        axiosConfig().get('http://broker-scheduler.herokuapp.com/v3/schedules/' + res.data.scheduleId)
+            .then(resGet => {
+                resGet.data.scheduleId = res.scheduleId;
+                dispatcher.dispatch({
+                    type: 'ESCALA_DATA',
+                    data: resGet.data
+                })
+            })
+    })
+    showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
+    var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + event.manager;
+    axiosConfig().get(urlBroker).then(resGet => {
+        dispatcher.dispatch({
+            type: 'ESCALA_BROKERS',
+            data: resGet.data
+        })
+    });
 }
 
 const fetchScheduleList = function (manager) {

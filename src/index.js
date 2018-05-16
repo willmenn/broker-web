@@ -28,7 +28,11 @@ class App extends Component {
 
     constructor() {
         super();
-        this.state = {panel: PanelStore.getAll()}
+        this.state = {
+            panel: PanelStore.getAll(),
+            broker: false,
+            brokerName: ""
+        }
     }
 
     componentWillMount() {
@@ -42,7 +46,11 @@ class App extends Component {
         })
         LoginStore.on('change', () => {
             console.log("Index: Login change")
-            this.setState({panel: LoginStore.getAll()});
+            this.setState({
+                panel: LoginStore.getAll(),
+                broker: LoginStore.getAll().broker,
+                brokerName: LoginStore.getAll().brokerName
+            });
         })
         HeaderStore.on('change', () => {
             console.log("Index:  Header change")
@@ -53,12 +61,12 @@ class App extends Component {
     render() {
         return (
             <div>
-                {this.state.panel.managerName !== "" || this.state.panel.broker ?
+                {this.state.panel.managerName !== "" || this.state.broker ?
                     <HeaderComponent managerName={this.state.panel.managerName}
-                                     isBroker={this.state.panel.broker}
-                            brokerName={this.state.panel.brokerName}/> :
+                                     isBroker={this.state.broker}
+                                     brokerName={this.state.brokerName}/> :
                     <LoginHeaderComponent/>}
-                {this.state.panel.managerName === "" && !this.state.panel.broker ?
+                {this.state.panel.managerName === "" && !this.state.broker ?
                     <AppComponent><LoginComponent/></AppComponent> :
                     this.body()
                 }
@@ -68,8 +76,13 @@ class App extends Component {
     }
 
     body() {
-        if (this.state.panel.broker) {
-            return <div> Oi broker</div>
+        if (this.state.broker) {
+            return <AppComponent>
+                {this.state.panel.scheduleVisible ? <ScheduleContainer brokers={this.state.panel.brokers}
+                                                                       scheduleWrapper={this.state.panel.scheduleData}
+                                                                       managersName={this.state.panel.managerName}/> : null}
+                {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
+            </AppComponent>
         } else {
             return this.managerApp()
         }

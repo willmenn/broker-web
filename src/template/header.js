@@ -19,6 +19,10 @@ class HeaderComponent extends Component {
         HeaderAction.showScheduleListAction({manager: this.props.managerName});
     }
 
+    showActiveSchedule() {
+        HeaderAction.showActiveScheduleAction({manager: this.props.managerName});
+    }
+
     render() {
         return (
             this.props.isBroker ? this.brokerHeader() : this.managerHeader()
@@ -73,6 +77,11 @@ class HeaderComponent extends Component {
                                 Plantões
                             </a>
                             </li>
+                            <li><a style={{paddingLeft: 0}} onClick={() => this.showActiveSchedule()}>
+                                Ver Escala
+                            </a>
+                            </li>
+
                         </ul>
                     </div>
                 </nav>

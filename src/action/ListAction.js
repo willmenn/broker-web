@@ -41,3 +41,4 @@ export const editEntity = function (data) {
         }
     }
 };
+1

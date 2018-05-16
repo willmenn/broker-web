@@ -42,6 +42,7 @@ class LoginStore extends EventEmitter {
             case 'LOGIN_BROKER' : {
                 this.state.broker = true;
                 this.state.brokerName = action.data.name
+                this.state.managerName = action.data.manager
                 this.emit('change');
                 break;
             }
