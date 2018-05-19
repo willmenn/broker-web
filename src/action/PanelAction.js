@@ -26,18 +26,12 @@ const fetchSchedule = function (data) {
                 type: 'ESCALA_DATA',
                 data: resGet.data
             })
+            dispatcher.dispatch({
+                type: 'ESCALA_BROKERS',
+                data: resGet.data.brokerV3s
+            })
             console.log(resGet.data);
         })
-}
-
-const fecthBrokersList = function (data) {
-    var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + data.manager;
-    axiosConfig().get(urlBroker).then(resGet => {
-        dispatcher.dispatch({
-            type: 'ESCALA_BROKERS',
-            data: resGet.data
-        })
-    });
 }
 
 const fetchBrokerList = function (type, manager) {
@@ -84,7 +78,6 @@ export function createPanelAction(event) {
             let data = {manager: event.manager};
             console.log(data);
             createSchedule(data);
-            fecthBrokersList(data);
             HeaderAction.showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
             break;
         }
@@ -95,7 +88,6 @@ export function createPanelAction(event) {
             let data = {manager: event.manager, scheduleId: event.scheduleId};
             console.log(data);
             fetchSchedule(data);
-            fecthBrokersList(data);
             HeaderAction.showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
             break;
         }

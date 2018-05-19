@@ -89,16 +89,13 @@ export const showActiveScheduleAction = function (event) {
                     type: 'ESCALA_DATA',
                     data: resGet.data
                 })
+                dispatcher.dispatch({
+                    type: 'ESCALA_BROKERS',
+                    data: resGet.data.brokerV3s
+                })
             })
     })
     showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
-    var urlBroker = "https://brokermanagement-dev.herokuapp.com/brokers/manager/" + event.manager;
-    axiosConfig().get(urlBroker).then(resGet => {
-        dispatcher.dispatch({
-            type: 'ESCALA_BROKERS',
-            data: resGet.data
-        })
-    });
 }
 
 const fetchScheduleList = function (manager) {
