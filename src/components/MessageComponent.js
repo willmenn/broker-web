@@ -27,21 +27,22 @@ class MessageComponent extends Component {
 
     onSubmit(evt) {
         let data = this.createFormData(evt);
-        saveMessage(data.message,this.props.manager);
+        saveMessage(data.message, this.props.manager);
         evt.preventDefault();
         return false;
     }
+
     render() {
         return (
             <div style={customizedCss}>
                 {
-                    this.props.broker ===false ?
+                    this.props.broker === false ?
                         <form onSubmit={this.onSubmit.bind(this)} style={{marginBottom: "10px"}}>
                             <div className="field">
                                 <div className="control">
                                     <textarea className="textarea"
                                               type="text"
-                                              placeholder="Normal textarea"
+                                              placeholder="Adicione um recado para a sua equipe."
                                               name="message"
                                     />
                                 </div>
@@ -51,13 +52,17 @@ class MessageComponent extends Component {
                         : null
                 }
                 {
-                    this.props.messages.map(m =>
-                        <article className="message">
-                            <div className="message-body">
-                                {m.message}
-                            </div>
-                        </article>
-                    )
+                    this.props.messages.length > 0 ? this.props.messages.map(m =>
+                            <article className="message">
+                                <div className="message-body">
+                                    {m.message}
+                                </div>
+                            </article>
+                        )
+                        :
+                        <div className="content" style={{textAlign: 'center'}}>
+                            <h3>A sua equipe não tem nenhum recado.</h3>
+                        </div>
                 }
             </div>
         )
