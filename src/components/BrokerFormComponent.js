@@ -48,7 +48,7 @@ class BrokerFormComponent extends Component {
 
     createFormData(evt) {
         let body = Array.from(evt.target.elements)
-            .filter(el => el.name === 'name')
+            .filter(el => el.name === 'name' || el.name === 'password')
             .reduce((a, b) => ({...a, [b.name]: b.value}), {});
 
         let constraints = {};
@@ -73,6 +73,10 @@ class BrokerFormComponent extends Component {
 
     handleCorretorInputValidation(isValid) {
         this.setState({inputCorretor: isValid});
+    }
+
+    handlePasswordInputValidation(isValid) {
+        this.setState({inputPassword: isValid});
     }
 
     notWorkShift(name) {
@@ -137,6 +141,19 @@ class BrokerFormComponent extends Component {
                         inputIsValid={this.handleCorretorInputValidation.bind(this)}
                         isRequired="true"
                         inputPattern={/[a-zA-Z]{2,}[0-9]{0,}/}
+                    />
+                    <InputBulmaComponent
+                        customStyle={{width: 209 + 'px'}}
+                        placeHolder="Senha"
+                        name="password"
+                        labelName="Senha:"
+                        inputType="password"
+                        inputMaxLength="20"
+                        errorMessage="A senha só pode ter números e letras."
+                        warningMessage="O campo senha não pode ser vazio."
+                        inputIsValid={this.handlePasswordInputValidation.bind(this)}
+                        isRequired="true"
+                        inputPattern={/[a-zA-Z]{0,}[0-9]{0,}/}
                     />
                     <MultipleChoiceInput
                         title="Não pode trabalhar nos turnos:"
