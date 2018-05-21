@@ -56,6 +56,13 @@ class ListAllStore extends EventEmitter {
                 this.emit('change');
                 break;
             }
+            case 'SHOW_LIST_SCHEDULE_LOADING' : {
+                console.log('ListAll s=Store: ' + action.type)
+                this.getDefault();
+                this.state.loading = true;
+                this.emit('change');
+                break;
+            }
         }
     }
 
@@ -63,7 +70,7 @@ class ListAllStore extends EventEmitter {
         let defaultState = {
             brokers: [],
             shiftplaces: [],
-            loading: false,
+            loading: true,
             schedules: []
         };
 

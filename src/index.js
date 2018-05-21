@@ -21,7 +21,7 @@ import PanelStore from './store/PanelStore'
 import ListStore from './store/ListStore'
 import LoginStore from './store/LoginStore'
 import HeaderStore from './store/HeaderStore'
-import ListSchedule from "./components/ListSchedule";
+import ListSchedule from "./components/schedule/ListSchedule";
 import ScheduleContainer from "./components/schedule/ScheduleContainer";
 import MessageComponent from "./components/MessageComponent";
 
