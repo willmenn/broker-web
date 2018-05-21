@@ -75,6 +75,16 @@ export const showScheduleListAction = function (event) {
     fetchScheduleList(event.manager);
 }
 
+export const showMessagesAction = function (event) {
+    var urlToGetMessages = "https://brokermanagement-dev.herokuapp.com/manager/messages?manager=" + event.manager;
+    axiosConfig().get(urlToGetMessages).then(res => {
+        dispatcher.dispatch({
+            type: 'MESSAGE_DATA',
+            data: res.data
+        })
+    });
+}
+
 export const showActiveScheduleAction = function (event) {
     dispatcher.dispatch({
         type: 'ESCALA_CADASTRO'

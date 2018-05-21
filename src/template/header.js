@@ -23,6 +23,10 @@ class HeaderComponent extends Component {
         HeaderAction.showActiveScheduleAction({manager: this.props.managerName});
     }
 
+    showMessages(){
+        HeaderAction.showMessagesAction({manager: this.props.managerName});
+    }
+
     render() {
         return (
             this.props.isBroker ? this.brokerHeader() : this.managerHeader()
@@ -69,7 +73,7 @@ class HeaderComponent extends Component {
                             <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
                                 Home
                             </a></li>
-                            <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                            <li><a style={{paddingLeft: 0}} onClick={() => this.showMessages()}>
                                 Recados
                             </a>
                             </li>
@@ -132,7 +136,7 @@ class HeaderComponent extends Component {
                             <li><a style={{paddingLeft: 0}} onClick={() => this.showScheduleList()}>
                                 Últimas Escalas
                             </a></li>
-                            <li><a style={{paddingLeft: 0}} onClick={() => this.home()}>
+                            <li><a style={{paddingLeft: 0}} onClick={() => this.showMessages()}>
                                 Recados
                             </a>
                             </li>

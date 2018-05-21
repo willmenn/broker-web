@@ -23,6 +23,7 @@ import LoginStore from './store/LoginStore'
 import HeaderStore from './store/HeaderStore'
 import ListSchedule from "./components/ListSchedule";
 import ScheduleContainer from "./components/schedule/ScheduleContainer";
+import MessageComponent from "./components/MessageComponent";
 
 class App extends Component {
 
@@ -84,6 +85,10 @@ class App extends Component {
                 {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
                 {this.state.panel.listAllComponentVisible ? <StatisticsComponent
                     manager={this.state.panel.managerName}/> : null}
+                {this.state.panel.showMessages ? <MessageComponent
+                    messages={this.state.panel.messages}
+                    broker={this.state.broker}
+                    manager={this.state.panel.managerName}/> : null}
             </AppComponent>
         } else {
             return this.managerApp()
@@ -126,6 +131,11 @@ class App extends Component {
                 manager={this.state.panel.managerName}/> : null}
             {this.state.panel.listScheduleVisible ? <ListSchedule/>
                 : null}
+            {this.state.panel.showMessages ? <MessageComponent
+                messages={this.state.panel.messages}
+                broker={this.state.broker}
+                manager={this.state.panel.managerName}
+            /> : null}
         </AppComponent>;
     }
 }

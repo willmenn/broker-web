@@ -20,7 +20,9 @@ class PanelStore extends EventEmitter {
             schedulePanelVisible: false,
             listAllComponentVisible: false,
             listScheduleVisible: false,
-            shiftPlaceList: []
+            shiftPlaceList: [],
+            showMessages: false,
+            messages: []
         };
     }
 
@@ -106,7 +108,9 @@ class PanelStore extends EventEmitter {
             schedulePanelVisible: false,
             listAllComponentVisible: false,
             listScheduleVisible: false,
-            shiftPlaceList: []
+            shiftPlaceList: [],
+            showMessages: false,
+            messages: []
         };
     }
 
