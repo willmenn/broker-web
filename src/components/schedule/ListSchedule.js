@@ -31,7 +31,7 @@ class ListSchedule extends Component {
     render() {
         return (
             <div style={customizedCss}>
-                {!this.state.list.loading ?
+                {!this.state.list.loadingSchedule ?
                     this.createListSchedule()
                     : <div className="is-half" style={customizedCss}>
                         <i className="fa fa-refresh fa-spin fa-3x fa-fw"/>

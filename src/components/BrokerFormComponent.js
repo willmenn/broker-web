@@ -11,6 +11,7 @@ class BrokerFormComponent extends Component {
         super(props);
         this.state = {
             inputCorretor: false,
+            inputPassword: false,
             notWorkShift: [],
             preferNotWorkShift: [],
             notWorkDay: [],

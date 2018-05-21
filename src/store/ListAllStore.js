@@ -11,6 +11,7 @@ class ListAllStore extends EventEmitter {
             brokers: [],
             shiftplaces: [],
             loading: false,
+            loadingSchedule: false,
             schedules: []
         }
     }
@@ -52,14 +53,14 @@ class ListAllStore extends EventEmitter {
                 console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
                 this.state.schedules = action.data;
-                this.state.loading = false;
+                this.state.loadingSchedule = false;
                 this.emit('change');
                 break;
             }
             case 'SHOW_LIST_SCHEDULE_LOADING' : {
                 console.log('ListAll s=Store: ' + action.type)
                 this.getDefault();
-                this.state.loading = true;
+                this.state.loadingSchedule = true;
                 this.emit('change');
                 break;
             }
@@ -70,7 +71,8 @@ class ListAllStore extends EventEmitter {
         let defaultState = {
             brokers: [],
             shiftplaces: [],
-            loading: true,
+            loading: false,
+            loadingSchedule: true,
             schedules: []
         };
 
