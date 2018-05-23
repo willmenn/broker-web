@@ -50,6 +50,7 @@ class ScheduleComponent extends Component {
                         {tableBody.afternoon.map(broker => broker)}
                         {this.createEmpyLineForshift("Noite")}
                         {tableBody.night.map(broker => broker)}
+                        {!this.props.isBroker ? this.createLineForLeftPlaces() : null}
                         </tbody>}
 
                 </table>
@@ -69,6 +70,32 @@ class ScheduleComponent extends Component {
         </tr>)
     }
 
+    createLineForLeftPlaces() {
+        let obj = this.props.schedule;
+        let sum = Object.keys(obj.days).map(k => obj.days[k].placeLeftCount).reduce((a, b) => a + b, 0);
+        if (sum > 0) {
+            return (<tr>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['SUN'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['MON'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['TUE'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['WED'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['THU'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['FRI'].placeLeftCount)}</td>
+                <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['SAT'].placeLeftCount)}</td>
+            </tr>)
+        } else {
+            return null;
+        }
+    }
+
+    showOnlyIfBiggerThan0(placeLeft) {
+        if (placeLeft > 0) {
+            return "-" + placeLeft;
+        } else {
+            return null;
+        }
+    }
+
     CreateTableBrokerBody() {
         var lines = new Array();
         lines.push(this.createEmpyLineForshift('Manhã'));
@@ -85,28 +112,28 @@ class ScheduleComponent extends Component {
             this.createEmpyLineForshift('Tarde')
         );
         lines.push(
-        <tr>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'AFTERNOON')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'AFTERNOON')}</td>
-        </tr>)
+            <tr>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'AFTERNOON')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'AFTERNOON')}</td>
+            </tr>)
         lines.push(
             this.createEmpyLineForshift('Noite')
         );
         lines.push(
-        <tr>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'NIGHT')}</td>
-            <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'NIGHT')}</td>
-        </tr>)
+            <tr>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('TUE', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('WED', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('THU', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('FRI', 'NIGHT')}</td>
+                <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'NIGHT')}</td>
+            </tr>)
         return lines;
     }
 
