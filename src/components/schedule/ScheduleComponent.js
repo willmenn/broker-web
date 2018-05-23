@@ -44,12 +44,15 @@ class ScheduleComponent extends Component {
                     {this.props.isBroker ?
                         <tbody>{tableBody.map(line => line)}</tbody>
                         : <tbody>
-                        {this.createEmpyLineForshift("Manhã")}
+                        {this.createEmptyLineForshift("Manhã")}
                         {tableBody.morning.map(broker => broker)}
-                        {this.createEmpyLineForshift("Tarde")}
+                        {this.createEmptyLineForshift("Tarde")}
                         {tableBody.afternoon.map(broker => broker)}
-                        {this.createEmpyLineForshift("Noite")}
+                        {this.createEmptyLineForshift("Noite")}
                         {tableBody.night.map(broker => broker)}
+                        {!this.props.isBroker &&
+                            this.checkIfHasAnyPlaceLeft(this.props.schedule) ?
+                                this.createEmptyLineForshift("Lugares Vazios") : null}
                         {!this.props.isBroker ? this.createLineForLeftPlaces() : null}
                         </tbody>}
 
@@ -58,7 +61,7 @@ class ScheduleComponent extends Component {
         }
     }
 
-    createEmpyLineForshift(shift) {
+    createEmptyLineForshift(shift) {
         return (<tr className="is-selected">
             <td className="has-text-centered">{shift}</td>
             <td className="has-text-centered">{" "}</td>
@@ -72,8 +75,7 @@ class ScheduleComponent extends Component {
 
     createLineForLeftPlaces() {
         let obj = this.props.schedule;
-        let sum = Object.keys(obj.days).map(k => obj.days[k].placeLeftCount).reduce((a, b) => a + b, 0);
-        if (sum > 0) {
+        if (this.checkIfHasAnyPlaceLeft(obj)) {
             return (<tr>
                 <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['SUN'].placeLeftCount)}</td>
                 <td className="has-text-centered">{this.showOnlyIfBiggerThan0(obj.days['MON'].placeLeftCount)}</td>
@@ -88,9 +90,13 @@ class ScheduleComponent extends Component {
         }
     }
 
+    checkIfHasAnyPlaceLeft(obj) {
+        return Object.keys(obj.days).map(k => obj.days[k].placeLeftCount).reduce((a, b) => a + b, 0) > 0;
+    }
+
     showOnlyIfBiggerThan0(placeLeft) {
         if (placeLeft > 0) {
-            return "-" + placeLeft;
+            return placeLeft;
         } else {
             return null;
         }
@@ -98,7 +104,7 @@ class ScheduleComponent extends Component {
 
     CreateTableBrokerBody() {
         var lines = new Array();
-        lines.push(this.createEmpyLineForshift('Manhã'));
+        lines.push(this.createEmptyLineForshift('Manhã'));
         lines.push(<tr>
             <td className="has-text-centered">{this.getShiftPlaceForDay('SUN', 'MORNING')}</td>
             <td className="has-text-centered">{this.getShiftPlaceForDay('MON', 'MORNING')}</td>
@@ -109,7 +115,7 @@ class ScheduleComponent extends Component {
             <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'MORNING')}</td>
         </tr>);
         lines.push(
-            this.createEmpyLineForshift('Tarde')
+            this.createEmptyLineForshift('Tarde')
         );
         lines.push(
             <tr>
@@ -122,7 +128,7 @@ class ScheduleComponent extends Component {
                 <td className="has-text-centered">{this.getShiftPlaceForDay('SAT', 'AFTERNOON')}</td>
             </tr>)
         lines.push(
-            this.createEmpyLineForshift('Noite')
+            this.createEmptyLineForshift('Noite')
         );
         lines.push(
             <tr>
