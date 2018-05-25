@@ -67,7 +67,7 @@ class ChartTabComponent extends Component {
                 <div className="column pie-card">
                     <div className="card">
                         <div className="card-content">
-                            <p className="title">
+                            <p className="title is-4">
                                 “A quantidade de plantões que os corretores irão fazer nesta escala.”
                             </p>
                             <p className="subtitle">
@@ -77,7 +77,7 @@ class ChartTabComponent extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="column column is-half is-one-quarter" style={{margin : 'auto'}}>
+                <div className="column is-one-quarter">
                     <div dangerouslySetInnerHTML={{__html: legend}}/>
                     <Pie ref="chart" data={data} options={options}/>
                 </div>
