@@ -11369,3 +11369,9 @@ label.panel-block:hover {
   color: #fff;
 }
 /*# sourceMappingURL=bulma.css.map */
+
+.pie-legend li {
+  display: inline;
+  margin: 3px;
+  color: white;
+}

@@ -7,6 +7,7 @@ import ListAll from './../ListAllComponent';
 import ScheduleSaveButtonComponent from "./ScheduleSaveButtonComponent";
 import ScheduleTab from "./ScheduleTab";
 import {createScheduleTabAction} from "../../action/ScheduleTabAction";
+import ChartTabComponent from "./ChartTabComponent";
 
 const customizedCss = {
     margin: 'auto'
@@ -18,7 +19,7 @@ class ScheduleContainer extends Component {
         super(props);
         this.state = {
             list: ListAllStore.getDefault(),
-            tabs: ["Plantão", "Corretor"],
+            tabs: ["Plantão", "Corretor", "Gráfico"],
             activeTab: 'Plantão',
             brokers: ScheduleTabStore.getAll()
         };
@@ -76,12 +77,25 @@ class ScheduleContainer extends Component {
                             ? this.getScheduleByBroker()
                             : this.getScheduleByShiftPlace()}
                         {this.state.brokers.scheduleBroker.brokersSchedule && this.state.activeBroker !== undefined
-                            || this.state.activeTab === 'Plantão'?
-                        <ScheduleSaveButtonComponent manager={this.props.managersName}/> : null}
+                        || this.state.activeTab === 'Plantão' ?
+                            <ScheduleSaveButtonComponent manager={this.props.managersName}/> : null}
                     </div>
                 )
-            } else {
-                return this.loading();
+            } else if (this.state.activeTab === 'Gráfico') {
+                return (
+                    <div style={{width: 'inherit'}}>
+                        <ScheduleTab
+                            tabs={this.state.tabs}
+                            activeTab={this.state.activeTab}
+                            changeActiveTab={this.changeActiveTab.bind(this)}
+                        />
+                        <ChartTabComponent
+                            data={this.props.scheduleWrapper.brokerScheduleCount}
+                            max={this.props.scheduleWrapper.max}
+                            palcesLeft={this.props.scheduleWrapper.placesLeft}
+                        />
+                    </div>
+                )
             }
         } else {
             return this.loading();
@@ -131,7 +145,7 @@ class ScheduleContainer extends Component {
                 schedule={this.getSchedule()}
                 isBroker={true}
                 brokerSchedule={this.state.activeBroker ? this.buildMap(this.props.scheduleWrapper.brokerSchedule)
-                    .get(this.state.activeBroker): null}
+                    .get(this.state.activeBroker) : null}
             />
         </div>;
     }
