@@ -11375,3 +11375,9 @@ label.panel-block:hover {
   margin: 3px;
   color: white;
 }
+
+.pie-card {
+  flex: none;
+  width: 45%;
+  margin: 0px;
+}

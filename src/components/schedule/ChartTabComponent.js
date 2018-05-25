@@ -64,7 +64,7 @@ class ChartTabComponent extends Component {
         var legend = this.state && this.state.legend || '';
         return (
             <div className="columns" style={{width: 'inherit'}}>
-                <div className="column is-half is-one-third">
+                <div className="column pie-card">
                     <div className="card">
                         <div className="card-content">
                             <p className="title">
@@ -77,7 +77,7 @@ class ChartTabComponent extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="column column is-half is-offset-one-quarter" style={{margin : 'auto'}}>
+                <div className="column column is-half is-one-quarter" style={{margin : 'auto'}}>
                     <div dangerouslySetInnerHTML={{__html: legend}}/>
                     <Pie ref="chart" data={data} options={options}/>
                 </div>
