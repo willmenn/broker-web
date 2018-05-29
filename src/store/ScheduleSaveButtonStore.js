@@ -25,7 +25,7 @@ class ScheduleSaveButtonStore extends EventEmitter {
                 console.log('Schedule Save Button Store: ' + action.type)
                 console.log("ScheduleButtonAction: ")
                 console.log(action)
-                this.state.scheduleId=action.data.scheduleId;
+                this.state.scheduleId=action.data.id;
                 this.emit('change');
                 break;
             }

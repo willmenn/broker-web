@@ -19,7 +19,7 @@ class ScheduleSaveButtonComponent extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         ScheduleSaveButtonStore.on('change', () => {
             this.setState({schedule: ScheduleSaveButtonStore.getAll()});
         })
@@ -29,7 +29,7 @@ class ScheduleSaveButtonComponent extends Component {
 
         SchedulesaveButtonAction.saveSchedule({
             manager: this.props.manager,
-            scheduleId: this.state.schedule.scheduleId
+            scheduleId: this.props.scheduleId
         });
         evt.preventDefault();
         return false;

@@ -78,7 +78,8 @@ class ScheduleContainer extends Component {
                             : this.getScheduleByShiftPlace()}
                         {this.state.brokers.scheduleBroker.brokersSchedule && this.state.activeBroker !== undefined
                         || this.state.activeTab === 'Plantão' ?
-                            <ScheduleSaveButtonComponent manager={this.props.managersName}/> : null}
+                            <ScheduleSaveButtonComponent manager={this.props.managersName}
+                            scheduleId={this.props.scheduleWrapper.id}/> : null}
                     </div>
                 )
             } else if (this.state.activeTab === 'Gráfico') {
