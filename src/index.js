@@ -81,7 +81,8 @@ class App extends Component {
             return <AppComponent>
                 {this.state.panel.scheduleVisible ? <ScheduleContainer brokers={this.state.panel.brokers}
                                                                        scheduleWrapper={this.state.panel.scheduleData}
-                                                                       managersName={this.state.panel.managerName}/> : null}
+                                                                       managersName={this.state.panel.managerName}
+                                                                       noEscala={this.state.panel.noEscala} /> : null}
                 {this.state.panel.listAllComponentVisible ? <ListAllComponent/> : null}
                 {this.state.panel.listAllComponentVisible ? <StatisticsComponent
                     manager={this.state.panel.managerName}/> : null}

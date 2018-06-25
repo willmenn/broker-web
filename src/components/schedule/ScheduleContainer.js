@@ -98,13 +98,21 @@ class ScheduleContainer extends Component {
                     </div>
                 )
             }
-        } else {
+        } else if(!this.props.noEscala){
             return this.loading();
+        }else if(this.props.noEscala){
+            return this.noEscala();
         }
     }
 
     buildMap(obj) {
         return Object.keys(obj).reduce((map, key) => map.set(key, obj[key]), new Map());
+    }
+
+    noEscala() {
+        return (
+            <div className="content" style={{margin: 'auto'}}><h3>A sua equipe não tem nenhuma escala.</h3></div>
+        )
     }
 
     loading() {

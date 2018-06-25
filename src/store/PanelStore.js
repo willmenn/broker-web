@@ -22,7 +22,8 @@ class PanelStore extends EventEmitter {
             listScheduleVisible: false,
             shiftPlaceList: [],
             showMessages: false,
-            messages: []
+            messages: [],
+            noEscala: false
         };
     }
 
@@ -51,6 +52,18 @@ class PanelStore extends EventEmitter {
             case 'ESCALA_BROKERS' : {
                 console.log('store: ' + action.type)
                 this.escalaBrokers(action.data);
+                break;
+            }
+            case 'NO_ESCALA' : {
+                console.log('store: ' + action.type)
+                // this.escalaCadastroVisible()
+                this.setDefaultEventDetails();
+                this.state.scheduleData = undefined;
+                this.state.schedulePanelVisible = false;
+                this.state.scheduleVisible = true;
+                this.state.noEscala=true;
+                this.state.brokers = [];
+                this.emit('change');
                 break;
             }
             case 'CORRETOR_DELETE' : {
@@ -110,7 +123,8 @@ class PanelStore extends EventEmitter {
             listScheduleVisible: false,
             shiftPlaceList: [],
             showMessages: false,
-            messages: []
+            messages: [],
+            noEscala: false
         };
     }
 

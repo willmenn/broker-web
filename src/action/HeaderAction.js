@@ -88,20 +88,26 @@ export const showActiveScheduleAction = function (event) {
     var urlToGetScheduleId = "https://brokermanagement-dev.herokuapp.com/manager/schedule?manager=" + event.manager;
     axiosConfig().get(urlToGetScheduleId).then(res => {
         console.log(res.data.scheduleId)
-        axiosConfig().get('http://broker-scheduler.herokuapp.com/v3/schedules/' + res.data.scheduleId)
-            .then(resGet => {
-                resGet.data.scheduleId = res.scheduleId;
-                dispatcher.dispatch({
-                    type: 'ESCALA_DATA',
-                    data: resGet.data
+        if(res.data.scheduleId != null) {
+            axiosConfig().get('http://broker-scheduler.herokuapp.com/v3/schedules/' + res.data.scheduleId)
+                .then(resGet => {
+                    resGet.data.scheduleId = res.scheduleId;
+                    dispatcher.dispatch({
+                        type: 'ESCALA_DATA',
+                        data: resGet.data
+                    })
+                    dispatcher.dispatch({
+                        type: 'ESCALA_BROKERS',
+                        data: resGet.data.brokerV3s
+                    })
                 })
-                dispatcher.dispatch({
-                    type: 'ESCALA_BROKERS',
-                    data: resGet.data.brokerV3s
-                })
+            showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
+        }else{
+            dispatcher.dispatch({
+                type: 'NO_ESCALA'
             })
+        }
     })
-    showAllShiftPlacesAction({manager: event.manager, subType: 'GERAR_ESCALA'});
 }
 
 const fetchScheduleList = function (manager) {
