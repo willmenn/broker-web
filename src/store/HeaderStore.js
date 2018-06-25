@@ -25,6 +25,7 @@ class HeaderStore extends EventEmitter {
                 this.state.isHomeVisible = true;
                 this.state.listAllComponentVisible = false;
                 this.state.listScheduleVisible = false;
+                this.state.showMessages = false;
                 this.emit('change');
                 break;
             }
