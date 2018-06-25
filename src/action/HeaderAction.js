@@ -14,11 +14,7 @@ const fetchBrokersList = function (data) {
             type: 'SHOW_ALL_BROKERS',
             data: resGet.data
         })
-    }).catch(function () {
-        dispatcher.dispatch({
-            type: 'SHOW_ALL_BROKERS_LOADING'
-        });
-    });
+    })
 }
 
 export const homeAction = function () {

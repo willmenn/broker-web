@@ -117,9 +117,13 @@ class StatisticsComponent extends Component {
     getTheMostOccurencyOfTheSameDay() {
         let brokers = this.state.list.brokers;
         let days = {"MON": 0, "TUE": 0, "WED": 0, "THU": 0, "FRI": 0, "SAT": 0, "SUN": 0}
-        brokers.forEach(function (broker) {
-            var count = days[broker.preference.weekDay];
-            days[broker.preference.weekDay] = count + 1;
+        brokers.forEach( broker =>{
+            if(broker.constraints && broker.constraints.DAY) {
+                broker.constraints.DAY.forEach(day => {
+                    var count = days[day];
+                    days[day] = count + 1;
+                })
+            }
         });
 
         var biggest = 0;
