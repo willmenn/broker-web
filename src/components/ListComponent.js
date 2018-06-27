@@ -60,7 +60,7 @@ class ListComponent extends Component {
     }
 
     onClickEdit(entity,id) {
-        ListAction.editEntity({ entity: entity,id: id});
+        ListAction.editEntity({ entity: entity,id: id, manager: this.props.manager});
     }
 
     onClickDeleteButton(entity) {
