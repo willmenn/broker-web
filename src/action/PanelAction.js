@@ -44,7 +44,7 @@ const fetchBrokerList = function (type, manager) {
     });
 }
 
-const fetchSchiftPlaceList = function (type, manager) {
+export const fetchSchiftPlaceList = function (type, manager) {
     var url = "https://brokermanagement-dev.herokuapp.com/shiftPlace/manager/" + manager;
     axiosConfig().get(url).then(res => {
         dispatcher.dispatch({
