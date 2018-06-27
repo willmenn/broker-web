@@ -123,6 +123,7 @@ class App extends Component {
             {this.state.panel.isListComponentVisible ? <ListComponent
                 listOptions={this.state.panel.listOptions}
                 listData={this.state.panel.listData}
+                manager={this.state.panel.managerName}
             /> : null}
             {this.state.panel.scheduleVisible ? <ScheduleContainer brokers={this.state.panel.brokers}
                                                                    scheduleWrapper={this.state.panel.scheduleData}

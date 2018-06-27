@@ -1,5 +1,6 @@
 import dispatcher from '../Dispatcher';
 import axios from 'axios';
+import {fetchSchiftPlaceList} from "./PanelAction";
 
 
 const axiosConfig = () => {
@@ -37,6 +38,7 @@ export const editEntity = function (data) {
         }
         case 'CORRETOR_EDIT' : {
             fetchBroker(data.entity+'_LIST',data.id);
+            fetchSchiftPlaceList('CORRETOR_CADASTRO', data.manager);
             break;
         }
     }
